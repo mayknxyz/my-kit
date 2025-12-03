@@ -1,33 +1,34 @@
 # My Kit
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GitHub issues](https://img.shields.io/github/issues/mayknxyz/my-kit)](https://github.com/mayknxyz/my-kit/issues)
-[![GitHub stars](https://img.shields.io/github/stars/mayknxyz/my-kit)](https://github.com/mayknxyz/my-kit/stargazers)
+[![GitHub issues](https://img.shields.io/github/issues/mayknxyz/my-kit?color=blue)](https://github.com/mayknxyz/my-kit/issues)
+[![Last Commit](https://img.shields.io/github/last-commit/mayknxyz/my-kit)](https://github.com/mayknxyz/my-kit/commits/main)
 
-A developer workflow toolkit for [Claude Code](https://claude.ai/code) and [GitHub](https://github.com) that complements [Spec Kit](https://github.com/github/spec-kit). My Kit provides slash commands that automate GitHub operations and workflow orchestration, while Spec Kit handles detailed feature specification.
+A **spec-driven development** toolkit for [Claude Code](https://claude.ai/code) and [GitHub](https://github.com). Define specifications first, then implement with confidence.
+
+Works with [Spec Kit](https://github.com/github/spec-kit) for detailed feature specifications, or use My Kit's lightweight spec workflow for simpler changes.
 
 ## What is My Kit?
 
-My Kit provides `/mykit.*` slash commands for Claude Code that automate common development tasks:
+My Kit provides `/mykit.*` slash commands for Claude Code that enforce a **specification-first** approach:
 
-- **Issue Management** - Select issues, create branches, track progress
-- **Workflow Orchestration** - Guide you through planning → implementation → PR
+- **Spec-Driven Workflow** - Define what you're building before writing code
+- **Issue-Linked Development** - All work tied to GitHub Issues for traceability
 - **Quality Gates** - Validation checks before commits and PRs
 - **Release Automation** - Semantic versioning, changelogs, GitHub releases
 
-## How It Works with Spec Kit
+## Spec-Driven Workflows
 
-| Tool | Purpose |
-|------|---------|
-| **Spec Kit** | Detailed feature specification (spec → plan → tasks) |
-| **My Kit** | GitHub workflow + lightweight alternative for simple changes |
+| Workflow | When to Use | Spec Tool |
+|----------|-------------|-----------|
+| **Full** | Complex features, architectural changes | Spec Kit |
+| **Lite** | Simple features, enhancements | My Kit |
+| **Quick Fix** | Bug fixes, minor changes | None |
 
-**Choose your workflow:**
+**The principle:** Specify → Plan → Implement → Validate → Ship
 
 ```
-[1] Full Workflow (Spec Kit)    - Complex features requiring detailed specs
-[2] Lite Workflow (My Kit)      - Simple changes with lightweight docs
-[3] Quick Fix                   - Minor changes, no formal planning
+Issue → Spec → Plan → Tasks → Code → Validate → Commit → PR → Release
 ```
 
 ## Installation

@@ -1,0 +1,23 @@
+# My Kit runtime files
+.mykit/cache/
+.mykit/state.json
+.mykit/backups/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+*.sublime-*
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp

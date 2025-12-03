@@ -1,6 +1,10 @@
 # My Kit
 
-A developer workflow toolkit for Claude Code that complements [Spec Kit](https://github.com/github/spec-kit). My Kit handles the GitHub operations and workflow orchestration while Spec Kit handles detailed feature specification.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![GitHub issues](https://img.shields.io/github/issues/mayknxyz/my-kit)](https://github.com/mayknxyz/my-kit/issues)
+[![GitHub stars](https://img.shields.io/github/stars/mayknxyz/my-kit)](https://github.com/mayknxyz/my-kit/stargazers)
+
+A developer workflow toolkit for [Claude Code](https://claude.ai/code) and [GitHub](https://github.com) that complements [Spec Kit](https://github.com/github/spec-kit). My Kit provides slash commands that automate GitHub operations and workflow orchestration, while Spec Kit handles detailed feature specification.
 
 ## What is My Kit?
 

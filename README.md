@@ -1,6 +1,6 @@
 # My Kit
 
-A developer workflow toolkit for Claude Code that complements [Spec Kit](https://github.com/anthropics/spec-kit). My Kit handles the GitHub operations and workflow orchestration while Spec Kit handles detailed feature specification.
+A developer workflow toolkit for Claude Code that complements [Spec Kit](https://github.com/github/spec-kit). My Kit handles the GitHub operations and workflow orchestration while Spec Kit handles detailed feature specification.
 
 ## What is My Kit?
 
@@ -188,5 +188,5 @@ MIT
 
 ## Related
 
-- [Spec Kit](https://github.com/anthropics/spec-kit) - Feature specification toolkit
+- [Spec Kit](https://github.com/github/spec-kit) - Feature specification toolkit
 - [Claude Code](https://claude.ai/code) - AI-powered development environment

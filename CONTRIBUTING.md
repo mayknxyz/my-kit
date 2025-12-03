@@ -59,12 +59,12 @@ cd my-kit
 
 ### Command Guidelines
 
-When adding or modifying `/mykit.*` commands:
+When adding or modifying `/mykit.*` commands, follow the [Command Conventions](docs/CONVENTIONS.md):
 
-1. **Preview by default** - Commands should show what they'll do without `--run`
-2. **Explicit execution** - State-changing commands require `--run` flag
+1. **Action-based execution** - State-changing commands require an action (e.g., `create`, `run`)
+2. **Preview by default** - Commands without action show what they'll do
 3. **Clear errors** - Provide actionable error messages with remediation steps
-4. **Issue linking** - Respect R1 (all work linked to GitHub Issues)
+4. **Issue linking** - All work linked to GitHub Issues (use `--no-issue` for exceptions)
 
 ### Documentation
 

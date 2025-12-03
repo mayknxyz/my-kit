@@ -42,16 +42,16 @@ curl -fsSL https://raw.githubusercontent.com/mayknxyz/my-kit/main/install.sh | b
 
 ```bash
 # 1. Initialize in your project
-/mykit.init
+/mykit.init create
 
 # 2. First-time setup (configure preferences)
-/mykit.setup
+/mykit.setup run
 
 # 3. Start a workflow session
-/mykit.start --run
+/mykit.start run
 
 # 4. Select an issue from backlog
-/mykit.backlog --run
+/mykit.backlog select
 ```
 
 ## Commands
@@ -123,21 +123,21 @@ curl -fsSL https://raw.githubusercontent.com/mayknxyz/my-kit/main/install.sh | b
 
 ## Key Features
 
-### Explicit Execution
+### Action-Based Execution
 
-Commands preview by default. Add `--run` to execute:
+Commands preview by default. Add an action to execute:
 
 ```bash
 /mykit.commit           # Shows what will be committed
-/mykit.commit --run     # Actually commits
+/mykit.commit create    # Actually commits
 ```
 
 ### Validation Gates
 
 Critical steps require validation:
-- `/mykit.pr` requires `/mykit.validate` to pass
-- `/mykit.commit` requires uncommitted changes
-- `/mykit.specify` requires an issue selected
+- `/mykit.pr create` requires `/mykit.validate run` to pass
+- `/mykit.commit create` requires uncommitted changes
+- `/mykit.specify create` requires an issue selected
 
 ### Issue Linking
 
@@ -184,6 +184,8 @@ specs/
 
 ## Documentation
 
+- [Commands](docs/COMMANDS.md) - Quick reference for all commands
+- [Conventions](docs/CONVENTIONS.md) - Command patterns and development conventions
 - [Blueprint](docs/001_BLUEPRINT.md) - Architecture, requirements, and development plan
 
 ## License

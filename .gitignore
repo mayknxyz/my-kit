@@ -2,6 +2,11 @@
 .mykit/cache/
 .mykit/state.json
 .mykit/backups/
+.mykit/backup/
+.mykit/.manifests/
+
+# Lock files
+mykit-upgrade.lock
 
 # OS files
 .DS_Store

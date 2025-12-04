@@ -12,6 +12,20 @@ Instructions for Claude Code when working in this repository.
 - **Issue-Linked**: All work tied to GitHub Issues
 - **Action-Based Commands**: State-changing commands require an action (e.g., `create`, `run`)
 
+## Branch Naming Convention
+
+Feature branches use the GitHub issue number as prefix:
+
+```
+{issue-number}-{short-name}
+```
+
+Examples:
+- `3-setup-wizard` (Issue #3: Setup wizard feature)
+- `15-oauth-integration` (Issue #15: OAuth integration)
+
+When creating feature branches via `/speckit.specify` or similar commands, always use the GitHub issue number as the branch prefix to maintain traceability between branches, specs, and issues.
+
 ## Command Pattern
 
 ```
@@ -54,6 +68,7 @@ When implementing commands:
 ## Active Technologies
 - Bash 4.0+ (POSIX-compatible shell script) + curl, git, gh CLI (validated at runtime) (001-curl-installer)
 - File system only (`.claude/commands/`, `.mykit/scripts/`, `.mykit/config.json`) (001-curl-installer)
+- File system only (`.mykit/config.json`) (003-setup-wizard)
 
 ## Recent Changes
 - 001-curl-installer: Added Bash 4.0+ (POSIX-compatible shell script) + curl, git, gh CLI (validated at runtime)

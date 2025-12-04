@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2025-12-05
+
+### Added
+- Interactive setup wizard (`/mykit.setup`) for onboarding configuration
+- Preview mode showing current or default configuration values
+- Five-step wizard flow: GitHub auth, default branch, PR preferences, validation settings, release settings
+- Atomic config file writes with temp file pattern for interruption safety
+- Config pre-population when re-running wizard with existing configuration
+- Partial config detection with completion guidance
+
+### Features
+- GitHub CLI authentication detection with warning for unauthenticated users
+- Default branch auto-detection from remote HEAD with fallback to main/master
+- Boolean prompts (Y/n, y/N) with sensible defaults
+- Version prefix validation (warns on non-standard values)
+- Signal trap handler for clean interrupt handling (INT/TERM)
+- Help flag (`--help`) with usage documentation
+
+### Files
+- `.mykit/scripts/setup-wizard.sh` - Core wizard logic
+- `.mykit/config.json` - Generated configuration output
+
 ## [0.2.0] - 2025-12-05
 
 ### Added
@@ -47,6 +69,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Prerequisite validation (git, gh CLI, git repository)
 - Platform-specific installation guidance
 
-[Unreleased]: https://github.com/mayknxyz/my-kit/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/mayknxyz/my-kit/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/mayknxyz/my-kit/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/mayknxyz/my-kit/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/mayknxyz/my-kit/releases/tag/v0.1.0

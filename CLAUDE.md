@@ -50,3 +50,10 @@ When implementing commands:
 2. Test execution mode (with action)
 3. Test error handling
 4. Test with and without `--force` flag
+
+## Active Technologies
+- Bash 4.0+ (POSIX-compatible shell script) + curl, git, gh CLI (validated at runtime) (001-curl-installer)
+- File system only (`.claude/commands/`, `.mykit/scripts/`, `.mykit/config.json`) (001-curl-installer)
+
+## Recent Changes
+- 001-curl-installer: Added Bash 4.0+ (POSIX-compatible shell script) + curl, git, gh CLI (validated at runtime)

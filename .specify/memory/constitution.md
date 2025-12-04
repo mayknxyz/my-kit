@@ -1,50 +1,134 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+Sync Impact Report
+==================
+Version change: 1.0.0 (initial)
+Modified principles: N/A (first version)
+Added sections:
+  - Core Principles (5 principles)
+  - Command Conventions
+  - Governance
+Removed sections: N/A
+Templates requiring updates:
+  - .specify/templates/plan-template.md: ✅ Constitution Check section exists
+  - .specify/templates/spec-template.md: ✅ Aligned with spec-first approach
+  - .specify/templates/tasks-template.md: ✅ Aligned with user story organization
+Follow-up TODOs: None
+-->
+
+# My Kit Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Spec-First Development
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+All features and significant changes MUST be specified before implementation begins.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+**Rules**:
+- Features require a specification document (`spec.md`) that defines WHAT and WHY
+- Implementation plans (`plan.md`) document HOW, created after specification approval
+- Tasks (`tasks.md`) break down work into actionable, trackable items
+- Quick fixes for trivial changes MAY bypass specification, but MUST still link to an issue
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+**Rationale**: Specifications prevent scope creep, ensure shared understanding, and create
+documentation that outlives the implementation session.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### II. Issue-Linked Traceability
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+All work MUST be linked to a GitHub Issue. No orphan commits, branches, or PRs.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+**Rules**:
+- Every branch MUST include the issue number prefix: `{issue-number}-{slug}`
+- Every spec directory MUST match: `specs/{issue-number}-{slug}/`
+- Every PR MUST reference its issue with `Closes #{issue-number}`
+- Quick fixes also require issues - every change is documented, no matter how small
+- Exception: The `--no-issue` flag MAY be used for exploratory work, but MUST NOT be merged
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+**Rationale**: GitHub Issues provide the documentation trail from idea to deployment.
+Traceability enables project history reconstruction and accountability.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+### III. Explicit Execution
+
+Commands MUST preview by default. Execution requires explicit action flags.
+
+**Rules**:
+- All state-changing commands show preview/dry-run without action flags
+- Execution requires explicit flags: `--run`, `create`, `select`, etc.
+- Read-only commands (`/mykit.status`, `/mykit.help`) execute immediately
+- Confirmations MUST be shown for irreversible operations unless `--yes` is passed
+
+**Rationale**: Prevents accidental execution, allows reviewing changes before commitment,
+and provides safer interaction with destructive operations.
+
+### IV. Validation Gates
+
+Critical workflow steps MUST pass validation before proceeding.
+
+**Rules**:
+- `/mykit.pr` requires `/mykit.validate` to pass (tests, linting, formatting)
+- `/mykit.commit` requires uncommitted changes to exist
+- `/mykit.specify` requires an issue to be selected
+- `/mykit.release` requires PR to be merged with no blocking issues
+- Gates MAY be bypassed with `--force` flag, but a warning MUST be displayed
+
+**Rationale**: Quality enforcement prevents broken or incomplete work from progressing
+through the pipeline. Gates catch issues early when they're cheapest to fix.
+
+### V. Simplicity
+
+Start simple. Add complexity only when justified by concrete need.
+
+**Rules**:
+- YAGNI (You Aren't Gonna Need It) - do not build for hypothetical requirements
+- Prefer editing existing files over creating new ones
+- Avoid abstractions until patterns emerge from duplication
+- Shell scripts follow Google Shell Style Guide and pass shellcheck
+- Conventional commits (`feat:`, `fix:`, `docs:`) enable automated versioning
+
+**Rationale**: Simple solutions are easier to understand, maintain, and debug.
+Complexity debt accumulates interest; simplicity preserves velocity.
+
+## Command Conventions
+
+Commands follow a consistent pattern for predictable behavior.
+
+**Pattern**: `/mykit.{command} [action] [flags]`
+
+**Actions**:
+- Read-only: Execute immediately (e.g., `/mykit.status`)
+- State-changing: Require action (e.g., `/mykit.commit create`)
+
+**Standard Flags**:
+- `--force`: Bypass validation gates (with warning)
+- `--yes`, `-y`: Skip confirmation prompts
+- `--json`: Machine-readable output
+- `--no-issue`: Work without issue linking (exceptional use only)
+
+**Exit Codes**:
+- 0: Success
+- 1: General error
+- 2: Pre-condition failure (validation gate blocked)
+- 3: Authentication or network error
+- 4: Git operation error
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+This constitution supersedes all other development practices for My Kit.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Amendment Process**:
+1. Propose amendment via GitHub Issue with `constitution` label
+2. Document rationale and impact on existing workflows
+3. Create migration plan for any breaking changes
+4. Require review and approval before merge
+5. Update version according to semantic versioning
+
+**Versioning**:
+- MAJOR: Backward-incompatible principle removal or redefinition
+- MINOR: New principle or materially expanded guidance
+- PATCH: Clarifications, wording improvements, non-semantic refinements
+
+**Compliance**:
+- All PRs and code reviews MUST verify adherence to these principles
+- Complexity beyond these principles MUST be justified in the plan
+- Runtime development guidance is provided in `CLAUDE.md`
+
+**Version**: 1.0.0 | **Ratified**: 2025-12-04 | **Last Amended**: 2025-12-04

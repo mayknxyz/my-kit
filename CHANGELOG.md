@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0] - 2025-12-05
+
+### Added
+- Session purpose prompt (`/mykit.start`) for workflow type selection
+- Three workflow options: Full workflow (Spec Kit), Lite workflow (My Kit), Quick fix
+- Chat-based selection via number (1, 2, 3) or name (full, lite, quickfix)
+- In-memory session state (`session.type`) for downstream command behavior
+- Automatic direction to `/mykit.backlog` after selection
+
+### Features
+- `AskUserQuestion` tool integration for interactive selection
+- Invalid input handling with re-prompt guidance
+- Session-scoped state (resets when Claude Code session ends)
+- Always-prompt behavior (no remembered defaults)
+
+### Files
+- `.claude/commands/mykit.start.md` - Slash command implementation
+
 ## [0.3.0] - 2025-12-05
 
 ### Added
@@ -69,7 +87,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Prerequisite validation (git, gh CLI, git repository)
 - Platform-specific installation guidance
 
-[Unreleased]: https://github.com/mayknxyz/my-kit/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/mayknxyz/my-kit/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/mayknxyz/my-kit/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/mayknxyz/my-kit/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/mayknxyz/my-kit/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/mayknxyz/my-kit/releases/tag/v0.1.0

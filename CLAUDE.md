@@ -71,6 +71,8 @@ When implementing commands:
 - File system only (`.mykit/config.json`) (003-setup-wizard)
 - Markdown + Claude Code slash command pattern (no external runtime) + Claude Code `AskUserQuestion` tool for chat-based selection (004-session-purpose)
 - In-memory session state (Claude Code conversation context) (004-session-purpose)
+- Markdown + Claude Code slash command pattern (no external runtime) + Claude Code conversation context, file system access to `.claude/commands/` and `docs/` (005-help)
+- N/A (read-only, no persistence) (005-help)
 
 ## Recent Changes
 - 001-curl-installer: Added Bash 4.0+ (POSIX-compatible shell script) + curl, git, gh CLI (validated at runtime)

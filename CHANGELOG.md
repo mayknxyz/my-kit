@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.0] - 2025-12-06
+
+### Added
+- Help command (`/mykit.help`) for command documentation and workflow guidance
+- Command overview mode showing all 17 commands grouped by category
+- Specific command help mode (`/mykit.help <command>`) with usage, actions, flags, examples
+- Workflow cheatsheets mode (`/mykit.help workflow`) for Full, Lite, and Quick Fix workflows
+- Unknown command error handling with list of available commands
+- Stub detection showing implementation status for each command
+
+### Features
+- Three help modes based on argument: empty (overview), command name (detail), "workflow" (cheatsheets)
+- Categorized command tables: Read-Only, Workflow, Issue & Branch, Lite Workflow, Quality & Commit, Management
+- Flag reference with short aliases
+- Workflow decision guide for choosing the right workflow
+
+### Files
+- `.claude/commands/mykit.help.md` - Slash command implementation
+
 ## [0.4.0] - 2025-12-05
 
 ### Added
@@ -87,7 +106,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Prerequisite validation (git, gh CLI, git repository)
 - Platform-specific installation guidance
 
-[Unreleased]: https://github.com/mayknxyz/my-kit/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/mayknxyz/my-kit/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/mayknxyz/my-kit/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/mayknxyz/my-kit/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/mayknxyz/my-kit/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/mayknxyz/my-kit/compare/v0.1.0...v0.2.0

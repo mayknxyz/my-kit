@@ -69,6 +69,8 @@ When implementing commands:
 - Bash 4.0+ (POSIX-compatible shell script) + curl, git, gh CLI (validated at runtime) (001-curl-installer)
 - File system only (`.claude/commands/`, `.mykit/scripts/`, `.mykit/config.json`) (001-curl-installer)
 - File system only (`.mykit/config.json`) (003-setup-wizard)
+- Markdown + Claude Code slash command pattern (no external runtime) + Claude Code `AskUserQuestion` tool for chat-based selection (004-session-purpose)
+- In-memory session state (Claude Code conversation context) (004-session-purpose)
 
 ## Recent Changes
 - 001-curl-installer: Added Bash 4.0+ (POSIX-compatible shell script) + curl, git, gh CLI (validated at runtime)

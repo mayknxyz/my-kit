@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.0] - 2025-12-06
+
+### Added
+- Enhanced status dashboard (`/mykit.status`) displaying feature context, workflow phase, file status, and next step suggestion
+- Feature context section showing current branch and linked GitHub issue details
+- Workflow phase detection based on spec.md/plan.md/tasks.md existence
+- File status visibility with staged/unstaged distinction and 10-file display limit
+- Next command suggestion based on current workflow state and uncommitted changes
+
+### Features
+- Git branch detection with detached HEAD state handling
+- Issue number extraction from branch pattern `{number}-{slug}`
+- GitHub CLI integration for issue title and state lookup with graceful degradation
+- Status code mapping (M, A, D, R, ??) to human-readable labels
+- Suggestion logic state machine for context-aware command recommendations
+
+### Files
+- `.claude/commands/mykit.status.md` - Slash command implementation
+- `docs/COMMANDS.md` - Updated command documentation
+
 ## [0.5.0] - 2025-12-06
 
 ### Added
@@ -106,7 +126,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Prerequisite validation (git, gh CLI, git repository)
 - Platform-specific installation guidance
 
-[Unreleased]: https://github.com/mayknxyz/my-kit/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/mayknxyz/my-kit/compare/v0.6.0...HEAD
+[0.6.0]: https://github.com/mayknxyz/my-kit/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/mayknxyz/my-kit/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/mayknxyz/my-kit/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/mayknxyz/my-kit/compare/v0.2.0...v0.3.0

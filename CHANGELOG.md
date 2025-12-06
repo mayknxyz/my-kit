@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.7.0] - 2025-12-06
+
+### Added
+- Resume session command (`/mykit.resume`) for restoring workflow context after interruptions
+- Session state display showing branch, timestamp, workflow stage, and session type
+- Next command suggestion based on workflow stage and uncommitted changes
+- State validation with warnings for stale state, branch mismatch, and project mismatch
+
+### Features
+- Project ID generation using SHA-256 hash of git remote URL (with fallback to git directory path)
+- 7-day staleness threshold for state freshness detection
+- Branch existence validation via `git branch --list`
+- Graceful handling of missing or corrupted state files
+- Read-only command that executes immediately (no action parameter required)
+
+### Files
+- `.claude/commands/mykit.resume.md` - Slash command implementation
+- `specs/007-resume-session/` - Feature specification and design documents
+
 ## [0.6.0] - 2025-12-06
 
 ### Added
@@ -126,7 +145,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Prerequisite validation (git, gh CLI, git repository)
 - Platform-specific installation guidance
 
-[Unreleased]: https://github.com/mayknxyz/my-kit/compare/v0.6.0...HEAD
+[Unreleased]: https://github.com/mayknxyz/my-kit/compare/v0.7.0...HEAD
+[0.7.0]: https://github.com/mayknxyz/my-kit/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/mayknxyz/my-kit/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/mayknxyz/my-kit/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/mayknxyz/my-kit/compare/v0.3.0...v0.4.0

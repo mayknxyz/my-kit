@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.0] - 2025-12-07
+
+### Added
+- Task generation command (`/mykit.tasks`) for creating task breakdowns from specs/plans
+- Preview mode showing proposed tasks without creating files
+- Execute mode (`create` action) to write tasks file to `specs/{branch}/tasks.md`
+- Guided conversation fallback with 3 questions when no spec/plan exists
+- Force flag (`--force`) to overwrite existing tasks without confirmation
+
+### Features
+- Artifact detection (spec.md, plan.md) with priority-based task extraction
+- User story extraction from spec with priority ordering (P1, P2, P3)
+- Implementation phases extraction from plan
+- Automatic completion tasks appending (validate, commit, PR)
+- Task count bounds: 5-15 implementation tasks at 30min-2hr granularity
+- Speckit conflict detection redirecting to `/speckit.tasks` when appropriate
+- State updates to `.mykit/state.json` with `tasks_path` and `workflow_step: "tasks"`
+- AskUserQuestion integration for guided conversation and overwrite confirmation
+
+### Files
+- `.claude/commands/mykit.tasks.md` - Slash command implementation (409 lines)
+- `.mykit/templates/commands/mykit.tasks.md` - Template for distribution
+- `specs/011-task-generation/` - Feature specification and design documents
+
 ## [0.10.0] - 2025-12-07
 
 ### Added
@@ -210,7 +234,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Prerequisite validation (git, gh CLI, git repository)
 - Platform-specific installation guidance
 
-[Unreleased]: https://github.com/mayknxyz/my-kit/compare/v0.10.0...HEAD
+[Unreleased]: https://github.com/mayknxyz/my-kit/compare/v0.11.0...HEAD
+[0.11.0]: https://github.com/mayknxyz/my-kit/compare/v0.10.0...v0.11.0
 [0.10.0]: https://github.com/mayknxyz/my-kit/compare/v0.9.0...v0.10.0
 [0.9.0]: https://github.com/mayknxyz/my-kit/compare/v0.8.0...v0.9.0
 [0.8.0]: https://github.com/mayknxyz/my-kit/compare/v0.7.0...v0.8.0

@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.8.0] - 2025-12-06
+
+### Added
+- Reset command (`/mykit.reset`) for clearing workflow state and starting fresh
+- Preview mode showing state file contents and what will be cleared/preserved
+- Execute mode (`run` action) to delete `.mykit/state.json`
+- Semantic flags (`--keep-branch`, `--keep-specs`) for explicit preservation confirmation
+- Force flag (`--force`) to skip preview and execute immediately
+
+### Features
+- State file existence detection with graceful "no state to reset" handling
+- State file content display (branch, lastCommand, workflowStage, timestamp)
+- Preservation confirmation for spec files, current branch, and config file
+- Combined flags support for power users
+- Error handling for permission denied and file system failures
+
+### Files
+- `.claude/commands/mykit.reset.md` - Slash command implementation
+- `specs/008-reset-state/` - Feature specification and design documents
+
 ## [0.7.0] - 2025-12-06
 
 ### Added
@@ -145,7 +165,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Prerequisite validation (git, gh CLI, git repository)
 - Platform-specific installation guidance
 
-[Unreleased]: https://github.com/mayknxyz/my-kit/compare/v0.7.0...HEAD
+[Unreleased]: https://github.com/mayknxyz/my-kit/compare/v0.8.0...HEAD
+[0.8.0]: https://github.com/mayknxyz/my-kit/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/mayknxyz/my-kit/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/mayknxyz/my-kit/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/mayknxyz/my-kit/compare/v0.4.0...v0.5.0

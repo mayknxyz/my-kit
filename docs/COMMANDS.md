@@ -14,8 +14,40 @@ These execute immediately without an action.
 
 | Command | Description |
 |---------|-------------|
-| `/mykit.status` | Show current workflow state and progress |
+| `/mykit.status` | Display workflow dashboard with feature context, phase, file status, and next step |
 | `/mykit.help` | Show command documentation |
+
+### /mykit.status
+
+Display a comprehensive status dashboard showing:
+
+- **Feature Context**: Current branch and linked GitHub issue
+- **Workflow Phase**: Specification, Planning, or Implementation progress
+- **File Status**: Uncommitted changes with staged/unstaged distinction
+- **Next Step**: Suggested command based on current state
+
+Example output:
+
+```
+# My Kit Status
+
+## Feature Context
+**Branch**: 006-status-dashboard
+**Issue**: #6 - feat: /mykit.status - enhanced dashboard (OPEN)
+
+## Workflow Phase
+**Current**: Implementation
+**Progress**: spec.md ✓ | plan.md ✓ | tasks.md ✓
+
+## File Status
+✓ modified  .claude/commands/mykit.status.md
+  modified  CLAUDE.md
+
+(2 file(s) changed)
+
+## Next Step
+`/mykit.commit create` - Commit your implementation changes
+```
 
 ## State-Changing Commands
 

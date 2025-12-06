@@ -92,6 +92,49 @@ Create a lightweight feature specification from a GitHub issue or via guided con
 /mykit.specify create --force
 ```
 
+### /mykit.plan
+
+Create a lightweight implementation plan from a feature specification via guided conversation.
+
+**Usage**:
+```
+/mykit.plan [create] [--force]
+```
+
+**Behavior**:
+- **No action**: Preview mode - shows proposed plan without creating files
+- **create**: Execute mode - creates plan file at `specs/{branch}/plan.md`
+
+**Prerequisites**:
+- Must be on a feature branch (e.g., `042-feature-name`)
+- Must have a spec file at `specs/{branch}/spec.md`
+- Must NOT have `/speckit.plan` artifacts (mutually exclusive workflows)
+
+**Plan Sections**:
+1. **Technical Context**: Technologies, dependencies, integration points
+2. **Design Decisions**: Key architectural choices with rationale
+3. **Implementation Phases**: Ordered steps to implement the feature
+
+**Guided Conversation**:
+- Analyzes spec for technical ambiguities
+- Asks 0-5 clarifying questions about tech stack, integrations, etc.
+- Records answers to inform plan generation
+
+**Flags**:
+- `--force`: Overwrite existing plan without confirmation
+
+**Examples**:
+```bash
+# Preview what plan would be created
+/mykit.plan
+
+# Create plan from spec
+/mykit.plan create
+
+# Force overwrite existing plan
+/mykit.plan create --force
+```
+
 ### Workflow
 
 | Command | Actions | Flags | Description |
@@ -113,7 +156,7 @@ Create a lightweight feature specification from a GitHub issue or via guided con
 | Command | Actions | Flags | Description |
 |---------|---------|-------|-------------|
 | `/mykit.specify` | `create` | `--no-issue`, `--force` | Create lightweight spec from issue or guided conversation |
-| `/mykit.plan` | `create` | | Create implementation plan |
+| `/mykit.plan` | `create` | `--force` | Create implementation plan from spec via guided conversation |
 | `/mykit.tasks` | `generate` | | Generate task breakdown |
 | `/mykit.implement` | `run` | | Execute tasks one by one |
 

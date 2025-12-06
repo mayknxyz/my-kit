@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.10.0] - 2025-12-07
+
+### Added
+- Lightweight plan command (`/mykit.plan`) for creating implementation plans from specifications
+- Preview mode showing proposed plan content without creating files
+- Execute mode (`create` action) to write plan file to `specs/{branch}/plan.md`
+- Guided conversation for technical decisions (0-5 questions based on spec analysis)
+- Force flag (`--force`) to overwrite existing plans without confirmation
+
+### Features
+- Three mandatory plan sections: Technical Context, Design Decisions, Implementation Phases
+- Spec analysis to identify technology choices, integrations, and ambiguities
+- AskUserQuestion integration for technical decision prompts with options
+- Mutual exclusivity check with `/speckit.plan` workflow (prevents mixing workflows)
+- State updates to `.mykit/state.json` with `plan_path` and `workflow_step: "planning"`
+- Clear error messages for missing prerequisites (no git repo, no feature branch, no spec file)
+
+### Files
+- `.claude/commands/mykit.plan.md` - Slash command implementation
+- `docs/COMMANDS.md` - Updated command documentation with detailed usage
+- `specs/010-lightweight-plan/` - Feature specification and design documents
+
 ## [0.9.0] - 2025-12-07
 
 ### Added
@@ -188,7 +210,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Prerequisite validation (git, gh CLI, git repository)
 - Platform-specific installation guidance
 
-[Unreleased]: https://github.com/mayknxyz/my-kit/compare/v0.9.0...HEAD
+[Unreleased]: https://github.com/mayknxyz/my-kit/compare/v0.10.0...HEAD
+[0.10.0]: https://github.com/mayknxyz/my-kit/compare/v0.9.0...v0.10.0
 [0.9.0]: https://github.com/mayknxyz/my-kit/compare/v0.8.0...v0.9.0
 [0.8.0]: https://github.com/mayknxyz/my-kit/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/mayknxyz/my-kit/compare/v0.6.0...v0.7.0

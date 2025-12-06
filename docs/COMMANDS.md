@@ -53,6 +53,45 @@ Example output:
 
 These require an action to execute. Without an action, they show a preview.
 
+### /mykit.specify
+
+Create a lightweight feature specification from a GitHub issue or via guided conversation.
+
+**Usage**:
+```
+/mykit.specify [create] [--no-issue] [--force]
+```
+
+**Behavior**:
+- **No action**: Preview mode - shows proposed spec without creating files
+- **create**: Execute mode - creates spec file at `specs/{branch}/spec.md`
+
+**Content Sources**:
+1. **Issue extraction**: If the linked GitHub issue body has 50+ characters, extracts Summary, Problem, and Acceptance Criteria sections automatically
+2. **Guided conversation**: Falls back to asking 3 questions:
+   - "What is this feature/change about?"
+   - "What problem does it solve?"
+   - "What should be true when done?"
+
+**Flags**:
+- `--no-issue`: Skip issue requirement for ad-hoc work (creates `specs/adhoc-{slug}/spec.md`)
+- `--force`: Overwrite existing spec without confirmation
+
+**Examples**:
+```bash
+# Preview what spec would be created
+/mykit.specify
+
+# Create spec from GitHub issue
+/mykit.specify create
+
+# Create ad-hoc spec without issue
+/mykit.specify create --no-issue
+
+# Force overwrite existing spec
+/mykit.specify create --force
+```
+
 ### Workflow
 
 | Command | Actions | Flags | Description |
@@ -73,7 +112,7 @@ These require an action to execute. Without an action, they show a preview.
 
 | Command | Actions | Flags | Description |
 |---------|---------|-------|-------------|
-| `/mykit.specify` | `create` | `--no-issue` | Create lightweight spec |
+| `/mykit.specify` | `create` | `--no-issue`, `--force` | Create lightweight spec from issue or guided conversation |
 | `/mykit.plan` | `create` | | Create implementation plan |
 | `/mykit.tasks` | `generate` | | Generate task breakdown |
 | `/mykit.implement` | `run` | | Execute tasks one by one |

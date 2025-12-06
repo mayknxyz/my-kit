@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.9.0] - 2025-12-07
+
+### Added
+- Lightweight spec command (`/mykit.specify`) for creating feature specifications
+- Preview mode showing proposed spec content without creating files
+- Execute mode (`create` action) to write spec file to `specs/{branch}/spec.md`
+- GitHub issue extraction for issues with 50+ character body content
+- Guided conversation fallback with 3 questions: summary, problem, acceptance criteria
+- No-issue flag (`--no-issue`) for ad-hoc specs without linked GitHub issues
+- Force flag (`--force`) to overwrite existing specs without confirmation
+
+### Features
+- Automatic section extraction from issue body (Summary, Problem, Acceptance Criteria)
+- Pattern matching for common markdown heading variations (Description, Why, Checklist, etc.)
+- State updates to `.mykit/state.json` with `spec_path` and `workflow_step`
+- AskUserQuestion integration for guided conversation and overwrite confirmation
+- Non-blocking GitHub API failure handling (warns and proceeds with conversation)
+
+### Files
+- `.claude/commands/mykit.specify.md` - Slash command implementation
+- `docs/COMMANDS.md` - Updated command documentation with detailed usage
+- `specs/009-lightweight-spec/` - Feature specification and design documents
+
 ## [0.8.0] - 2025-12-06
 
 ### Added
@@ -165,7 +188,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Prerequisite validation (git, gh CLI, git repository)
 - Platform-specific installation guidance
 
-[Unreleased]: https://github.com/mayknxyz/my-kit/compare/v0.8.0...HEAD
+[Unreleased]: https://github.com/mayknxyz/my-kit/compare/v0.9.0...HEAD
+[0.9.0]: https://github.com/mayknxyz/my-kit/compare/v0.8.0...v0.9.0
 [0.8.0]: https://github.com/mayknxyz/my-kit/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/mayknxyz/my-kit/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/mayknxyz/my-kit/compare/v0.5.0...v0.6.0

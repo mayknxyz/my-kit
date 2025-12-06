@@ -61,7 +61,7 @@ These require an action to execute. Without an action, they show a preview.
 | `/mykit.setup` | `run` | | Run first-time onboarding wizard |
 | `/mykit.start` | `run` | | Begin workflow session |
 | `/mykit.resume` | `run` | | Resume interrupted session |
-| `/mykit.reset` | `run` | `--yes` | Clear state, start fresh |
+| `/mykit.reset` | `run` | `--keep-branch`, `--keep-specs`, `--force` | Clear state, start fresh |
 
 ### Issue & Branch
 

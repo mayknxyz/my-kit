@@ -76,6 +76,8 @@ When implementing commands:
 - Markdown + Claude Code slash command pattern (no external runtime) + git CLI, gh CLI (GitHub CLI), Claude Code file system access (006-status-dashboard)
 - N/A (read-only command, no persistence) (006-status-dashboard)
 - `.mykit/state.json` (read-only; other commands write to this file) (007-resume-session)
+- Markdown + Claude Code slash command pattern (no external runtime) + Claude Code file system access, git CLI (for branch info only) (008-reset-state)
+- `.mykit/state.json` (file deletion), in-memory conversation context (008-reset-state)
 
 ## Recent Changes
 - 001-curl-installer: Added Bash 4.0+ (POSIX-compatible shell script) + curl, git, gh CLI (validated at runtime)

@@ -78,6 +78,8 @@ When implementing commands:
 - `.mykit/state.json` (read-only; other commands write to this file) (007-resume-session)
 - Markdown + Claude Code slash command pattern (no external runtime) + Claude Code file system access, git CLI (for branch info only) (008-reset-state)
 - `.mykit/state.json` (file deletion), in-memory conversation context (008-reset-state)
+- Markdown (Claude Code slash command) + Bash 4.0+ (helper scripts) + Claude Code conversation context, `gh` CLI (GitHub), `git` CLI (009-lightweight-spec)
+- File system (`.mykit/state.json`, `specs/{branch}/spec.md`) (009-lightweight-spec)
 
 ## Recent Changes
 - 001-curl-installer: Added Bash 4.0+ (POSIX-compatible shell script) + curl, git, gh CLI (validated at runtime)

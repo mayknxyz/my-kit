@@ -80,6 +80,8 @@ When implementing commands:
 - `.mykit/state.json` (file deletion), in-memory conversation context (008-reset-state)
 - Markdown (Claude Code slash command) + Bash 4.0+ (helper scripts) + Claude Code conversation context, `gh` CLI (GitHub), `git` CLI (009-lightweight-spec)
 - File system (`.mykit/state.json`, `specs/{branch}/spec.md`) (009-lightweight-spec)
+- Markdown (Claude Code slash command) + Bash 4.0+ (helper validation) + Claude Code conversation context, `git` CLI, `gh` CLI (optional) (010-lightweight-plan)
+- File system (`specs/{branch}/plan.md`, `.mykit/state.json`) (010-lightweight-plan)
 
 ## Recent Changes
 - 001-curl-installer: Added Bash 4.0+ (POSIX-compatible shell script) + curl, git, gh CLI (validated at runtime)

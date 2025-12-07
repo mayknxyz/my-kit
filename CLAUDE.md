@@ -82,6 +82,8 @@ When implementing commands:
 - File system (`.mykit/state.json`, `specs/{branch}/spec.md`) (009-lightweight-spec)
 - Markdown (Claude Code slash command) + Bash 4.0+ (helper validation) + Claude Code conversation context, `git` CLI, `gh` CLI (optional) (010-lightweight-plan)
 - File system (`specs/{branch}/plan.md`, `.mykit/state.json`) (010-lightweight-plan)
+- Markdown (Claude Code slash command pattern) + Claude Code conversation context, `git` CLI, file system access (011-task-generation)
+- File system (`specs/{branch}/tasks.md`, `.mykit/state.json`) (011-task-generation)
 
 ## Recent Changes
 - 001-curl-installer: Added Bash 4.0+ (POSIX-compatible shell script) + curl, git, gh CLI (validated at runtime)

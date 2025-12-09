@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.12.0] - 2025-12-09
+
+### Added
+- Task execution command (`/mykit.implement`) for working through tasks.md systematically
+- Dashboard mode (no action) showing progress percentage, current task, and next task
+- Run mode (`run` action) for autonomous task execution with auto-complete on success
+- Complete mode (`complete` action) for manual task completion
+- Skip mode (`skip` action) for bypassing blocked tasks with `[~]` marker
+
+### Features
+- Extended checkbox markers: `[ ]` pending, `[>]` in-progress, `[x]` complete, `[~]` skipped
+- Autonomous task execution based on task type (commands, code changes, documentation)
+- Dual state persistence in tasks.md (visual) and state.json (workflow context)
+- Resume logic for interrupted sessions (picks up in-progress task)
+- Phase transition messaging (implementation → completion tasks)
+- Skipped tasks reminder when all other tasks complete
+- Progress bar visualization with completion percentage
+- Comprehensive error handling for all edge cases
+
+### Files
+- `.claude/commands/mykit.implement.md` - Slash command implementation (675 lines)
+- `.mykit/templates/commands/mykit.implement.md` - Template for distribution
+- `specs/012-task-execution/` - Feature specification and design documents
+
 ## [0.11.0] - 2025-12-07
 
 ### Added
@@ -234,7 +258,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Prerequisite validation (git, gh CLI, git repository)
 - Platform-specific installation guidance
 
-[Unreleased]: https://github.com/mayknxyz/my-kit/compare/v0.11.0...HEAD
+[Unreleased]: https://github.com/mayknxyz/my-kit/compare/v0.12.0...HEAD
+[0.12.0]: https://github.com/mayknxyz/my-kit/compare/v0.11.0...v0.12.0
 [0.11.0]: https://github.com/mayknxyz/my-kit/compare/v0.10.0...v0.11.0
 [0.10.0]: https://github.com/mayknxyz/my-kit/compare/v0.9.0...v0.10.0
 [0.9.0]: https://github.com/mayknxyz/my-kit/compare/v0.8.0...v0.9.0

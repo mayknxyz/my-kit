@@ -7,6 +7,50 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Code quality validation command (`/mykit.validate`) with shellcheck and markdownlint integration
+- Conventional commit command (`/mykit.commit`) with automatic CHANGELOG.md updates
+- Pull request command (`/mykit.pr`) with comprehensive validation gates and rich descriptions
+- Validation infrastructure (`validation.sh`) for code quality checks
+- Git operations infrastructure (`git-ops.sh`) for commit and CHANGELOG management
+- Task completion validation in `utils.sh` for workflow gate checking
+
+### Features
+- **Validation Gates (Blueprint Phase 6 - R7)**:
+  - Gate 1: All tasks must be complete before PR creation
+  - Gate 2: Code validation must pass before PR creation
+  - Gate 3: At least one commit must exist on branch
+  - Force flag (`--force`) to bypass gates with warnings
+- **Code Quality Validation**:
+  - shellcheck integration for shell script linting
+  - markdownlint integration for markdown file validation
+  - Graceful degradation when tools are missing
+  - Results stored in state.json for other commands
+- **Conventional Commits**:
+  - Interactive prompts for commit type, description, and scope
+  - Automatic CHANGELOG.md updates with proper sectioning
+  - Support for feat, fix, docs, refactor, test, chore, perf, style
+  - Preview mode showing changes and suggested commit type
+- **Pull Request Creation**:
+  - Rich PR descriptions generated from spec.md, plan.md, and commits
+  - Automatic issue linking with "Closes #N"
+  - GitHub CLI integration for PR creation
+  - Comprehensive error messages with remediation steps
+- **Infrastructure**:
+  - validation.sh: Tool detection, script/markdown validation, result formatting
+  - git-ops.sh: Uncommitted changes checking, commit creation, branch operations
+  - utils.sh enhancements: Task checking, state management, jq helpers
+
+### Files
+- `.claude/commands/mykit.validate.md` - Validation command implementation
+- `.claude/commands/mykit.commit.md` - Commit command implementation
+- `.claude/commands/mykit.pr.md` - Pull request command implementation
+- `.mykit/scripts/validation.sh` - Validation infrastructure (370 lines)
+- `.mykit/scripts/git-ops.sh` - Git operations infrastructure (483 lines)
+- `.mykit/scripts/utils.sh` - Enhanced utilities (338 lines)
+- `.mykit/templates/commands/*.md` - Templates for distribution
+- `specs/013-validation-gates/` - Feature specification and design documents
+
 ## [0.12.0] - 2025-12-09
 
 ### Added

@@ -160,6 +160,143 @@ Create a lightweight implementation plan from a feature specification via guided
 | `/mykit.tasks` | `generate` | | Generate task breakdown |
 | `/mykit.implement` | `run` | | Execute tasks one by one |
 
+### /mykit.validate
+
+Run code quality validation checks on shell scripts and markdown files.
+
+**Usage**:
+```
+/mykit.validate [run]
+```
+
+**Behavior**:
+- **No action**: Preview mode - shows files that will be validated and tool availability
+- **run**: Execute mode - runs shellcheck and markdownlint, updates state.json
+
+**Validation Tools**:
+- **shellcheck**: Lints shell scripts in `.mykit/scripts/*.sh`
+- **markdownlint**: Lints markdown files in `.claude/commands/`, `docs/`, `specs/`, and root documentation
+
+**Features**:
+- Graceful degradation - warns if tools missing, doesn't fail
+- Results stored in `.mykit/state.json` for `/mykit.pr` to check
+- Clear error messages with file names and line numbers
+- Exit codes: 0 if passed, 1 if failed
+
+**Examples**:
+```bash
+# Preview what will be validated
+/mykit.validate
+
+# Run validation checks
+/mykit.validate run
+```
+
+### /mykit.commit
+
+Create commits with conventional format and automatically update CHANGELOG.md.
+
+**Usage**:
+```
+/mykit.commit [create] [--force]
+```
+
+**Behavior**:
+- **No action**: Preview mode - shows changed files, diff stats, and suggested commit type
+- **create**: Execute mode - prompts for commit details, updates CHANGELOG, creates commit
+
+**Commit Format**:
+Follows [Conventional Commits](https://www.conventionalcommits.org/):
+- `feat`: New feature
+- `fix`: Bug fix
+- `docs`: Documentation changes
+- `refactor`: Code refactoring
+- `test`: Adding or updating tests
+- `chore`: Maintenance tasks
+- `perf`: Performance improvements
+- `style`: Code style/formatting
+
+**Interactive Prompts**:
+1. Commit type selection (with suggestions based on changed files)
+2. Commit description (concise one-liner)
+3. Optional scope (e.g., auth, api, ui)
+
+**CHANGELOG Updates**:
+Automatically appends entry to `[Unreleased]` section in correct category:
+- `feat` → Added
+- `fix` → Fixed
+- `docs` → Documentation
+- `refactor` → Changed
+- etc.
+
+**Flags**:
+- `--force`: Skip validation checks (not recommended)
+
+**Examples**:
+```bash
+# Preview changes
+/mykit.commit
+
+# Create a commit interactively
+/mykit.commit create
+
+# Force commit without validation
+/mykit.commit create --force
+```
+
+### /mykit.pr
+
+Create pull requests with comprehensive validation gates and rich descriptions.
+
+**Usage**:
+```
+/mykit.pr [create] [--force]
+```
+
+**Behavior**:
+- **No action**: Preview mode - shows PR description, validation gate status
+- **create**: Execute mode - validates gates, creates PR on GitHub
+
+**Validation Gates**:
+Three gates must pass before PR creation (unless `--force` used):
+
+1. **Tasks Complete**: All tasks in `tasks.md` must be marked `[x]` or `[~]` (no `[ ]` or `[>]`)
+2. **Validation Passed**: `/mykit.validate run` must have been run and passed
+3. **Commits Exist**: At least one commit must exist on the branch
+
+**PR Description Generation**:
+Automatically generates rich PR description from:
+- **Summary**: Extracted from `spec.md` (if exists) or generated from commits
+- **Changes**: List of commits on the branch
+- **Test Plan**: Extracted from `plan.md` (if exists)
+- **Issue Link**: Automatically adds `Closes #{issue_number}`
+
+**Prerequisites**:
+- Must be on a feature branch (format: `{number}-{slug}`)
+- GitHub CLI (`gh`) must be installed and authenticated
+- Branch must be pushed to remote (command will push if needed)
+
+**Flags**:
+- `--force`: Bypass all validation gates (with warnings)
+
+**Examples**:
+```bash
+# Preview PR and check validation status
+/mykit.pr
+
+# Create PR (gates must pass)
+/mykit.pr create
+
+# Force create PR bypassing gates
+/mykit.pr create --force
+```
+
+**Error Messages**:
+If validation gates fail, command provides actionable remediation:
+- Tasks incomplete → `/mykit.implement run`
+- Validation not run → `/mykit.validate run`
+- No commits → `/mykit.commit create`
+
 ### Quality & Commit
 
 | Command | Actions | Flags | Description |

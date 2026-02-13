@@ -45,17 +45,6 @@ Follow the loaded reference file's instructions exactly. Each reference contains
 - **constitution.md**: Preview/create/amend modes for project constitution with interactive principle collection, semantic versioning, and dependency scan
 - **taskstoissues.md**: Parse tasks.md, validate GitHub remote, detect duplicates, topological sort by dependencies, create issues with labels and cross-references
 
-### 4. Update State
-
-After successful execution, update `.mykit/state.json`:
-
-```json
-{
-  "last_command": "/mykit.{step}",
-  "last_command_time": "{ISO 8601 timestamp}"
-}
-```
-
 ## Reference Files
 
 - `references/audit.md` — Comprehensive multi-domain audit workflow

@@ -43,11 +43,6 @@ git status --porcelain
 git log --oneline -10
 ```
 
-Read `.mykit/state.json` for:
-- `session.type` (major/minor/patch)
-- `workflow_step` (current phase)
-- `current_feature` (feature details)
-
 ### 3. Load Reference File
 
 | Step | Reference |
@@ -62,32 +57,9 @@ Read `.mykit/state.json` for:
 
 Follow the loaded reference file's instructions exactly. Each reference contains the complete workflow:
 
-- **commit.md**: Interactive commit type selection, message composition, auto-staging, CHANGELOG updates, breaking change detection, issue linkage
+- **commit.md**: Interactive commit type selection, message composition, auto-staging, CHANGELOG updates, breaking change detection, issue linkage, version bump selection
 - **pr.md**: Validation gates (tasks complete, code quality, commits exist), PR description generation from artifacts, issue linking, create/update modes
 - **release.md**: Version determination, tag creation, GitHub release publishing, post-release cleanup
-
-### 5. Update State
-
-After successful execution, update `.mykit/state.json`:
-
-```json
-{
-  "last_command": "/mykit.{step}",
-  "last_command_time": "{ISO 8601 timestamp}"
-}
-```
-
-For commit, also update:
-```json
-{
-  "last_commit": {
-    "hash": "{commit hash}",
-    "message": "{commit message}",
-    "type": "{commit type}",
-    "breaking": false
-  }
-}
-```
 
 ## Reference Files
 

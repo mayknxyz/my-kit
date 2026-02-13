@@ -14,16 +14,16 @@ This creates symlinks from `kit/.claude/` → `~/.claude/`, making all commands,
 
 ## What's Included
 
-### Commands (25)
+### Commands (18)
 
 | Category | Commands |
 |----------|----------|
-| Workflow | `/mykit.start`, `/mykit.init`, `/mykit.setup`, `/mykit.end`, `/mykit.reset`, `/mykit.resume` |
+| Setup | `/mykit.init`, `/mykit.setup`, `/mykit.sync` |
+| Read-Only | `/mykit.status`, `/mykit.help` |
 | Development | `/mykit.specify`, `/mykit.plan`, `/mykit.tasks`, `/mykit.implement` |
-| Major Mode | `/mykit.clarify`, `/mykit.analyze`, `/mykit.checklist` |
 | Ship | `/mykit.commit`, `/mykit.pr`, `/mykit.release` |
 | Ops | `/mykit.audit`, `/mykit.constitution`, `/mykit.taskstoissues` |
-| Management | `/mykit.upgrade`, `/mykit.sync`, `/mykit.help`, `/mykit.status`, `/mykit.skill.review` |
+| Utilities | `/mykit.log`, `/mykit.skill.review` |
 
 ### Skills (27)
 
@@ -31,8 +31,8 @@ This creates symlinks from `kit/.claude/` → `~/.claude/`, making all commands,
 
 | Skill | Auto-trigger | Purpose |
 |-------|-------------|---------|
-| `mykit` | No | Scripts, templates, upstream mirror |
-| `mykit-workflow` | Yes | 7 dev workflow steps × 3 modes |
+| `mykit` | No | Scripts, templates, version files |
+| `mykit-workflow` | Yes | 4 dev workflow steps |
 | `mykit-ship` | Yes | Commit, PR, release pipeline |
 | `mykit-ops` | Yes | Audit, constitution, tasks-to-issues |
 
@@ -44,24 +44,17 @@ a11y, analytics, animation, api-design, astro, biome, ci-cd, cloudflare, copywri
 
 Audit agents for parallel quality analysis: quality, security, performance, a11y, dependencies.
 
-## Workflows
+## Workflow
 
-### Major (breaking changes, new projects)
 ```
-/mykit.start → /mykit.specify → /mykit.clarify → /mykit.plan →
-/mykit.tasks → /mykit.analyze → /mykit.checklist → /mykit.implement →
+/mykit.specify → /mykit.plan → /mykit.tasks → /mykit.implement →
 /mykit.audit → /mykit.commit → /mykit.pr
 ```
 
-### Minor (new features)
-```
-/mykit.start → /mykit.specify → /mykit.plan → /mykit.tasks →
-/mykit.implement → /mykit.audit → /mykit.commit → /mykit.pr
-```
+For bug fixes and small changes, workflow steps are optional:
 
-### Patch (bug fixes, refactoring)
 ```
-/mykit.start → /mykit.implement → /mykit.audit → /mykit.commit → /mykit.pr
+/mykit.specify → /mykit.implement → /mykit.commit → /mykit.pr
 ```
 
 ## Natural Language
@@ -81,4 +74,4 @@ You can also describe what you want in natural language — skills auto-activate
 cd ~/my-kit-v2 && git pull && stow -R -t ~ kit
 ```
 
-Or use the command: `/mykit.upgrade --run`
+Or use the command: `/mykit.sync`

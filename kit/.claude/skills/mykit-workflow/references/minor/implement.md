@@ -1,6 +1,6 @@
-<!-- Minor mode: standard task execution with progress tracking -->
+<!-- Task execution with progress tracking -->
 
-## Minor Mode Implementation
+## Implementation
 
 Execute implementation tasks from tasks.md one by one with autonomous execution, progress tracking, and workflow guidance.
 
@@ -24,7 +24,6 @@ Run `git init` to initialize a repository, or navigate to an existing git reposi
 
 Parse the command arguments to determine:
 - `action`: defaults to `run` (command executes directly)
-- `hasForceFlag`: true if `--force` is present
 
 Valid actions:
 - `run`: Execute next/current task
@@ -62,14 +61,13 @@ Display error and stop:
 
 You must be on a feature branch (e.g., `042-feature-name`) to execute tasks.
 
-To select an issue and create a branch: `/mykit.start`
+To create a branch: `/mykit.specify`
 ```
 
 ### Step 5: Determine Paths
 
 Set the following paths based on the current branch:
 - `tasksPath = specs/{branch}/tasks.md`
-- `statePath = .mykit/state.json`
 
 ### Step 6: Check for tasks.md
 
@@ -81,7 +79,7 @@ Display error and stop:
 ```
 **Error**: No tasks file found at `{tasksPath}`.
 
-Run `/mykit.tasks -c` to generate a task list from your spec and plan.
+Run `/mykit.tasks` to generate a task list from your spec and plan.
 ```
 
 ### Step 7: Parse tasks.md
@@ -173,7 +171,7 @@ Congratulations! You've completed all tasks for this feature.
 **Next Steps**:
 1. `/mykit.audit` - Run quality checks
 2. `/mykit.commit` - Create a commit
-3. `/mykit.pr -c` - Create a pull request
+3. `/mykit.pr` - Create a pull request
 ```
 
 ---
@@ -198,19 +196,6 @@ Update tasks.md file:
 Display:
 ```
 **Starting Task**: {targetTask.id}
-```
-
-### Update state.json
-
-Update with:
-```json
-{
-  "workflow_step": "implement",
-  "current_task": "{targetTask.id}",
-  "tasks_path": "{tasksPath}",
-  "last_command": "/mykit.implement",
-  "last_command_time": "{ISO 8601 timestamp}"
-}
 ```
 
 ### Execute Task Autonomously

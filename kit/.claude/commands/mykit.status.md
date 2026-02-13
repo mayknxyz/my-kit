@@ -86,10 +86,6 @@ Check for spec files in `specs/{branch}/` directory (only if on a feature branch
 1. Check if `specs/{branch}/spec.md` exists -> set `specExists`
 2. Check if `specs/{branch}/plan.md` exists -> set `planExists`
 3. Check if `specs/{branch}/tasks.md` exists -> set `tasksExists`
-4. Check if `specs/{branch}/research.md` exists -> set `researchExists`
-5. Check if `specs/{branch}/data-model.md` exists -> set `dataModelExists`
-6. Check if `specs/{branch}/contracts/` directory exists and is non-empty -> set `contractsExist`
-7. Check if `specs/{branch}/checklists/` directory exists and is non-empty -> set `checklistsExist`
 
 **Determine phase**:
 
@@ -98,13 +94,6 @@ if tasksExists -> phase = "Implementation"
 else if planExists -> phase = "Planning"
 else if specExists -> phase = "Specification"
 else -> phase = "Not started"
-```
-
-**Determine mode** (based on artifacts):
-
-```
-if researchExists OR dataModelExists OR contractsExist OR checklistsExist -> mode = "Major"
-else -> mode = "Minor"
 ```
 
 ### Step 6: Get File Status
@@ -145,21 +134,19 @@ Based on the current state, determine the suggested next command:
 
 **Suggestion Logic**:
 
-| Phase | Mode | Has Uncommitted Changes | Suggested Command | Reason |
-|-------|------|------------------------|-------------------|--------|
-| Not started | Any | Any | `/mykit.start` | Select an issue to work on |
-| Specification | Major | No | `/mykit.clarify` or `/mykit.plan -c` | Continue specification work |
-| Specification | Minor | No | `/mykit.plan -c` | Create implementation plan |
-| Specification | Any | Yes | `/mykit.commit` | Commit your specification changes |
-| Planning | Major | No | `/mykit.tasks -c` | Generate implementation tasks |
-| Planning | Minor | No | `/mykit.tasks -c` | Generate implementation tasks |
-| Planning | Any | Yes | `/mykit.commit` | Commit your planning changes |
-| Implementation | Any | No | `/mykit.implement` or `/mykit.pr -c` | Continue implementation or create PR |
-| Implementation | Any | Yes | `/mykit.commit` | Commit your implementation changes |
+| Phase | Has Uncommitted Changes | Suggested Command | Reason |
+|-------|------------------------|-------------------|--------|
+| Not started | Any | `/mykit.specify` | Create a specification |
+| Specification | No | `/mykit.plan` | Create implementation plan |
+| Specification | Yes | `/mykit.commit` | Commit your specification changes |
+| Planning | No | `/mykit.tasks` | Generate implementation tasks |
+| Planning | Yes | `/mykit.commit` | Commit your planning changes |
+| Implementation | No | `/mykit.implement` or `/mykit.pr` | Continue implementation or create PR |
+| Implementation | Yes | `/mykit.commit` | Commit your implementation changes |
 
 **Special cases**:
 
-- If on main branch (not feature branch): Suggest `/mykit.start`
+- If on main branch (not feature branch): Suggest `/mykit.specify`
 - If in detached HEAD: Suggest `git checkout {branch}` to return to a branch
 
 ### Step 8: Display Dashboard
@@ -194,7 +181,7 @@ Format and display the complete status dashboard:
 ```
 **Branch**: {branch}
 
-Not on a feature branch. Use `/mykit.start` to start working on an issue.
+Not on a feature branch. Use `/mykit.specify` to start working on an issue.
 ```
 
 **If in detached HEAD state**:
@@ -206,19 +193,10 @@ You are not on a branch. Use `git checkout {branchName}` to return to a branch.
 
 ## Workflow Phase
 
-**If on a feature branch (Minor mode)**:
+**If on a feature branch**:
 ```
 **Current**: {phase}
-**Mode**: Minor
 **Progress**: spec.md {specExists ? "✓" : "○"} | plan.md {planExists ? "✓" : "○"} | tasks.md {tasksExists ? "✓" : "○"}
-```
-
-**If on a feature branch (Major mode)**:
-```
-**Current**: {phase}
-**Mode**: Major
-**Progress**: spec.md {specExists ? "✓" : "○"} | plan.md {planExists ? "✓" : "○"} | tasks.md {tasksExists ? "✓" : "○"}
-**Major Artifacts**: research.md {researchExists ? "✓" : "○"} | data-model.md {dataModelExists ? "✓" : "○"} | contracts/ {contractsExist ? "✓" : "○"} | checklists/ {checklistsExist ? "✓" : "○"}
 ```
 
 **If NOT on a feature branch**:
@@ -301,7 +279,6 @@ Where:
 
 | Command | Relationship |
 |---------|--------------|
-| `/mykit.start` | Sets session workflow type |
 | `/mykit.help` | Shows command documentation |
 | `/mykit.commit` | Common next step when changes exist |
-| `/mykit.start` | Suggested when not on a feature branch |
+| `/mykit.specify` | Suggested when not on a feature branch |

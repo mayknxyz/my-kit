@@ -282,43 +282,6 @@ Use `AskUserQuestion` to prompt the user:
   Review reports in `{reportDir}` and fix manually, or re-run `/mykit.audit` later.
   ```
 
-### Step 12: Update State
-
-Update `.mykit/state.json` with:
-- `last_command` = "/mykit.audit"
-- `last_command_time` = current ISO timestamp
-- `checks.audit` = audit results (see below)
-
-```json
-{
-  "last_command": "/mykit.audit",
-  "last_command_time": "{ISO timestamp}",
-  "checks": {
-    "audit": {
-      "last_run": "{ISO timestamp}",
-      "status": "{passed|failed}",
-      "domains": {
-        "quality": {"status": "{status}", "issues": {count}},
-        "security": {"status": "{status}", "issues": {count}},
-        "perf": {"status": "{status}", "issues": {count}},
-        "a11y": {"status": "{status}", "issues": {count}},
-        "deps": {"status": "{status}", "issues": {count}}
-      },
-      "total_issues": {totalCount},
-      "report_dir": "{reportDir}"
-    },
-    "quality": {
-      "status": "{from checks.audit.domains.quality.status}",
-      "last_run": "{ISO timestamp}"
-    },
-    "security": {
-      "status": "{from checks.audit.domains.security.status}",
-      "last_run": "{ISO timestamp}"
-    }
-  }
-}
-```
-
 ---
 
 ## Error Handling

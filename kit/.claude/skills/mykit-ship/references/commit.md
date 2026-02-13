@@ -5,11 +5,10 @@ Create a commit with conventional format and update CHANGELOG.md.
 ## Usage
 
 ```
-/mykit.commit [--force]
+/mykit.commit
 ```
 
 - Executes directly: Creates the commit and updates CHANGELOG
-- `--force`: Skip validation checks (not recommended)
 
 ## Description
 
@@ -35,30 +34,12 @@ git rev-parse --git-dir 2>/dev/null
 Run `git init` to initialize a repository, or navigate to an existing git repository.
 ```
 
-### Step 2: Parse Arguments
-
-Parse command arguments:
-- Check for `--force` flag in arguments
-
-```bash
-FORCE_FLAG=false
-
-for arg in "$@"; do
-  case "$arg" in
-    --force)
-      FORCE_FLAG=true
-      ;;
-  esac
-done
-```
-
-### Step 3: Source Scripts
+### Step 2: Source Scripts
 
 Source required scripts:
 
 ```bash
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-source "$SCRIPT_DIR/$HOME/.claude/skills/mykit/references/scripts/git-ops.sh"
+source $HOME/.claude/skills/mykit/references/scripts/git-ops.sh
 ```
 
 **If git-ops.sh cannot be sourced**, display:
@@ -66,10 +47,10 @@ source "$SCRIPT_DIR/$HOME/.claude/skills/mykit/references/scripts/git-ops.sh"
 ```
 **Error**: git-ops.sh script not found at $HOME/.claude/skills/mykit/references/scripts/git-ops.sh
 
-This is a My Kit installation issue. Try re-running installation or `/mykit.upgrade`.
+This is a My Kit installation issue. Try `/mykit.sync` to reinstall.
 ```
 
-### Step 4: Check for Uncommitted Changes
+### Step 3: Check for Uncommitted Changes
 
 Check if there are changes to commit:
 
@@ -84,14 +65,14 @@ if ! has_uncommitted_changes; then
 fi
 ```
 
-### Step 5: Display Create Mode Header
+### Step 4: Display Create Mode Header
 
 ```
 ## Creating Commit
 
 ```
 
-### Step 9: Show Current Changes
+### Step 5: Show Current Changes
 
 Display brief summary:
 
@@ -101,7 +82,7 @@ git status --short
 echo ""
 ```
 
-### Step 10: Prompt for Commit Details
+### Step 6: Prompt for Commit Details
 
 Use Claude Code's capabilities to gather commit information through conversation:
 
@@ -173,7 +154,7 @@ Example: "removed the /api/v1/users endpoint, use /api/v2/users instead"
 
 Store the answer as `BREAKING_DESCRIPTION`.
 
-### Step 10b: Detect Issue Number from Branch
+### Step 6b: Detect Issue Number from Branch
 
 Attempt to extract the issue number from the current branch for automatic linkage:
 
@@ -186,9 +167,9 @@ if is_feature_branch; then
 fi
 ```
 
-If `ISSUE_NUMBER` is non-empty, a `Refs #{ISSUE_NUMBER}` footer will be appended to the commit message (see Step 15).
+If `ISSUE_NUMBER` is non-empty, a `Refs #{ISSUE_NUMBER}` footer will be appended to the commit message (see Step 9).
 
-### Step 11: Display Commit Summary
+### Step 7: Display Commit Summary
 
 Show what will be committed:
 
@@ -208,119 +189,96 @@ Show what will be committed:
 
 ```
 
-### Step 12: Confirm Commit
+### Step 8: Confirm Commit
 
-If `--force` flag is NOT set, ask for confirmation:
+Use `AskUserQuestion` to confirm:
+- header: "Confirm"
+- question: "Create this commit?"
+- options:
+  1. label: "Yes", description: "Create the commit"
+  2. label: "Cancel", description: "Abort"
 
-```
-**Confirm commit?** (yes/no):
-```
+If user selects "Cancel", display "Commit cancelled." and stop.
 
-If user says no or anything other than "yes", abort:
+### Step 9: Ask Version Bump Type
 
-```
-Commit cancelled.
-```
+Use `AskUserQuestion` to determine the version bump:
+- header: "Version"
+- question: "What type of version bump?"
+- options:
+  1. label: "Minor", description: "New backward-compatible feature (0.X.0)"
+  2. label: "Patch", description: "Bug fix or small change (0.0.X)"
+  3. label: "Major", description: "Breaking change (X.0.0)"
 
-If `--force` flag IS set, skip confirmation.
+Store the answer as `BUMP_TYPE` (major/minor/patch).
 
-### Step 13: Update CHANGELOG.md (Version-Aware)
+### Step 10: Calculate Version
 
-Determine the version for the CHANGELOG entry. The mode (Major/Minor/Patch) determines the version bump:
-
-1. Read `session.type` from conversation context (`"major"`, `"minor"`, or `"patch"`)
-2. If `session.type` is not set in conversation context, read `session_type` from `.mykit/state.json`
-3. Check if `.mykit/state.json` already has a `dev_version` for this development cycle:
-   - **If `dev_version` exists**: Use it (don't bump again — same development cycle)
-   - **If `dev_version` is missing/null**: Calculate next version based on mode:
-     - Get latest git tag (e.g., `v0.26.0`)
-     - Apply bump based on mode: Major → next major (`v1.0.0`), Minor → next minor (`v0.27.0`), Patch → next patch (`v0.26.1`)
-     - Store as `dev_version` in state.json (Step 16)
-4. If no mode is available (no `session.type` and no `session_type` in state), fall back to `calculate_next_version()` which scans commit messages
+Calculate the next version from the latest git tag and the selected bump type:
 
 ```bash
 source $HOME/.claude/skills/mykit/references/scripts/git-ops.sh
 
-# Determine dev_version
-STATE_FILE=".mykit/state.json"
-DEV_VERSION=""
-SESSION_TYPE="${session_type:-}"  # from conversation context
+# Get latest tag
+LATEST_TAG=$(git describe --tags --abbrev=0 --match 'v[0-9]*.[0-9]*.[0-9]*' 2>/dev/null || echo "v0.0.0")
+[[ "$LATEST_TAG" =~ ^v([0-9]+)\.([0-9]+)\.([0-9]+)$ ]]
+V_MAJOR="${BASH_REMATCH[1]}"
+V_MINOR="${BASH_REMATCH[2]}"
+V_PATCH="${BASH_REMATCH[3]}"
 
-# Try state.json if not in context
-if [[ -z "$SESSION_TYPE" && -f "$STATE_FILE" ]]; then
-  SESSION_TYPE=$(jq -r '.session_type // empty' "$STATE_FILE" 2>/dev/null || echo "")
-fi
+case "$BUMP_TYPE" in
+  major)
+    V_MAJOR=$((V_MAJOR + 1)); V_MINOR=0; V_PATCH=0
+    ;;
+  minor)
+    V_MINOR=$((V_MINOR + 1)); V_PATCH=0
+    ;;
+  patch)
+    V_PATCH=$((V_PATCH + 1))
+    ;;
+esac
 
-# Check for existing dev_version
-if [[ -f "$STATE_FILE" ]]; then
-  DEV_VERSION=$(jq -r '.dev_version // empty' "$STATE_FILE" 2>/dev/null || echo "")
-fi
-
-# Calculate if needed
-if [[ -z "$DEV_VERSION" ]]; then
-  # Get latest tag
-  LATEST_TAG=$(git describe --tags --abbrev=0 --match 'v[0-9]*.[0-9]*.[0-9]*' 2>/dev/null || echo "v0.0.0")
-  [[ "$LATEST_TAG" =~ ^v([0-9]+)\.([0-9]+)\.([0-9]+)$ ]]
-  V_MAJOR="${BASH_REMATCH[1]}"
-  V_MINOR="${BASH_REMATCH[2]}"
-  V_PATCH="${BASH_REMATCH[3]}"
-
-  case "$SESSION_TYPE" in
-    major)
-      V_MAJOR=$((V_MAJOR + 1)); V_MINOR=0; V_PATCH=0
-      ;;
-    minor)
-      V_MINOR=$((V_MINOR + 1)); V_PATCH=0
-      ;;
-    patch)
-      V_PATCH=$((V_PATCH + 1))
-      ;;
-    *)
-      # Fallback: use calculate_next_version() from git-ops.sh
-      DEV_VERSION=$(calculate_next_version)
-      ;;
-  esac
-
-  if [[ -z "$DEV_VERSION" ]]; then
-    DEV_VERSION="v${V_MAJOR}.${V_MINOR}.${V_PATCH}"
-  fi
-fi
-
-# Strip 'v' prefix for CHANGELOG version header (e.g., "v0.27.0" → "0.27.0")
+DEV_VERSION="v${V_MAJOR}.${V_MINOR}.${V_PATCH}"
 CHANGELOG_VERSION="${DEV_VERSION#v}"
 ```
+
+**If CHANGELOG already has a version header matching this version** (from a previous commit in this branch), reuse that version instead of bumping again.
+
+### Step 11: Update CHANGELOG.md (Version-Aware)
 
 Call the update_changelog function with the version:
 
 ```bash
+source $HOME/.claude/skills/mykit/references/scripts/git-ops.sh
+
 if update_changelog "$COMMIT_TYPE" "$COMMIT_DESCRIPTION" "$CHANGELOG_VERSION"; then
-  echo "✓ Updated CHANGELOG.md (${CHANGELOG_VERSION})"
+  echo "Updated CHANGELOG.md (${CHANGELOG_VERSION})"
 else
-  echo "⚠️  Warning: Could not update CHANGELOG.md"
+  echo "Warning: Could not update CHANGELOG.md"
 fi
 
 # If breaking change, also add a Breaking section entry
 if [[ "$IS_BREAKING" == "true" ]]; then
   if update_changelog "breaking" "$BREAKING_DESCRIPTION" "$CHANGELOG_VERSION"; then
-    echo "✓ Updated CHANGELOG.md (Breaking)"
+    echo "Updated CHANGELOG.md (Breaking)"
   else
-    echo "⚠️  Warning: Could not update CHANGELOG.md Breaking section"
+    echo "Warning: Could not update CHANGELOG.md Breaking section"
   fi
 fi
 ```
 
-### Step 14: Stage All Changes
+### Step 12: Stage All Changes
 
-Auto-stage all changes (including CHANGELOG.md updates from Step 13):
+Auto-stage all changes (including CHANGELOG.md updates from Step 11):
 
 ```bash
 source $HOME/.claude/skills/mykit/references/scripts/git-ops.sh
 
 stage_all_changes
-echo "✓ Staged all changes"
+echo "Staged all changes"
 ```
 
-### Step 15: Build and Create the Commit
+### Step 13: Build and Create the Commit
 
 Build the commit subject line:
 
@@ -354,99 +312,30 @@ source $HOME/.claude/skills/mykit/references/scripts/git-ops.sh
 COMMIT_SHA=$(create_commit "$COMMIT_TYPE" "$COMMIT_DESCRIPTION" "$COMMIT_SCOPE" "$COMMIT_BODY")
 
 if [[ $? -eq 0 ]]; then
-  echo "✓ Created commit: $COMMIT_SHA"
+  echo "Created commit: $COMMIT_SHA"
 else
-  echo "❌ Failed to create commit"
+  echo "Failed to create commit"
   exit 1
 fi
 ```
 
-### Step 16: Update State
-
-Update `.mykit/state.json` with commit information, `session_type`, and `dev_version`:
-
-```bash
-STATE_FILE=".mykit/state.json"
-TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-
-if [[ -f "$STATE_FILE" ]]; then
-  STATE_JSON=$(cat "$STATE_FILE")
-else
-  STATE_JSON="{}"
-fi
-
-# Build commit message for state record
-COMMIT_MSG="$COMMIT_SUBJECT"
-
-# Determine breaking flag
-BREAKING_FLAG="false"
-if [[ "$IS_BREAKING" == "true" ]]; then
-  BREAKING_FLAG="true"
-fi
-
-# Determine session_type to persist (from conversation context or existing state)
-PERSIST_SESSION_TYPE="${SESSION_TYPE:-}"
-
-UPDATED_STATE=$(echo "$STATE_JSON" | jq \
-  --arg sha "$COMMIT_SHA" \
-  --arg message "$COMMIT_MSG" \
-  --arg timestamp "$TIMESTAMP" \
-  --argjson breaking "$BREAKING_FLAG" \
-  --arg last_cmd "/mykit.commit" \
-  --arg last_time "$TIMESTAMP" \
-  --arg dev_version "$DEV_VERSION" \
-  --arg session_type "$PERSIST_SESSION_TYPE" \
-  '.last_commit = {
-    sha: $sha,
-    message: $message,
-    timestamp: $timestamp,
-    breaking: $breaking
-  } | .last_command = $last_cmd | .last_command_time = $last_time
-  | .dev_version = $dev_version
-  | if $session_type != "" then .session_type = $session_type else . end')
-
-# Atomic write via temp file
-echo "$UPDATED_STATE" > "${STATE_FILE}.tmp"
-mv "${STATE_FILE}.tmp" "$STATE_FILE"
-```
-
-### Step 17: Display Success Message
+### Step 14: Display Success Message
 
 ```
 ---
 
-✅ **Commit created successfully**
+**Commit created successfully**
 
 **Commit**: {sha}
 **Message**: {message}
+**Version**: {CHANGELOG_VERSION}
 
 **Next Steps**:
 - Continue development: Make more changes
 - Create another commit: `/mykit.commit`
-- Create pull request: `/mykit.pr -c` (when ready)
+- Create pull request: `/mykit.pr` (when ready)
 - Push changes: `git push`
 ```
-
----
-
-## Force Flag Behavior
-
-When `--force` flag is used:
-
-### Step 18: Display Force Warning (if --force used)
-
-If force flag is set, display warning before creating commit:
-
-```
-⚠️  **Warning**: Using --force flag
-
-You are bypassing validation checks. This is not recommended unless you have a specific reason.
-
-Proceeding with commit creation...
-
-```
-
-Then continue with Steps 13-17 normally.
 
 ---
 
@@ -523,26 +412,11 @@ You can manually update CHANGELOG.md later.
 
 Don't fail the commit, just warn.
 
-### State Update Failure
-
-If state.json update fails:
-
-```
-**Warning**: Could not update state.json
-
-The commit was created but state was not saved.
-
-Error: {error message}
-```
-
-Don't fail the commit, just warn.
-
 ---
 
 ## Notes
 
 - CHANGELOG.md is automatically created if it doesn't exist
-- Force flag skips validation but still shows warnings
 - Commit follows conventional commits specification
-- State tracking enables other commands to see latest commit
+- Version bump type is asked at commit time and calculated from latest git tag
 - Scope is optional but recommended for larger projects

@@ -78,7 +78,7 @@ Q_FILE="$REPO_ROOT/AGENTS.md"
 BOB_FILE="$REPO_ROOT/AGENTS.md"
 
 # Template file
-TEMPLATE_FILE="$HOME/.claude/skills/mykit/references/templates/major/agent-file-template.md"
+TEMPLATE_FILE="$HOME/.claude/skills/mykit/references/templates/minor/agent-file-template.md"
 
 # Global variables for parsed plan data
 NEW_LANG=""

@@ -364,9 +364,9 @@ Validate the updated constitution content:
 Scan dependent files for constitution references (check + report only, do NOT auto-edit):
 
 1. **Templates scan**:
-   - Read `$HOME/.claude/skills/mykit/references/templates/major/plan-template.md` — check Constitution Check section alignment
-   - Read `$HOME/.claude/skills/mykit/references/templates/major/spec-template.md` — check for principle references
-   - Read `$HOME/.claude/skills/mykit/references/templates/major/tasks-template.md` — check for principle-driven task types
+   - Read `$HOME/.claude/skills/mykit/references/templates/minor/plan.md` — check Constitution Check section alignment
+   - Read `$HOME/.claude/skills/mykit/references/templates/minor/spec.md` — check for principle references
+   - Read `$HOME/.claude/skills/mykit/references/templates/minor/tasks.md` — check for principle-driven task types
 
 2. **Command files scan**:
    - Read each `.claude/commands/mykit.*.md` file
@@ -388,9 +388,9 @@ Modified principles: {list of old title -> new title if renamed}
 Added sections: {list}
 Removed sections: {list}
 Templates requiring updates:
-  - $HOME/.claude/skills/mykit/references/templates/major/plan-template.md: {✅ aligned | ⚠ needs review}
-  - $HOME/.claude/skills/mykit/references/templates/major/spec-template.md: {✅ aligned | ⚠ needs review}
-  - $HOME/.claude/skills/mykit/references/templates/major/tasks-template.md: {✅ aligned | ⚠ needs review}
+  - $HOME/.claude/skills/mykit/references/templates/minor/plan.md: {✅ aligned | ⚠ needs review}
+  - $HOME/.claude/skills/mykit/references/templates/minor/spec.md: {✅ aligned | ⚠ needs review}
+  - $HOME/.claude/skills/mykit/references/templates/minor/tasks.md: {✅ aligned | ⚠ needs review}
 Command files: {✅ aligned | ⚠ {count} file(s) reference changed principles}
 Documentation: {✅ aligned | ⚠ {count} file(s) need updates}
 Follow-up TODOs: {list of deferred items, or "None"}

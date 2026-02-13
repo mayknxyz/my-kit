@@ -1,6 +1,6 @@
-<!-- Minor mode: custom lightweight specification workflow -->
+<!-- Specification workflow -->
 
-## Minor Mode Specification
+## Specification
 
 Create a lightweight feature specification from a GitHub issue or via guided conversation.
 
@@ -20,14 +20,7 @@ git rev-parse --git-dir 2>/dev/null
 Run `git init` to initialize a repository, or navigate to an existing git repository.
 ```
 
-### Step 2: Parse Arguments
-
-Parse the command arguments to determine:
-- `hasCreateAction`: always true (CRUD routing handled by command router)
-- `hasNoIssueFlag`: true if `--no-issue` is present
-- `hasForceFlag`: true if `--force` is present
-
-### Step 3: Get Current Branch and Extract Issue Number
+### Step 2: Get Current Branch and Extract Issue Number
 
 Get the current branch name:
 
@@ -44,18 +37,9 @@ Extract the issue number from the branch name using pattern `^([0-9]+)-`:
   - Set `issueNumber = null`
   - Set `isFeatureBranch = false`
 
-### Step 4: Validate Issue Requirement (with Auto-Branch)
+### Step 3: Auto-Create Branch (if on default branch)
 
-**If `hasNoIssueFlag` is false AND `issueNumber` is null**:
-
-First, check the auto-branch config:
-
-```bash
-source $HOME/.claude/skills/mykit/references/scripts/utils.sh
-AUTO_CREATE_BRANCH=$(get_config_field_or_default ".specify.autoCreateBranch" "true")
-```
-
-**If `AUTO_CREATE_BRANCH` is "true"**:
+**If `isFeatureBranch` is false**:
 
 1. Check if an issue number was provided in the command arguments (e.g., `github issue #48`). If so, extract and use it. Otherwise, use `AskUserQuestion` to prompt:
    - header: "Issue Number"
@@ -84,38 +68,17 @@ AUTO_CREATE_BRANCH=$(get_config_field_or_default ".specify.autoCreateBranch" "tr
    - Set `isFeatureBranch = true`
    - Set `issueNumber` from the parsed output
    - Set the current branch to `BRANCH_NAME`
-   - Continue to Step 5
+   - Continue to Step 4
 
-**If `AUTO_CREATE_BRANCH` is "false"**:
+### Step 4: Determine Spec Path
 
-Display error and stop:
-```
-**Error**: No issue selected.
+Set `specPath = specs/{branch}/spec.md` where `{branch}` is the current branch name.
 
-You must be on a feature branch (e.g., `042-feature-name`) or use the `--no-issue` flag.
+### Step 5: Check for Existing Spec
 
-To select an issue: `/mykit.start`
-To skip issue requirement: `/mykit.specify -c --no-issue`
-```
+**If file exists at `specPath`**:
 
-### Step 5: Determine Spec Path
-
-**If `hasNoIssueFlag` is true**:
-- Spec path will be determined after guided conversation (uses slug from Q1 answer)
-- Set `specPath = null` (to be determined later)
-
-**If on a feature branch**:
-- Set `specPath = specs/{branch}/spec.md` where `{branch}` is the current branch name
-
-### Step 6: Check for Existing Spec
-
-**If `specPath` is set AND file exists at that path**:
-
-**If `hasForceFlag` is true**:
-- Continue (will overwrite)
-
-**If `hasForceFlag` is false AND `hasCreateAction` is true**:
-- Use `AskUserQuestion` tool to prompt:
+Use `AskUserQuestion` tool to prompt:
   - header: "Existing Spec"
   - question: "A spec file already exists at this location. What would you like to do?"
   - options:
@@ -127,7 +90,7 @@ To skip issue requirement: `/mykit.specify -c --no-issue`
   Operation cancelled. Existing spec preserved.
   ```
 
-### Step 7: Attempt GitHub Issue Extraction
+### Step 6: Attempt GitHub Issue Extraction
 
 **If `issueNumber` is not null**:
 
@@ -144,16 +107,16 @@ gh issue view {issueNumber} --json body,title 2>/dev/null
     ```
     **Warning**: Unable to fetch GitHub issue details. Proceeding with guided conversation.
     ```
-  - Continue to Step 8 (guided conversation)
+  - Continue to Step 7 (guided conversation)
 
 - **If gh command succeeds**:
   - Parse JSON and extract `body` and `title`
   - Set `issueTitle = title`
   - Check body length:
-    - **If body length >= 50 characters**: Attempt section extraction (Step 7a)
-    - **If body length < 50 characters**: Continue to Step 8 (guided conversation)
+    - **If body length >= 50 characters**: Attempt section extraction (Step 6a)
+    - **If body length < 50 characters**: Continue to Step 7 (guided conversation)
 
-#### Step 7a: Extract Sections from Issue Body
+#### Step 6a: Extract Sections from Issue Body
 
 Search for common markdown headings and extract content:
 
@@ -179,10 +142,10 @@ Search for common markdown headings and extract content:
 - Set `contentSource = "issue"` if at least summary was extracted
 - If no sections found but body >= 50 chars, use full body as summary
 
-### Step 8: Guided Conversation (if needed)
+### Step 7: Guided Conversation (if needed)
 
 **Trigger conversation if**:
-- `issueNumber` is null (--no-issue mode), OR
+- `issueNumber` is null, OR
 - GitHub issue body < 50 characters, OR
 - No sections could be extracted from issue body
 
@@ -218,14 +181,14 @@ Wait for user response and store as `acceptanceCriteria`.
 
 Set `contentSource = "conversation"`
 
-### Step 9: Generate Ad-hoc Spec Path (if needed)
+### Step 8: Generate Ad-hoc Spec Path (if needed)
 
-**If `hasNoIssueFlag` is true AND `specPath` is null**:
+**If `issueNumber` is null AND `specPath` was not set from a feature branch**:
 - Generate a slug from the summary (first 30 chars, lowercase, spaces to hyphens)
 - Set `specPath = specs/adhoc-{slug}/spec.md`
 - Create the directory if it doesn't exist
 
-### Step 10: Format Spec Content
+### Step 9: Format Spec Content
 
 Generate the spec content using the lite template structure:
 
@@ -272,27 +235,7 @@ Where:
 - `currentDate` = today's date in YYYY-MM-DD format
 - `issueLink` = `[#N](https://github.com/{owner}/{repo}/issues/N)` or "N/A (ad-hoc)"
 
-### Step 11: Preview or Execute
-
-**If `hasCreateAction` is false (Preview Mode — deprecated, handled by router)**:
-
-Display the spec content with a preview header:
-
-```
-## PREVIEW - Proposed Specification
-
-{formatted spec content from Step 10}
-
----
-
-**Note**: This is a preview. No files have been created.
-
-To save this specification, run: `/mykit.specify -c`
-```
-
-Stop execution here.
-
-**If `hasCreateAction` is true (Execute Mode)**:
+### Step 10: Write Spec
 
 1. Create the spec directory if it doesn't exist
 2. Write the spec content to `specPath`
@@ -304,5 +247,5 @@ Stop execution here.
 **File**: {specPath}
 **Source**: {contentSource === "issue" ? "Extracted from GitHub issue" : "Guided conversation"}
 
-Next step: `/mykit.plan -c` to create an implementation plan.
+Next step: `/mykit.plan` to create an implementation plan.
 ```

@@ -148,19 +148,8 @@ PR_HEAD_SHA=$(echo "$PR_JSON" | jq -r '.headRefOid')
 ```bash
 source $HOME/.claude/skills/mykit/references/scripts/git-ops.sh
 
-# Use dev_version from state.json if available (set by /mykit.commit)
-STATE_FILE=".mykit/state.json"
-DEV_VERSION=""
-if [[ -f "$STATE_FILE" ]]; then
-  DEV_VERSION=$(jq -r '.dev_version // empty' "$STATE_FILE" 2>/dev/null)
-fi
-
-if [[ -n "$DEV_VERSION" ]]; then
-  NEXT_VERSION="$DEV_VERSION"
-else
-  NEXT_VERSION=$(calculate_next_version)
-fi
-
+# Calculate version from latest git tag and CHANGELOG
+NEXT_VERSION=$(calculate_next_version)
 CURRENT_VERSION=$(git describe --tags --abbrev=0 --match 'v[0-9]*.[0-9]*.[0-9]*' 2>/dev/null || echo "v0.0.0")
 ```
 
@@ -362,37 +351,7 @@ if [[ -n "$ISSUE_NUMBER" ]]; then
 fi
 ```
 
-### Step 16: Update State
-
-Update `.mykit/state.json` with release information:
-
-```bash
-STATE_FILE=".mykit/state.json"
-TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-
-if [[ -f "$STATE_FILE" ]]; then
-  STATE_JSON=$(cat "$STATE_FILE")
-else
-  STATE_JSON="{}"
-fi
-
-UPDATED_STATE=$(echo "$STATE_JSON" | jq \
-  --arg version "$NEXT_VERSION" \
-  --arg pr_number "$PR_NUMBER" \
-  --arg timestamp "$TIMESTAMP" \
-  --arg last_cmd "/mykit.release" \
-  --arg last_time "$TIMESTAMP" \
-  '.release = {
-    version: $version,
-    pr_number: $pr_number,
-    released_at: $timestamp
-  } | .workflow_step = "released" | .last_command = $last_cmd | .last_command_time = $last_time | del(.dev_version) | del(.session_type)')
-
-echo "$UPDATED_STATE" > "${STATE_FILE}.tmp"
-mv "${STATE_FILE}.tmp" "$STATE_FILE"
-```
-
-### Step 17: Display Success
+### Step 16: Display Success
 
 ```
 ---

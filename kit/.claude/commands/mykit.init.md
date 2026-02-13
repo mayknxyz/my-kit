@@ -192,7 +192,7 @@ After all 3 phases complete, display a summary:
   CLAUDE.md:    ./CLAUDE.md
   Conventions:  ./docs/CONVENTIONS.md
 
-  Next step: Run /mykit.start to begin your first workflow.
+  Next step: Run /mykit.specify to begin your first workflow.
 ═══════════════════════════════════════
 ```
 
@@ -216,5 +216,5 @@ Adding a new framework requires only:
 |---------|--------------|
 | `/mykit.setup` | Phase 2 runs the same setup wizard (standalone re-configuration) |
 | `/mykit.constitution` | Phase 3 runs the same constitution logic (standalone editing) |
-| `/mykit.start` | Recommended next step after init completes |
+| `/mykit.specify` | Recommended next step after init completes |
 | `/mykit.status` | Shows current configuration state |

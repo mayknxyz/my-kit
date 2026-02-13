@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.2] - 2026-02-13
+
+### Changed
+
+- Collapse 3 workflow modes (major/minor/patch) into single workflow based on minor files
+- Replace `/mykit.upgrade` with `/mykit.sync` for install/upgrade from any directory
+- Rename `/mykit.end` to `/mykit.log` with simplified git-only data gathering
+- Version bump type now asked at commit time instead of session start
+- All commands use AskUserQuestion for interactive routing instead of CRUD flags
+- Update all template commands, scripts, and skills to match simplified architecture
+
+### Removed
+
+- spec-kit upstream mirror (SPEC_KIT_VERSION, upstream/ directory, sync scripts)
+- state.json persistence — derive everything from git + file existence
+- Major-only workflow steps: `/mykit.clarify`, `/mykit.analyze`, `/mykit.checklist`
+- Patch workflow variant (4 files)
+- Commands: `/mykit.start`, `/mykit.resume`, `/mykit.reset`, `/mykit.upgrade`
+- 5 scripts: version.sh, upgrade.sh, github-api.sh, sync-upstream.sh, check-upstream-drift.sh
+- CRUD flag parsing (-c/-r/-u/-d) and --force flags from all commands
+- State management functions from utils.sh (read_state, write_state, update_state_field, get_state_field)
+
 ## [2.0.1] - 2026-02-13
 
 ### Fixed
@@ -43,6 +65,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Monolithic command routing (replaced by skill routing)
 - Per-project infrastructure file copies (now globally shared via stow symlinks)
 
-[Unreleased]: https://github.com/mayknxyz/my-kit-v2/compare/v2.0.1...HEAD
+[Unreleased]: https://github.com/mayknxyz/my-kit-v2/compare/v2.0.2...HEAD
+[2.0.2]: https://github.com/mayknxyz/my-kit-v2/compare/v2.0.1...v2.0.2
 [2.0.1]: https://github.com/mayknxyz/my-kit-v2/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/mayknxyz/my-kit-v2/releases/tag/v2.0.0

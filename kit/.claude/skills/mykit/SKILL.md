@@ -12,7 +12,7 @@ This skill contains shared infrastructure files used by other My Kit skills and 
 
 ### Scripts (`references/scripts/`)
 
-9 bash utilities for workflow automation:
+8 bash utilities for workflow automation:
 
 | Script | Purpose |
 |--------|---------|
@@ -21,9 +21,8 @@ This skill contains shared infrastructure files used by other My Kit skills and 
 | `git-ops.sh` | Git operations (commit, changelog, branch) |
 | `security.sh` | Security scanning utilities |
 | `setup-plan.sh` | Plan directory setup |
-| `setup-wizard.sh` | Interactive onboarding wizard |
 | `update-agent-context.sh` | Update agent context files |
-| `utils.sh` | Shared utilities (config, parsing) |
+| `utils.sh` | Shared utilities (task parsing, git helpers) |
 | `validation.sh` | Code quality validation (shellcheck, markdownlint) |
 
 ### Templates (`references/templates/`)
@@ -32,11 +31,7 @@ Template files organized by category:
 
 - `minor/` — Lightweight templates (spec, plan, tasks)
 - `commands/` — Command template files for distribution
-- `frameworks/` — Framework-specific templates (vanilla, astro, sveltekit)
-
-### Memory (`references/memory/`)
-
-- `constitution.md` — Project constitution template
+- `frameworks/` — Framework-specific CLAUDE.md templates (vanilla, astro, sveltekit)
 
 ### Version Files
 
@@ -44,4 +39,4 @@ Template files organized by category:
 
 ## Path Convention
 
-Scripts in this skill use `$HOME/.claude/` prefix for infrastructure paths (after stow deployment). Per-project paths (`.mykit/config.json`, `.mykit/memory/`) remain relative to the project root.
+Scripts in this skill use `$HOME/.claude/` prefix for infrastructure paths (after stow deployment).

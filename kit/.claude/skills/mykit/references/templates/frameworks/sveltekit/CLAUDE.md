@@ -92,3 +92,17 @@ npm run test:e2e     # Playwright E2E tests
 - Unit tests: Vitest for utility functions and business logic
 - E2E tests: Playwright for critical user flows
 - Lighthouse audits for performance, accessibility, SEO
+
+## Project Principles
+
+<!-- Filled by /mykit.init -->
+
+## Workflow
+
+- Default branch: `main`
+- PR title format: `{version}: {title} (#{issue})`
+- Auto-assign PRs: yes
+- Draft PRs: no
+- Auto-create branch on specify: yes
+- Auto-fix linting: yes
+- Version prefix: `v`

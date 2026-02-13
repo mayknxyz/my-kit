@@ -5,11 +5,10 @@ Create a commit with conventional format and update CHANGELOG.md.
 ## Usage
 
 ```
-/mykit.commit [--force]
+/mykit.commit
 ```
 
 - Default: Create the commit and update CHANGELOG
-- `--force`: Skip validation checks (not recommended)
 
 ## Description
 
@@ -35,44 +34,12 @@ git rev-parse --git-dir 2>/dev/null
 Run `git init` to initialize a repository, or navigate to an existing git repository.
 ```
 
-### Step 2: Parse Arguments
-
-Parse command arguments:
-- Check for `--force` flag in arguments
-
-```bash
-FORCE_FLAG=false
-
-for arg in "$@"; do
-  case "$arg" in
-    --force)
-      FORCE_FLAG=true
-      ;;
-    *)
-      echo "Error: Invalid argument '$arg'"
-      exit 1
-      ;;
-  esac
-done
-```
-
-**If invalid argument provided**, display:
-
-```
-**Error**: Invalid argument '{arg}'.
-
-Valid usage:
-- `/mykit.commit` - Create commit
-- `/mykit.commit --force` - Create commit, skip validation
-```
-
-### Step 3: Source Scripts
+### Step 2: Source Scripts
 
 Source required scripts:
 
 ```bash
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-source "$SCRIPT_DIR/$HOME/.claude/skills/mykit/references/scripts/git-ops.sh"
+source $HOME/.claude/skills/mykit/references/scripts/git-ops.sh
 ```
 
 **If git-ops.sh cannot be sourced**, display:
@@ -80,10 +47,10 @@ source "$SCRIPT_DIR/$HOME/.claude/skills/mykit/references/scripts/git-ops.sh"
 ```
 **Error**: git-ops.sh script not found at $HOME/.claude/skills/mykit/references/scripts/git-ops.sh
 
-This is a My Kit installation issue. Try re-running installation or `/mykit.upgrade`.
+This is a My Kit installation issue. Try `/mykit.sync` to reinstall.
 ```
 
-### Step 4: Check for Uncommitted Changes
+### Step 3: Check for Uncommitted Changes
 
 Check if there are changes to commit:
 
@@ -98,14 +65,14 @@ if ! has_uncommitted_changes; then
 fi
 ```
 
-### Step 5: Display Create Mode Header
+### Step 4: Display Create Mode Header
 
 ```
 ## Creating Commit
 
 ```
 
-### Step 6: Show Current Changes
+### Step 5: Show Current Changes
 
 Display brief summary:
 
@@ -115,7 +82,7 @@ git status --short
 echo ""
 ```
 
-### Step 7: Prompt for Commit Details
+### Step 6: Prompt for Commit Details
 
 Use Claude Code's capabilities to gather commit information through conversation:
 
@@ -159,7 +126,7 @@ Examples: api, ui, auth, database
 Scope (optional):
 ```
 
-### Step 8: Display Commit Summary
+### Step 7: Display Commit Summary
 
 Show what will be committed:
 
@@ -176,23 +143,18 @@ Show what will be committed:
 
 ```
 
-### Step 9: Confirm Commit
+### Step 8: Confirm Commit
 
-If `--force` flag is NOT set, ask for confirmation:
+Use `AskUserQuestion` to confirm:
+- header: "Confirm"
+- question: "Create this commit?"
+- options:
+  1. label: "Yes", description: "Create the commit"
+  2. label: "Cancel", description: "Abort"
 
-```
-**Confirm commit?** (yes/no):
-```
+If user selects "Cancel", display "Commit cancelled." and stop.
 
-If user says no or anything other than "yes", abort:
-
-```
-Commit cancelled.
-```
-
-If `--force` flag IS set, skip confirmation.
-
-### Step 10: Update CHANGELOG.md
+### Step 9: Update CHANGELOG.md
 
 Call the update_changelog function:
 
@@ -200,24 +162,24 @@ Call the update_changelog function:
 source $HOME/.claude/skills/mykit/references/scripts/git-ops.sh
 
 if update_changelog "$COMMIT_TYPE" "$COMMIT_DESCRIPTION"; then
-  echo "✓ Updated CHANGELOG.md"
+  echo "Updated CHANGELOG.md"
 else
-  echo "⚠️  Warning: Could not update CHANGELOG.md"
+  echo "Warning: Could not update CHANGELOG.md"
 fi
 ```
 
-### Step 11: Stage CHANGELOG if Modified
+### Step 10: Stage CHANGELOG if Modified
 
 If CHANGELOG.md was modified, stage it:
 
 ```bash
 if git diff --name-only | grep -q "CHANGELOG.md"; then
   git add CHANGELOG.md
-  echo "✓ Staged CHANGELOG.md"
+  echo "Staged CHANGELOG.md"
 fi
 ```
 
-### Step 12: Create the Commit
+### Step 11: Create the Commit
 
 Create commit with conventional format:
 
@@ -227,53 +189,19 @@ source $HOME/.claude/skills/mykit/references/scripts/git-ops.sh
 COMMIT_SHA=$(create_commit "$COMMIT_TYPE" "$COMMIT_DESCRIPTION" "$COMMIT_SCOPE")
 
 if [[ $? -eq 0 ]]; then
-  echo "✓ Created commit: $COMMIT_SHA"
+  echo "Created commit: $COMMIT_SHA"
 else
-  echo "❌ Failed to create commit"
+  echo "Failed to create commit"
   exit 1
 fi
 ```
 
-### Step 13: Update State
-
-Update `.mykit/state.json` with commit information:
-
-```bash
-STATE_FILE=".mykit/state.json"
-TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-
-if [[ -f "$STATE_FILE" ]]; then
-  STATE_JSON=$(cat "$STATE_FILE")
-else
-  STATE_JSON="{}"
-fi
-
-# Build commit message
-if [[ -n "$COMMIT_SCOPE" ]]; then
-  COMMIT_MSG="${COMMIT_TYPE}(${COMMIT_SCOPE}): ${COMMIT_DESCRIPTION}"
-else
-  COMMIT_MSG="${COMMIT_TYPE}: ${COMMIT_DESCRIPTION}"
-fi
-
-UPDATED_STATE=$(echo "$STATE_JSON" | jq \
-  --arg sha "$COMMIT_SHA" \
-  --arg message "$COMMIT_MSG" \
-  --arg timestamp "$TIMESTAMP" \
-  '.last_commit = {
-    sha: $sha,
-    message: $message,
-    timestamp: $timestamp
-  }')
-
-echo "$UPDATED_STATE" > "$STATE_FILE"
-```
-
-### Step 14: Display Success Message
+### Step 12: Display Success Message
 
 ```
 ---
 
-✅ **Commit created successfully**
+**Commit created successfully**
 
 **Commit**: {sha}
 **Message**: {message}
@@ -281,30 +209,9 @@ echo "$UPDATED_STATE" > "$STATE_FILE"
 **Next Steps**:
 - Continue development: Make more changes
 - Create another commit: `/mykit.commit`
-- Create pull request: `/mykit.pr -c` (when ready)
+- Create pull request: `/mykit.pr` (when ready)
 - Push changes: `git push`
 ```
-
----
-
-## Force Flag Behavior
-
-When `--force` flag is used:
-
-### Step 15: Display Force Warning (if --force used)
-
-If force flag is set, display warning before creating commit:
-
-```
-⚠️  **Warning**: Using --force flag
-
-You are bypassing validation checks. This is not recommended unless you have a specific reason.
-
-Proceeding with commit creation...
-
-```
-
-Then continue with Steps 10-14 normally.
 
 ---
 
@@ -381,26 +288,10 @@ You can manually update CHANGELOG.md later.
 
 Don't fail the commit, just warn.
 
-### State Update Failure
-
-If state.json update fails:
-
-```
-**Warning**: Could not update state.json
-
-The commit was created but state was not saved.
-
-Error: {error message}
-```
-
-Don't fail the commit, just warn.
-
 ---
 
 ## Notes
 
 - CHANGELOG.md is automatically created if it doesn't exist
-- Force flag skips validation but still shows warnings
 - Commit follows conventional commits specification
-- State tracking enables other commands to see latest commit
 - Scope is optional but recommended for larger projects

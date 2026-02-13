@@ -1,6 +1,6 @@
-<!-- Minor mode: custom lightweight task generation workflow -->
+<!-- Task generation workflow -->
 
-## Minor Mode Tasks
+## Tasks
 
 Generate a lightweight task breakdown from feature specification and/or implementation plan, or via guided conversation.
 
@@ -20,13 +20,7 @@ git rev-parse --git-dir 2>/dev/null
 Run `git init` to initialize a repository, or navigate to an existing git repository.
 ```
 
-### Step 2: Parse Arguments
-
-Parse the command arguments to determine:
-- `hasCreateAction`: always true (CRUD routing handled by command router)
-- `hasForceFlag`: true if `--force` is present
-
-### Step 3: Get Current Branch and Extract Issue Number
+### Step 2: Get Current Branch and Extract Issue Number
 
 Get the current branch name:
 
@@ -43,7 +37,7 @@ Extract the issue number from the branch name using pattern `^([0-9]+)-`:
   - Set `issueNumber = null`
   - Set `isFeatureBranch = false`
 
-### Step 4: Validate Feature Branch Requirement
+### Step 3: Validate Feature Branch Requirement
 
 **If `isFeatureBranch` is false**:
 
@@ -53,10 +47,10 @@ Display error and stop:
 
 You must be on a feature branch (e.g., `042-feature-name`) to generate tasks.
 
-To select an issue and create a branch: `/mykit.start`
+To create a branch: `/mykit.specify`
 ```
 
-### Step 5: Determine Paths
+### Step 4: Determine Paths
 
 Set the following paths based on the current branch:
 - `specPath = specs/{branch}/spec.md`
@@ -64,31 +58,11 @@ Set the following paths based on the current branch:
 - `tasksPath = specs/{branch}/tasks.md`
 - `specsDir = specs/{branch}/`
 
-### Step 6: Check for Full-Mode Artifacts
-
-Check if any of these full-mode planning artifacts exist in `specsDir`:
-- `research.md`
-- `data-model.md`
-- `contracts/` directory
-
-**If any of these exist**:
-
-Display notice and continue:
-```
-**Notice**: Full-mode artifacts detected (research.md, data-model.md, contracts/).
-
-These artifacts won't be leveraged in minor mode. Proceeding with minor task generation.
-```
-
-### Step 7: Check for Existing Tasks
+### Step 5: Check for Existing Tasks
 
 **If tasks file exists at `tasksPath`**:
 
-**If `hasForceFlag` is true**:
-- Continue (will overwrite)
-
-**If `hasForceFlag` is false AND `hasCreateAction` is true**:
-- Use `AskUserQuestion` tool to prompt:
+Use `AskUserQuestion` tool to prompt:
   - header: "Existing Tasks"
   - question: "A tasks file already exists at this location. What would you like to do?"
   - options:
@@ -100,7 +74,7 @@ These artifacts won't be leveraged in minor mode. Proceeding with minor task gen
   Operation cancelled. Existing tasks preserved.
   ```
 
-### Step 8: Detect Available Artifacts
+### Step 6: Detect Available Artifacts
 
 Check which documentation artifacts exist:
 - `hasSpec`: true if spec.md exists and has content >= 50 characters
@@ -110,9 +84,9 @@ Check which documentation artifacts exist:
 - If both exist: `contentSource = "spec+plan"`
 - If only spec exists: `contentSource = "spec"`
 - If only plan exists: `contentSource = "plan"`
-- If neither exists or both are too short: `contentSource = "guided"` (trigger Step 9)
+- If neither exists or both are too short: `contentSource = "guided"` (trigger Step 7)
 
-### Step 9: Read and Analyze Artifacts (if available)
+### Step 7: Read and Analyze Artifacts (if available)
 
 **If `hasSpec` is true**:
 
@@ -138,7 +112,7 @@ Extract the following information:
 - **Design Decisions**: All sections matching `### DD-###: {title}`
   - Extract: decision title, choice, rationale
 
-### Step 10: Guided Conversation (if no artifacts)
+### Step 8: Guided Conversation (if no artifacts)
 
 **Trigger conversation if `contentSource` is "guided"**:
 
@@ -174,7 +148,7 @@ Wait for user response and store as `definitionOfDone`.
 
 Set `contentSource = "guided"` if not already set.
 
-### Step 11: Generate Task List
+### Step 9: Generate Task List
 
 Generate tasks based on the content source:
 
@@ -201,7 +175,7 @@ Generate tasks based on the content source:
 - Consider `componentsAffected` for task scoping
 - Use `definitionOfDone` to ensure completion criteria are covered
 
-### Step 12: Format Tasks Content
+### Step 10: Format Tasks Content
 
 Generate the tasks.md content using this structure:
 
@@ -224,27 +198,7 @@ Where:
 - `currentDate` = today's date in YYYY-MM-DD format
 - `contentSource` = one of: "spec", "plan", "spec+plan", "guided"
 
-### Step 13: Preview or Execute
-
-**If `hasCreateAction` is false (Preview Mode — deprecated, handled by router)**:
-
-Display the tasks content with a preview header:
-
-```
-## PREVIEW - Proposed Task List
-
-{formatted tasks content from Step 12}
-
----
-
-**Note**: This is a preview. No files have been created.
-
-To save these tasks, run: `/mykit.tasks -c`
-```
-
-Stop execution here.
-
-**If `hasCreateAction` is true (Execute Mode)**:
+### Step 11: Write Tasks
 
 1. Create the specs directory if it doesn't exist
 2. Write the tasks content to `tasksPath`

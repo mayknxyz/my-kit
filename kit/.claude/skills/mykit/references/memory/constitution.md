@@ -8,10 +8,7 @@ Added sections:
   - Command Conventions
   - Governance
 Removed sections: N/A
-Templates requiring updates:
-  - $HOME/.claude/skills/mykit/references/templates/major/plan-template.md: ✅ Constitution Check section exists
-  - $HOME/.claude/skills/mykit/references/templates/major/spec-template.md: ✅ Aligned with spec-first approach
-  - $HOME/.claude/skills/mykit/references/templates/major/tasks-template.md: ✅ Aligned with user story organization
+Templates requiring updates: N/A (major templates removed in v2 simplification)
 Follow-up TODOs: None
 -->
 
@@ -27,7 +24,7 @@ All features and significant changes MUST be specified before implementation beg
 - Features require a specification document (`spec.md`) that defines WHAT and WHY
 - Implementation plans (`plan.md`) document HOW, created after specification approval
 - Tasks (`tasks.md`) break down work into actionable, trackable items
-- Patch mode for trivial changes MAY bypass specification, but MUST still link to an issue
+- Trivial changes MAY bypass specification, but MUST still link to an issue
 
 **Rationale**: Specifications prevent scope creep, ensure shared understanding, and create
 documentation that outlives the implementation session.
@@ -40,21 +37,19 @@ All work MUST be linked to a GitHub Issue. No orphan commits, branches, or PRs.
 - Every branch MUST include the issue number prefix: `{issue-number}-{slug}`
 - Every spec directory MUST match: `specs/{issue-number}-{slug}/`
 - Every PR MUST reference its issue with `Closes #{issue-number}`
-- Patch mode also requires issues - every change is documented, no matter how small
-- Exception: The `--no-issue` flag MAY be used for exploratory work, but MUST NOT be merged
+- Every change is documented, no matter how small
 
 **Rationale**: GitHub Issues provide the documentation trail from idea to deployment.
 Traceability enables project history reconstruction and accountability.
 
 ### III. Explicit Execution
 
-Commands MUST preview by default. Execution requires explicit action flags.
+Commands MUST confirm before executing state-changing operations.
 
 **Rules**:
-- All state-changing commands show preview/dry-run without action flags
-- Execution requires explicit flags: `--run`, `create`, `select`, etc.
+- State-changing commands use AskUserQuestion for confirmation before proceeding
 - Read-only commands (`/mykit.status`, `/mykit.help`) execute immediately
-- Confirmations MUST be shown for irreversible operations unless `--yes` is passed
+- Confirmations MUST be shown for irreversible operations
 
 **Rationale**: Prevents accidental execution, allows reviewing changes before commitment,
 and provides safer interaction with destructive operations.
@@ -68,7 +63,7 @@ Critical workflow steps MUST pass validation before proceeding.
 - `/mykit.commit` requires uncommitted changes to exist
 - `/mykit.specify` requires an issue to be selected
 - `/mykit.release` requires PR to be merged with no blocking issues
-- Gates MAY be bypassed with `--force` flag, but a warning MUST be displayed
+- Gates ensure quality at each step of the workflow
 
 **Rationale**: Quality enforcement prevents broken or incomplete work from progressing
 through the pipeline. Gates catch issues early when they're cheapest to fix.
@@ -97,11 +92,7 @@ Commands follow a consistent pattern for predictable behavior.
 - Read-only: Execute immediately (e.g., `/mykit.status`)
 - State-changing: Require action (e.g., `/mykit.commit create`)
 
-**Standard Flags**:
-- `--force`: Bypass validation gates (with warning)
-- `--yes`, `-y`: Skip confirmation prompts
-- `--json`: Machine-readable output
-- `--no-issue`: Work without issue linking (exceptional use only)
+**Confirmations**: State-changing commands use AskUserQuestion for interactive confirmation.
 
 **Exit Codes**:
 - 0: Success

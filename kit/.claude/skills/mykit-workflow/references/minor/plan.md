@@ -1,6 +1,6 @@
-<!-- Minor mode: custom lightweight planning workflow -->
+<!-- Plan workflow -->
 
-## Minor Mode Plan
+## Plan
 
 Create a lightweight implementation plan from a feature specification via guided conversation.
 
@@ -20,13 +20,7 @@ git rev-parse --git-dir 2>/dev/null
 Run `git init` to initialize a repository, or navigate to an existing git repository.
 ```
 
-### Step 2: Parse Arguments
-
-Parse the command arguments to determine:
-- `hasCreateAction`: always true (CRUD routing handled by command router)
-- `hasForceFlag`: true if `--force` is present
-
-### Step 3: Get Current Branch and Extract Issue Number
+### Step 2: Get Current Branch and Extract Issue Number
 
 Get the current branch name:
 
@@ -43,7 +37,7 @@ Extract the issue number from the branch name using pattern `^([0-9]+)-`:
   - Set `issueNumber = null`
   - Set `isFeatureBranch = false`
 
-### Step 4: Validate Feature Branch Requirement
+### Step 3: Validate Feature Branch Requirement
 
 **If `isFeatureBranch` is false**:
 
@@ -53,17 +47,17 @@ Display error and stop:
 
 You must be on a feature branch (e.g., `042-feature-name`) to create a plan.
 
-To select an issue and create a branch: `/mykit.start`
+To create a branch: `/mykit.specify`
 ```
 
-### Step 5: Determine Paths
+### Step 4: Determine Paths
 
 Set the following paths based on the current branch:
 - `specPath = specs/{branch}/spec.md`
 - `planPath = specs/{branch}/plan.md`
 - `specsDir = specs/{branch}/`
 
-### Step 6: Check for Existing Spec File
+### Step 5: Check for Existing Spec File
 
 Check if the spec file exists at `specPath`.
 
@@ -75,34 +69,14 @@ Display error and stop:
 
 A spec file is required before creating a plan.
 
-To create a specification: `/mykit.specify -c`
+To create a specification: `/mykit.specify`
 ```
 
-### Step 7: Check for Full-Mode Artifacts
-
-Check if any of these full-mode planning artifacts exist in `specsDir`:
-- `research.md`
-- `data-model.md`
-- `contracts/` directory
-
-**If any of these exist**:
-
-Display notice and continue:
-```
-**Notice**: Full-mode artifacts detected (research.md, data-model.md, contracts/).
-
-These artifacts won't be leveraged in minor mode. Proceeding with minor plan.
-```
-
-### Step 8: Check for Existing Plan
+### Step 6: Check for Existing Plan
 
 **If plan file exists at `planPath`**:
 
-**If `hasForceFlag` is true**:
-- Continue (will overwrite)
-
-**If `hasForceFlag` is false AND `hasCreateAction` is true**:
-- Use `AskUserQuestion` tool to prompt:
+Use `AskUserQuestion` tool to prompt:
   - header: "Existing Plan"
   - question: "A plan file already exists at this location. What would you like to do?"
   - options:
@@ -114,7 +88,7 @@ These artifacts won't be leveraged in minor mode. Proceeding with minor plan.
   Operation cancelled. Existing plan preserved.
   ```
 
-### Step 9: Read and Analyze Spec File
+### Step 7: Read and Analyze Spec File
 
 Read the spec file content from `specPath`.
 
@@ -126,7 +100,7 @@ Extract the following information from the spec:
 - **Success Criteria**: All items under `### Measurable Outcomes`
 - **Clarifications**: Any recorded clarifications from `## Clarifications` section
 
-### Step 10: Identify Technical Decisions (Guided Conversation)
+### Step 8: Identify Technical Decisions (Guided Conversation)
 
 Analyze the spec content to identify areas that may need technical clarification.
 
@@ -147,9 +121,9 @@ Use `AskUserQuestion` tool with:
 
 Record each answer for use in plan generation.
 
-**If no ambiguities detected**: Skip to Step 11 without asking questions.
+**If no ambiguities detected**: Skip to Step 9 without asking questions.
 
-### Step 11: Generate Plan Content
+### Step 9: Generate Plan Content
 
 Generate the plan content using this structure:
 
@@ -204,27 +178,7 @@ Where:
 - `branch` = current git branch
 - `currentDate` = today's date in YYYY-MM-DD format
 
-### Step 12: Preview or Execute
-
-**If `hasCreateAction` is false (Preview Mode — deprecated, handled by router)**:
-
-Display the plan content with a preview header:
-
-```
-## PREVIEW - Proposed Implementation Plan
-
-{formatted plan content from Step 11}
-
----
-
-**Note**: This is a preview. No files have been created.
-
-To save this plan, run: `/mykit.plan -c`
-```
-
-Stop execution here.
-
-**If `hasCreateAction` is true (Execute Mode)**:
+### Step 10: Write Plan
 
 1. Create the specs directory if it doesn't exist
 2. Write the plan content to `planPath`
@@ -236,5 +190,5 @@ Stop execution here.
 **File**: {planPath}
 **Source**: {questionCount > 0 ? "Spec analysis + guided conversation" : "Spec analysis"}
 
-Next step: `/mykit.tasks -c` to create the task breakdown.
+Next step: `/mykit.tasks` to create the task breakdown.
 ```

@@ -5,18 +5,14 @@ Generate a task breakdown from feature specification and/or implementation plan,
 ## Usage
 
 ```
-/mykit.tasks [-c|-r|-u|-d] [--force]
+/mykit.tasks
 ```
 
-- `-c`: Create — generate a new tasks file
-- `-r`: Read — display current tasks and progress (default if no flag)
-- `-u`: Update — regenerate tasks from updated spec/plan
-- `-d`: Delete — remove the tasks file
-- `--force`: Skip confirmation prompts
+- Default: Display current tasks and progress, or generate if none exist
 
 ## Description
 
-This command generates task breakdowns for the Minor workflow. It analyzes existing spec.md and/or plan.md files to extract user stories and implementation phases, or guides users through a 3-question conversation when no documentation exists. The output is a structured tasks.md file with implementation tasks and standard completion tasks.
+This command generates task breakdowns for the development workflow. It analyzes existing spec.md and/or plan.md files to extract user stories and implementation phases, or guides users through a 3-question conversation when no documentation exists. The output is a structured tasks.md file with implementation tasks and standard completion tasks.
 
 ## Implementation
 
@@ -38,13 +34,7 @@ git rev-parse --git-dir 2>/dev/null
 Run `git init` to initialize a repository, or navigate to an existing git repository.
 ```
 
-### Step 2: Parse Arguments
-
-Parse the command arguments to determine:
-- `flag`: one of `-c`, `-r`, `-u`, `-d`, or `null` (defaults to `-r`)
-- `hasForceFlag`: true if `--force` is present
-
-### Step 3: Get Current Branch and Extract Issue Number
+### Step 2: Get Current Branch and Extract Issue Number
 
 Get the current branch name:
 
@@ -61,7 +51,7 @@ Extract the issue number from the branch name using pattern `^([0-9]+)-`:
   - Set `issueNumber = null`
   - Set `isFeatureBranch = false`
 
-### Step 4: Validate Feature Branch Requirement
+### Step 3: Validate Feature Branch Requirement
 
 **If `isFeatureBranch` is false**:
 
@@ -71,10 +61,10 @@ Display error and stop:
 
 You must be on a feature branch (e.g., `042-feature-name`) to generate tasks.
 
-To select an issue and create a branch: `/mykit.start`
+To select an issue and create a branch: `/mykit.specify`
 ```
 
-### Step 5: Determine Paths
+### Step 4: Determine Paths
 
 Set the following paths based on the current branch:
 - `specPath = specs/{branch}/spec.md`
@@ -82,58 +72,35 @@ Set the following paths based on the current branch:
 - `tasksPath = specs/{branch}/tasks.md`
 - `specsDir = specs/{branch}/`
 
-### Step 6: Detect Full-Mode Artifacts
-
-Check if any full-mode planning artifacts exist in `specsDir`:
-- `research.md`
-- `data-model.md`
-- `contracts/` directory
-
-**If any of these exist and `session.type` is not `major`**:
-
-Display info and suggest switching to major mode:
-```
-**Note**: Major-mode planning artifacts detected (research.md, data-model.md, contracts/).
-
-Consider using `/mykit.start` to select Major mode for story-driven task generation
-with dependency graphs and parallel markers.
-```
-
-Continue with task generation regardless.
-
-### Step 7: Check for Existing Tasks
+### Step 5: Check for Existing Tasks
 
 **If tasks file exists at `tasksPath`**:
 
-**If `hasForceFlag` is true**:
-- Continue (will overwrite)
+Use `AskUserQuestion` to prompt:
+- header: "Existing Tasks"
+- question: "A tasks file already exists. What would you like to do?"
+- options:
+  1. label: "View", description: "Display current tasks and progress"
+  2. label: "Overwrite", description: "Replace the existing tasks entirely"
+  3. label: "Cancel", description: "Abort and keep the existing tasks"
 
-**If `hasForceFlag` is false AND `flag` is `-c` or `-u`**:
-- Use `AskUserQuestion` tool to prompt:
-  - header: "Existing Tasks"
-  - question: "A tasks file already exists at this location. What would you like to do?"
-  - options:
-    1. label: "Overwrite", description: "Replace the existing tasks entirely"
-    2. label: "Cancel", description: "Abort and keep the existing tasks"
+- If user selects "View": Display the tasks content and stop.
+- If user selects "Cancel": Display "Operation cancelled. Existing tasks preserved." and stop.
+- If user selects "Overwrite": Continue with task generation.
 
-- If user selects "Cancel", display message and stop:
-  ```
-  Operation cancelled. Existing tasks preserved.
-  ```
-
-### Step 8: Detect Available Artifacts
+### Step 6: Detect Available Artifacts
 
 Check which documentation artifacts exist:
 - `hasSpec`: true if spec.md exists and has content >= 50 characters
-- `hasplan`: true if plan.md exists and has content >= 50 characters
+- `hasPlan`: true if plan.md exists and has content >= 50 characters
 
 **Determine content source**:
 - If both exist: `contentSource = "spec+plan"`
 - If only spec exists: `contentSource = "spec"`
 - If only plan exists: `contentSource = "plan"`
-- If neither exists or both are too short: `contentSource = "guided"` (trigger Step 9)
+- If neither exists or both are too short: `contentSource = "guided"` (trigger Step 8)
 
-### Step 9: Read and Analyze Artifacts (if available)
+### Step 7: Read and Analyze Artifacts (if available)
 
 **If `hasSpec` is true**:
 
@@ -159,7 +126,7 @@ Extract the following information:
 - **Design Decisions**: All sections matching `### DD-###: {title}`
   - Extract: decision title, choice, rationale
 
-### Step 10: Guided Conversation (if no artifacts)
+### Step 8: Guided Conversation (if no artifacts)
 
 **Trigger conversation if `contentSource` is "guided"**:
 
@@ -193,9 +160,7 @@ Use `AskUserQuestion` tool:
 
 Wait for user response and store as `definitionOfDone`.
 
-Set `contentSource = "guided"` if not already set.
-
-### Step 11: Generate Task List
+### Step 9: Generate Task List
 
 Generate tasks based on the content source:
 
@@ -222,7 +187,7 @@ Generate tasks based on the content source:
 - Consider `componentsAffected` for task scoping
 - Use `definitionOfDone` to ensure completion criteria are covered
 
-### Step 12: Append Completion Tasks
+### Step 10: Append Completion Tasks
 
 Always append the following standard completion tasks at the end:
 
@@ -231,12 +196,12 @@ Always append the following standard completion tasks at the end:
 
 - [ ] T0XX Run validation: `/mykit.audit`
 - [ ] T0XX Create commit: `/mykit.commit`
-- [ ] T0XX Create pull request: `/mykit.pr -c`
+- [ ] T0XX Create pull request: `/mykit.pr`
 ```
 
-Where `T0XX` continues the task numbering sequence from Step 11.
+Where `T0XX` continues the task numbering sequence from Step 9.
 
-### Step 13: Format Tasks Content
+### Step 11: Format Tasks Content
 
 Generate the tasks.md content using this structure:
 
@@ -256,7 +221,7 @@ Generate the tasks.md content using this structure:
 
 - [ ] T0XX Run validation: `/mykit.audit`
 - [ ] T0XX Create commit: `/mykit.commit`
-- [ ] T0XX Create pull request: `/mykit.pr -c`
+- [ ] T0XX Create pull request: `/mykit.pr`
 ```
 
 Where:
@@ -265,31 +230,11 @@ Where:
 - `currentDate` = today's date in YYYY-MM-DD format
 - `contentSource` = one of: "spec", "plan", "spec+plan", "guided"
 
-### Step 14: Preview or Execute
-
-**If `flag` is `-r` (Read Mode)**:
-
-Display the tasks content with a preview header:
-
-```
-## Current Task List
-
-{formatted tasks content from Step 13}
-```
-
-Stop execution here.
-
-**If `flag` is `-c` or `-u` (Create/Update Mode)**:
+### Step 12: Write Tasks File
 
 1. Create the specs directory if it doesn't exist
 2. Write the tasks content to `tasksPath`
-3. Update `.mykit/state.json` with:
-   - `workflow_step` = "tasks"
-   - `tasks_path` = tasksPath
-   - `last_command` = "/mykit.tasks"
-   - `last_command_time` = current ISO timestamp
-
-4. Display confirmation:
+3. Display confirmation:
 
 ```
 **Tasks generated successfully!**
@@ -312,13 +257,12 @@ Where `contentSource description` is:
 | Error | Message |
 |-------|---------|
 | Not a git repository | "Not in a git repository. Run `git init` to initialize." |
-| Not on feature branch | "No feature branch detected. Use `/mykit.start` first." |
-| Major-mode artifacts detected | "Major-mode planning artifacts detected. Consider using Major mode for richer task generation." |
+| Not on feature branch | "No feature branch detected. Use `/mykit.specify` first." |
 | File write failed | "Error: Unable to create tasks file at {path}. Check permissions." |
 
 ## Example Outputs
 
-### Read Mode (default)
+### View Existing Tasks
 
 ```
 /mykit.tasks
@@ -333,23 +277,21 @@ Where `contentSource description` is:
 
 - [ ] T001 Create user model with email and password fields
 - [ ] T002 Implement password hashing service
-- [ ] T003 Create login endpoint
-- [ ] T004 Create registration endpoint
+- [x] T003 Create login endpoint
+- [>] T004 Create registration endpoint
 - [ ] T005 Add session management
-- [ ] T006 Implement logout functionality
-- [ ] T007 Add authentication middleware
 
 ## Completion
 
-- [ ] T008 Run validation: `/mykit.audit`
-- [ ] T009 Create commit: `/mykit.commit`
-- [ ] T010 Create pull request: `/mykit.pr -c`
+- [ ] T006 Run validation: `/mykit.audit`
+- [ ] T007 Create commit: `/mykit.commit`
+- [ ] T008 Create pull request: `/mykit.pr`
 ```
 
-### Create Mode
+### Generate New Tasks
 
 ```
-/mykit.tasks -c
+/mykit.tasks
 
 **Tasks generated successfully!**
 
@@ -360,40 +302,11 @@ Where `contentSource description` is:
 Next step: `/mykit.implement` to start working through tasks.
 ```
 
-### Guided Conversation Mode
-
-```
-/mykit.tasks -c
-
-No spec or plan found. Starting guided conversation.
-
-**Tasks: Q1/3**
-What needs to be built or changed?
-> Add a dark mode toggle to the settings page
-
-**Tasks: Q2/3**
-What components or files are affected?
-> Settings component, theme context, CSS variables
-
-**Tasks: Q3/3**
-What defines 'done' for this work?
-> User can toggle between light and dark mode, preference is saved
-
-**Tasks generated successfully!**
-
-**File**: specs/042-dark-mode/tasks.md
-**Source**: Generated from guided conversation
-**Task Count**: 6 implementation + 3 completion = 9 total
-
-Next step: `/mykit.implement` to start working through tasks.
-```
-
 ## Related Commands
 
 | Command | Relationship |
-|---------|--------------|
+|---------|------------|
 | `/mykit.specify` | Create spec before running this command (optional) |
 | `/mykit.plan` | Create plan before running this command (optional) |
-| `/mykit.start` | Select issue and create branch |
 | `/mykit.implement` | Next step after task generation |
 | `/mykit.status` | Shows current workflow phase |

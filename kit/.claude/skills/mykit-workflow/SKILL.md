@@ -1,11 +1,11 @@
 ---
 name: mykit-workflow
-description: My Kit development workflow — manages specify, plan, tasks, implement, clarify, analyze, and checklist steps across major, minor, and patch modes.
+description: My Kit development workflow — handles 4 development workflow steps: specify, plan, tasks, implement.
 ---
 
 # My Kit Workflow
 
-Handles the 7 development workflow steps across 3 modes (major, minor, patch). Auto-activates when the user expresses intent to work on specifications, plans, tasks, implementation, clarification, analysis, or checklists.
+Handles the 4 development workflow steps. Auto-activates when the user expresses intent to work on specifications, plans, tasks, or implementation.
 
 ## Trigger Keywords
 
@@ -13,101 +13,52 @@ Handles the 7 development workflow steps across 3 modes (major, minor, patch). A
 - **plan**: "write the plan", "create plan", "implementation plan", "plan this"
 - **tasks**: "break into tasks", "task breakdown", "generate tasks", "create tasks"
 - **implement**: "implement", "start coding", "execute tasks", "build this"
-- **clarify**: "clarify the spec", "find ambiguities", "clarification questions"
-- **analyze**: "analyze artifacts", "consistency check", "cross-artifact analysis"
-- **checklist**: "quality checklist", "requirements checklist", "generate checklist"
 
 ## Step Identification
 
-Map user intent to one of 7 steps:
+Map user intent to one of 4 steps:
 
-| Step | Keywords | Modes Available |
-|------|----------|----------------|
-| `specify` | spec, specification, specify | major, minor, patch |
-| `plan` | plan, implementation plan | major, minor, patch |
-| `tasks` | tasks, task breakdown | major, minor, patch |
-| `implement` | implement, build, code | major, minor, patch |
-| `clarify` | clarify, ambiguities | major only |
-| `analyze` | analyze, consistency | major only |
-| `checklist` | checklist, quality gates | major only |
+| Step | Keywords |
+|------|----------|
+| `specify` | spec, specification, specify |
+| `plan` | plan, implementation plan |
+| `tasks` | tasks, task breakdown |
+| `implement` | implement, build, code |
 
 ## Routing Logic
 
-### 1. Read Session State
+### 1. Identify Step
 
-Read `.mykit/state.json` to determine the current mode:
+Map user intent to one of the 4 steps.
 
-```json
-{
-  "session": {
-    "type": "major|minor|patch"
-  }
-}
-```
+### 2. Handle Existing Artifacts
 
-If `session.type` is not set, prompt the user to select a mode using `AskUserQuestion`:
-- header: "Workflow Mode"
-- question: "Which workflow mode are you using?"
-- options: Major, Minor, Patch
+For artifact-producing steps (specify, plan, tasks):
+- If the artifact already exists, prompt via `AskUserQuestion`: overwrite or cancel
+- If the artifact does not exist, create it
 
-### 2. Validate Step Availability
+### 3. Load Reference File
 
-For major-only steps (`clarify`, `analyze`, `checklist`):
-- If mode is `minor` or `patch`, display error explaining the step requires Major mode
-- Suggest the appropriate next step for their mode
+Based on the step, load the appropriate reference file:
 
-### 3. CRUD Routing (for specify, plan, tasks)
-
-These steps support CRUD operations via flags:
-
-| Flag | Operation |
+| Step | Reference |
 |------|-----------|
-| `-c` / `--create` | Create new artifact |
-| `-r` / `--read` | View existing artifact |
-| `-u` / `--update` | Regenerate (overwrite) |
-| `-d` / `--delete` | Remove artifact |
-
-If no CRUD flag is provided, present an interactive menu using `AskUserQuestion`.
-
-### 4. Load Reference File
-
-Based on (step, mode), load the appropriate reference file:
-
-| Step | Major | Minor | Patch |
-|------|-------|-------|-------|
-| specify | `references/major/specify.md` | `references/minor/specify.md` | `references/patch/specify.md` |
-| plan | `references/major/plan.md` | `references/minor/plan.md` | `references/patch/plan.md` |
-| tasks | `references/major/tasks.md` | `references/minor/tasks.md` | `references/patch/tasks.md` |
-| implement | `references/major/implement.md` | `references/minor/implement.md` | `references/patch/implement.md` |
-| clarify | `references/major/clarify.md` | — | — |
-| analyze | `references/major/analyze.md` | — | — |
-| checklist | `references/major/checklist.md` | — | — |
+| specify | `references/minor/specify.md` |
+| plan | `references/minor/plan.md` |
+| tasks | `references/minor/tasks.md` |
+| implement | `references/minor/implement.md` |
 
 **Load only the one reference file needed per invocation.**
 
-### 5. Execute Reference Instructions
+### 4. Execute Reference Instructions
 
-Follow the loaded reference file's instructions exactly. The reference file contains the complete step-by-step workflow for that (step, mode) combination.
-
-### 6. Update State
-
-After successful execution, update `.mykit/state.json`:
-
-```json
-{
-  "workflow_step": "{step}",
-  "last_command": "/mykit.{step}",
-  "last_command_time": "{ISO 8601 timestamp}"
-}
-```
+Follow the loaded reference file's instructions exactly. The reference file contains the complete step-by-step workflow for that step.
 
 ## Shared Patterns
 
-See `references/routing.md` for shared CRUD patterns and state management conventions used across all workflow steps.
+See `references/routing.md` for shared routing patterns and branch/path conventions used across all workflow steps.
 
 ## Reference Files
 
-- `references/routing.md` — Shared CRUD routing, state management patterns
-- `references/major/` — 7 files (specify, plan, tasks, implement, clarify, analyze, checklist)
+- `references/routing.md` — Shared routing patterns, branch/path conventions
 - `references/minor/` — 4 files (specify, plan, tasks, implement)
-- `references/patch/` — 4 files (specify, plan, tasks, implement)

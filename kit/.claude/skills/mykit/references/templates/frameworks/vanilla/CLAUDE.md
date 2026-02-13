@@ -49,3 +49,17 @@ Target modern evergreen browsers (Chrome, Firefox, Safari, Edge — latest 2 ver
 - Manual browser testing
 - Validate HTML with W3C validator
 - Check accessibility with axe or Lighthouse
+
+## Project Principles
+
+<!-- Filled by /mykit.init -->
+
+## Workflow
+
+- Default branch: `main`
+- PR title format: `{version}: {title} (#{issue})`
+- Auto-assign PRs: yes
+- Draft PRs: no
+- Auto-create branch on specify: yes
+- Auto-fix linting: yes
+- Version prefix: `v`

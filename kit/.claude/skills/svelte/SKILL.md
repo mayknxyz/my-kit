@@ -92,4 +92,10 @@ Components accept snippets as props:
 - Use `$effect` for derived state — use `$derived()` instead
 - Mutate `$state` objects without reassignment for deep reactivity — use `$state.snapshot()` for copies
 
+## References
+
+| Topic | File | Load When |
+|-------|------|-----------|
+| Coding conventions | [conventions.md](references/conventions.md) | Component patterns, state management, forms, styling, testing |
+
 Docs: https://svelte.dev/docs

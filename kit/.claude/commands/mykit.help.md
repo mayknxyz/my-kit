@@ -52,8 +52,7 @@ These execute immediately without an action.
 
 | Command | Description |
 |---------|-------------|
-| `/mykit.init` | Initialize My Kit in repository |
-| `/mykit.setup` | Run first-time onboarding wizard |
+| `/mykit.init` | Initialize My Kit in repository (creates CLAUDE.md) |
 | `/mykit.sync` | Install/upgrade My Kit v2 |
 
 ## Development Workflow
@@ -78,8 +77,6 @@ These execute immediately without an action.
 | Command | Description |
 |---------|-------------|
 | `/mykit.audit` | Run comprehensive audit (quality, security, perf, a11y, deps) |
-| `/mykit.constitution` | Create or update project constitution |
-| `/mykit.taskstoissues` | Convert tasks to GitHub issues |
 | `/mykit.log` | Export session summary to ~/my-log |
 | `/mykit.skill.review` | Review activated skills and propose improvements |
 
@@ -162,7 +159,6 @@ If `$ARGUMENTS` doesn't match any known command name or "workflow":
 Available commands:
 - `/mykit.audit` - Run comprehensive audit
 - `/mykit.commit` - Create commit with CHANGELOG
-- `/mykit.constitution` - Create or update project constitution
 - `/mykit.help` - Show command documentation
 - `/mykit.implement` - Execute tasks one by one
 - `/mykit.init` - Initialize My Kit in repository
@@ -170,13 +166,11 @@ Available commands:
 - `/mykit.plan` - Create implementation plan
 - `/mykit.pr` - Create or update pull request
 - `/mykit.release` - Create release with versioning
-- `/mykit.setup` - Run first-time onboarding wizard
 - `/mykit.specify` - Create feature specification
 - `/mykit.status` - Show current workflow state
 - `/mykit.sync` - Install/upgrade My Kit v2
 - `/mykit.skill.review` - Review activated skills and propose improvements
 - `/mykit.tasks` - Generate task breakdown
-- `/mykit.taskstoissues` - Convert tasks to GitHub issues
 Special topics:
 - `workflow` - Show workflow cheatsheets
 
@@ -189,7 +183,6 @@ Run `/mykit.help` for the full command reference.
 For reference, these are valid command names to check against:
 - `audit`
 - `commit`
-- `constitution`
 - `help`
 - `implement`
 - `init`
@@ -197,10 +190,8 @@ For reference, these are valid command names to check against:
 - `plan`
 - `pr`
 - `release`
-- `setup`
 - `specify`
 - `status`
 - `sync`
 - `skill.review`
 - `tasks`
-- `taskstoissues`

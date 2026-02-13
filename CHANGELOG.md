@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.3] - 2026-02-14
+
+### Changed
+
+- Merge `/mykit.init` + `/mykit.setup` + `/mykit.constitution` into unified `/mykit.init`
+- CLAUDE.md is now the single source of truth (principles + workflow config)
+- Move CONVENTIONS.md content into framework skills (astro, svelte, web-core)
+- Ship skill references read workflow preferences from CLAUDE.md instead of config.json
+- Framework CLAUDE.md templates include Project Principles and Workflow sections
+- mykit-ops skill now handles audit only
+
+### Removed
+
+- Commands: `/mykit.setup`, `/mykit.constitution`, `/mykit.taskstoissues`
+- `.mykit/` directory (config.json, memory/constitution.md)
+- `setup-wizard.sh` interactive onboarding script
+- Config functions from utils.sh (read_config, get_config_field, get_config_field_or_default)
+- Constitution Check table from plan template
+- CONVENTIONS.md from framework templates (moved to skills)
+
 ## [2.0.2] - 2026-02-13
 
 ### Changed
@@ -65,7 +85,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Monolithic command routing (replaced by skill routing)
 - Per-project infrastructure file copies (now globally shared via stow symlinks)
 
-[Unreleased]: https://github.com/mayknxyz/my-kit-v2/compare/v2.0.2...HEAD
+[Unreleased]: https://github.com/mayknxyz/my-kit-v2/compare/v2.0.3...HEAD
+[2.0.3]: https://github.com/mayknxyz/my-kit-v2/compare/v2.0.2...v2.0.3
 [2.0.2]: https://github.com/mayknxyz/my-kit-v2/compare/v2.0.1...v2.0.2
 [2.0.1]: https://github.com/mayknxyz/my-kit-v2/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/mayknxyz/my-kit-v2/releases/tag/v2.0.0

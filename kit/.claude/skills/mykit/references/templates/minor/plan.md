@@ -18,13 +18,3 @@
 ```text
 [file structure]
 ```
-
-## Constitution Check
-
-| Principle | Status | Notes |
-|-----------|--------|-------|
-| I. Spec-First Development | | |
-| II. Issue-Linked Traceability | | |
-| III. Explicit Execution | | |
-| IV. Validation Gates | | |
-| V. Simplicity | | |

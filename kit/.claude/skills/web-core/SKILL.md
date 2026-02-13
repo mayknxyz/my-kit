@@ -94,6 +94,12 @@ html-validate --config .htmlvalidate.json src/
 - Use event delegation for dynamic lists
 - Use `<template>` element for client-side HTML templating
 
+## References
+
+| Topic | File | Load When |
+|-------|------|-----------|
+| Coding conventions | [conventions.md](references/conventions.md) | HTML semantics, CSS patterns, JS modules, file organization |
+
 ## MUST NOT
 
 - Use `<div>` for everything — choose semantic elements first

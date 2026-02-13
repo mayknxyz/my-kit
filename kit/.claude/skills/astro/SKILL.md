@@ -29,6 +29,7 @@ Senior Astro 5.x engineer. Atomic design architecture. Svelte for interactive is
 | Svelte hydration strategy | [svelte-islands.md](references/svelte-islands.md) | Adding interactivity, choosing client directives |
 | Content Layer API (Astro 5) | [content-collections.md](references/content-collections.md) | Setting up blog/content, defining schemas, querying collections |
 | Output modes + routing | [routing-ssr.md](references/routing-ssr.md) | Configuring SSR, creating API endpoints, prerender decisions |
+| Coding conventions | [conventions.md](references/conventions.md) | Component patterns, content collections, styling, forms, testing |
 
 ## Tooling
 

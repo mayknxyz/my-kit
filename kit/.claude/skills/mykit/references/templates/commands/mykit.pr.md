@@ -112,16 +112,18 @@ source $HOME/.claude/skills/mykit/references/scripts/git-ops.sh
 source $HOME/.claude/skills/mykit/references/scripts/utils.sh
 ```
 
-### Step 4a: Read Configuration
+### Step 4a: Read Workflow Preferences
 
-Read PR-related configuration values with safe defaults:
+Read PR-related preferences from the project's `CLAUDE.md` `## Workflow` section. If `CLAUDE.md` doesn't exist or the section is missing, use these defaults:
 
 ```bash
-BASE_BRANCH=$(get_config_field_or_default ".defaults.branch" "main")
-TITLE_TEMPLATE=$(get_config_field_or_default ".pr.titleTemplate" "{version}: {title} (#{issue})")
-AUTO_ASSIGN=$(get_config_field_or_default ".pr.autoAssign" "true")
-DRAFT_MODE=$(get_config_field_or_default ".pr.draftMode" "false")
+BASE_BRANCH="main"
+TITLE_TEMPLATE="{version}: {title} (#{issue})"
+AUTO_ASSIGN="true"
+DRAFT_MODE="false"
 ```
+
+To read from CLAUDE.md: parse the `## Workflow` section for key-value pairs like `Default branch: main`, `PR title format: ...`, `Auto-assign PRs: yes/no`, `Draft PRs: yes/no`. Map `yes` → `"true"`, `no` → `"false"`.
 
 ### Step 5: Determine Paths
 

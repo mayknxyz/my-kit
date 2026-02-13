@@ -156,7 +156,14 @@ CURRENT_VERSION=$(git describe --tags --abbrev=0 --match 'v[0-9]*.[0-9]*.[0-9]*'
 ### Step 6: Get Included Commits
 
 ```bash
-BASE_BRANCH=$(source $HOME/.claude/skills/mykit/references/scripts/utils.sh && get_config_field_or_default ".defaults.branch" "main")
+# Read default branch from CLAUDE.md's ## Workflow section, or fall back to "main"
+BASE_BRANCH="main"
+if [[ -f "CLAUDE.md" ]]; then
+  CLAUDE_BRANCH=$(grep -oP 'Default branch: \K\S+' CLAUDE.md 2>/dev/null || true)
+  if [[ -n "$CLAUDE_BRANCH" ]]; then
+    BASE_BRANCH="$CLAUDE_BRANCH"
+  fi
+fi
 COMMITS=$(get_branch_commits "$BASE_BRANCH" "pretty")
 COMMIT_COUNT=$(get_commit_count "$BASE_BRANCH")
 ```

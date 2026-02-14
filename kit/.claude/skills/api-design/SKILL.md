@@ -132,6 +132,12 @@ export async function POST({ request }: APIContext) {
 - Return `429` with `Retry-After` header
 - Cloudflare Rate Limiting rules for edge enforcement
 
+## References
+
+| Trigger | File | Purpose |
+|---------|------|---------|
+| API route boilerplate, error helper, cursor pagination, Turnstile verification | `references/patterns.md` | Reusable API route patterns and middleware |
+
 ## MUST DO
 
 - Validate all input with Zod at API boundary using `safeParse()`

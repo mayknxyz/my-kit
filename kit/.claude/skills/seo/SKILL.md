@@ -100,6 +100,12 @@ linkinator https://example.com --recurse --format json
 lighthouse https://example.com --only-categories=seo --output json
 ```
 
+## References
+
+| Trigger | File | Purpose |
+|---------|------|---------|
+| JSON-LD templates, SEO component, sitemap, robots.txt, structured data | `references/patterns.md` | JSON-LD templates, Astro SEO component, technical SEO configs |
+
 ## MUST DO
 
 - Add JSON-LD structured data to every page (at minimum `WebSite` + `Organization`)

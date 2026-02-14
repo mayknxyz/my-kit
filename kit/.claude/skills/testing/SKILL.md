@@ -100,6 +100,12 @@ it("toggles menu", async () => {
 });
 ```
 
+## References
+
+| Trigger | File | Purpose |
+|---------|------|---------|
+| Vitest config, Playwright setup, page objects, test factories, test organization | `references/patterns.md` | Test configurations, fixtures, and patterns |
+
 ## MUST DO
 
 - Use `getByRole` as the primary query method (mirrors accessibility)

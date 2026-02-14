@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.4.0] - 2026-02-14
+
+### Added
+
+- Reference files for 5 domain skills: `security/references/patterns.md`, `testing/references/patterns.md`, `a11y/references/patterns.md`, `seo/references/patterns.md`, `api-design/references/patterns.md`
+- `## References` routing tables in security, testing, a11y, seo, api-design SKILL.md files
+- `.github/workflows/shellcheck.yml` — ShellCheck CI for bash scripts on push/PR
+- `v2.0.0` git tag on initial commit (was missing)
+
+### Changed
+
+- Commit skill (`commit.md`): added Step 11b to update `package.json` version when updating CHANGELOG
+- README.md: updated to 5 My Kit skills and 16 commands (added mykit-issues)
+- CLAUDE.md: updated skills with `references/` list (9 → 15)
+
+### Removed
+
+- `VERSION` file (unused — git tags are the source of truth)
+- `scripts/.gitkeep` (directory contains real files)
+
 ## [2.3.0] - 2026-02-14
 
 ### Added
@@ -146,7 +166,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Monolithic command routing (replaced by skill routing)
 - Per-project infrastructure file copies (now globally shared via stow symlinks)
 
-[Unreleased]: https://github.com/mayknxyz/my-kit-v2/compare/v2.3.0...HEAD
+[Unreleased]: https://github.com/mayknxyz/my-kit-v2/compare/v2.4.0...HEAD
+[2.4.0]: https://github.com/mayknxyz/my-kit-v2/compare/v2.3.0...v2.4.0
 [2.3.0]: https://github.com/mayknxyz/my-kit-v2/compare/v2.2.0...v2.3.0
 [2.2.0]: https://github.com/mayknxyz/my-kit-v2/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/mayknxyz/my-kit-v2/compare/v2.0.4...v2.1.0

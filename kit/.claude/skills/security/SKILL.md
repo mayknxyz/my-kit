@@ -150,6 +150,12 @@ snyk test                                # scan for known vulnerabilities
 snyk monitor                             # monitor for new vulnerabilities
 ```
 
+## References
+
+| Trigger | File | Purpose |
+|---------|------|---------|
+| CSP config, CORS middleware, security checklist, headers file, secrets management | `references/patterns.md` | Reusable security configurations and middleware |
+
 ## MUST DO
 
 - Set security headers on all responses

@@ -267,9 +267,26 @@ if [[ "$IS_BREAKING" == "true" ]]; then
 fi
 ```
 
+### Step 11b: Update package.json Version
+
+If a `package.json` exists in the project root, update its `version` field to match the new version:
+
+```bash
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+PKG_FILE="${REPO_ROOT}/package.json"
+
+if [[ -f "$PKG_FILE" ]]; then
+  # Update the "version" field in package.json
+  sed -i "s/\"version\": *\"[^\"]*\"/\"version\": \"${CHANGELOG_VERSION}\"/" "$PKG_FILE"
+  echo "Updated package.json version to ${CHANGELOG_VERSION}"
+fi
+```
+
+This keeps `package.json` version in sync with the CHANGELOG version on every commit.
+
 ### Step 12: Stage All Changes
 
-Auto-stage all changes (including CHANGELOG.md updates from Step 11):
+Auto-stage all changes (including CHANGELOG.md and package.json updates):
 
 ```bash
 source $HOME/.claude/skills/mykit/references/scripts/git-ops.sh
@@ -420,3 +437,4 @@ Don't fail the commit, just warn.
 - Commit follows conventional commits specification
 - Version bump type is asked at commit time and calculated from latest git tag
 - Scope is optional but recommended for larger projects
+- `package.json` version is updated automatically when CHANGELOG is updated

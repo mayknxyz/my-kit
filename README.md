@@ -14,7 +14,7 @@ This creates symlinks from `kit/.claude/` → `~/.claude/`, making all commands,
 
 ## What's Included
 
-### Commands (15)
+### Commands (16)
 
 | Category | Commands |
 |----------|----------|
@@ -22,19 +22,20 @@ This creates symlinks from `kit/.claude/` → `~/.claude/`, making all commands,
 | Read-Only | `/mykit.status`, `/mykit.help` |
 | Development | `/mykit.specify`, `/mykit.plan`, `/mykit.tasks`, `/mykit.implement` |
 | Ship | `/mykit.commit`, `/mykit.pr`, `/mykit.release` |
-| Ops | `/mykit.audit` |
+| Ops | `/mykit.audit`, `/mykit.issues` |
 | Utilities | `/mykit.log`, `/mykit.skill.review` |
 
-### Skills (27)
+### Skills (28)
 
-**4 My Kit skills** — workflow, ship, ops, and infrastructure:
+**5 My Kit skills** — workflow, ship, ops, issues, and infrastructure:
 
 | Skill | Auto-trigger | Purpose |
 |-------|-------------|---------|
-| `mykit` | No | Scripts, templates, version files |
+| `mykit` | No | Scripts, templates |
 | `mykit-workflow` | Yes | 4 dev workflow steps |
 | `mykit-ship` | Yes | Commit, PR, release pipeline |
 | `mykit-ops` | Yes | Audit utilities |
+| `mykit-issues` | Yes | Issue triage, deep-dive, bulk review |
 
 **23 domain skills** — auto-triggered by project context:
 

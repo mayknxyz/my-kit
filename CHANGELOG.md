@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.4] - 2026-02-14
+
+### Added
+
+- R2 presigned URL generation pattern for browser uploads to cloudflare skill
+- R2 CORS configuration guide and browser upload checklist to cloudflare skill
+- Authenticated R2 proxy pattern for serving private files to cloudflare skill
+- Local dev gotcha for R2 binding vs S3 API mismatch to cloudflare skill
+
+### Changed
+
+- Add `blob:` to CSP `img-src` directive in security skill for object URL previews
+
 ## [2.0.3] - 2026-02-14
 
 ### Changed
@@ -85,7 +98,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Monolithic command routing (replaced by skill routing)
 - Per-project infrastructure file copies (now globally shared via stow symlinks)
 
-[Unreleased]: https://github.com/mayknxyz/my-kit-v2/compare/v2.0.3...HEAD
+[Unreleased]: https://github.com/mayknxyz/my-kit-v2/compare/v2.0.4...HEAD
+[2.0.4]: https://github.com/mayknxyz/my-kit-v2/compare/v2.0.3...v2.0.4
 [2.0.3]: https://github.com/mayknxyz/my-kit-v2/compare/v2.0.2...v2.0.3
 [2.0.2]: https://github.com/mayknxyz/my-kit-v2/compare/v2.0.1...v2.0.2
 [2.0.1]: https://github.com/mayknxyz/my-kit-v2/compare/v2.0.0...v2.0.1

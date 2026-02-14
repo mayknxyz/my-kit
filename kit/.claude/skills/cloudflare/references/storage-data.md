@@ -116,6 +116,94 @@ const list = await env.BUCKET.list({ prefix: 'images/' });
 
 **Gotcha**: No public access by default. Expose via custom domain or a Worker/Pages Function that proxies the bucket.
 
+### Presigned URLs (Browser Uploads)
+
+For client-side uploads directly to R2, generate presigned URLs server-side using the S3 API:
+
+```typescript
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+
+const client = new S3Client({
+  region: 'auto',
+  endpoint: `https://${accountId}.r2.cloudflarestorage.com`,
+  credentials: { accessKeyId, secretAccessKey },
+});
+
+const url = await getSignedUrl(
+  client,
+  new PutObjectCommand({ Bucket: bucketName, Key: key, ContentType: type, ContentLength: size }),
+  { expiresIn: 300 }
+);
+```
+
+### R2 CORS Configuration (Required for Browser Uploads)
+
+**Critical**: R2 buckets have NO CORS rules by default. Browser uploads via presigned URLs will fail with a CORS preflight error unless you configure CORS on the bucket.
+
+```bash
+# Check current CORS rules
+bunx wrangler r2 bucket cors list my-bucket
+
+# Set CORS rules from a JSON file
+bunx wrangler r2 bucket cors set my-bucket --file r2-cors.json --force
+```
+
+```json
+{
+  "rules": [
+    {
+      "allowed": {
+        "origins": ["https://example.com", "http://localhost:5173"],
+        "methods": ["GET", "PUT", "HEAD"],
+        "headers": ["content-type", "content-length"]
+      },
+      "expose": ["ETag"],
+      "maxAge": 3600
+    }
+  ]
+}
+```
+
+**Checklist for R2 browser uploads**:
+1. R2 bucket exists (`wrangler r2 bucket create`)
+2. R2 API credentials set (account ID, access key, secret key)
+3. CORS rules configured on bucket (`wrangler r2 bucket cors set`)
+4. Presigned URL generated server-side with correct bucket name
+5. Client sends PUT to presigned URL with matching Content-Type/Content-Length
+6. CSP `img-src` includes `blob:` if using `URL.createObjectURL()` for previews
+
+### Serving R2 Files (Authenticated Proxy)
+
+R2 buckets are private by default. Serve files through an API route:
+
+```typescript
+// src/routes/api/files/[...path]/+server.ts
+import { GetObjectCommand } from '@aws-sdk/client-s3';
+
+export const GET: RequestHandler = async ({ params, platform, locals }) => {
+  if (!locals.user) throw error(401, 'Unauthorized');
+
+  const client = createR2Client(accountId, accessKeyId, secretAccessKey);
+  const response = await client.send(
+    new GetObjectCommand({ Bucket: bucketName, Key: params.path })
+  );
+
+  return new Response(response.Body as ReadableStream, {
+    headers: {
+      'Content-Type': response.ContentType ?? 'application/octet-stream',
+      'Cache-Control': 'private, max-age=3600',
+    },
+  });
+};
+```
+
+Store the R2 key in the database, render as `/api/files/${r2Key}` in templates.
+
+### Local Dev Gotcha: Binding vs S3 API
+
+**Critical**: `wrangler pages dev` emulates R2 bindings locally (miniflare). If uploads use presigned URLs (S3 API hitting the remote bucket), the local `FILES_BUCKET` binding won't have those files. Use the S3 API (`GetObjectCommand`) for serving too, so both upload and download hit the same remote bucket. The binding approach (`env.BUCKET.get()`) only works when both reads and writes use the binding.
+
 ---
 
 ## Queues

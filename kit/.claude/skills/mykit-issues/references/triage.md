@@ -1,0 +1,196 @@
+# /mykit.issues — Triage
+
+Review and triage open GitHub issues. Analyzes completeness, clarity, staleness, and potential duplicates. Suggests labels from the repo's existing label set.
+
+**This operation is read-only — it never modifies issues.**
+
+## Usage
+
+```
+/mykit.issues
+/mykit.issues triage
+```
+
+## User Input
+
+```text
+$ARGUMENTS
+```
+
+## Implementation
+
+### Step 1: Check Prerequisites
+
+```bash
+# In a git repository
+git rev-parse --git-dir 2>/dev/null
+```
+
+If not in a git repo, display error and stop:
+
+```
+**Error**: Not in a git repository.
+```
+
+```bash
+# gh CLI installed
+command -v gh
+```
+
+If `gh` is not installed, display error and stop:
+
+```
+**Error**: GitHub CLI (`gh`) is not installed. Install it from https://cli.github.com
+```
+
+```bash
+# Authenticated
+gh auth status
+```
+
+If not authenticated, display error and stop:
+
+```
+**Error**: Not authenticated with GitHub. Run `gh auth login` first.
+```
+
+```bash
+# Has a GitHub remote
+gh repo view --json nameWithOwner -q .nameWithOwner
+```
+
+If no GitHub remote, display error and stop:
+
+```
+**Error**: No GitHub remote found for this repository.
+```
+
+### Step 2: Fetch Open Issues
+
+```bash
+gh issue list --state open --json number,title,body,labels,assignees,author,createdAt,updatedAt,comments,milestone --limit 50
+```
+
+If no open issues, display:
+
+```
+No open issues found. Nothing to triage.
+```
+
+Stop here.
+
+### Step 3: Fetch Repo Labels
+
+```bash
+gh label list --json name,description,color --limit 100
+```
+
+### Step 4: Analyze Each Issue
+
+For each issue, assess:
+
+#### Completeness
+
+- **Has body**: Does the issue have a non-empty body?
+- **Has sections**: Does the body contain headings or structured sections?
+- **Reproduction steps**: For bugs, does it include steps to reproduce?
+- Score: complete / partial / minimal
+
+#### Clarity
+
+- **Clear problem statement**: Is the problem or request clearly stated?
+- **Clear expected outcome**: Is the desired outcome defined?
+- Score: clear / unclear / ambiguous
+
+#### Staleness
+
+Based on `updatedAt`:
+
+| Bucket | Threshold |
+|--------|-----------|
+| Fresh | Updated within 7 days |
+| Aging | Updated 8–30 days ago |
+| Stale | Updated 31–90 days ago |
+| Very stale | Updated 90+ days ago |
+
+#### Duplicate Detection
+
+Compare each pair of issues by keyword overlap in titles:
+- Extract significant words (skip common stop words like "the", "is", "a", "an", "in", "to", "for", "and", "or", "bug", "feature", "request", "issue")
+- Flag pairs with >50% keyword overlap as potential duplicates
+
+### Step 5: Suggest Labels
+
+For each unlabeled issue, suggest labels from the repo's existing label set based on:
+- Keywords in title and body
+- Issue type (bug report, feature request, question, documentation)
+- Domain indicators (e.g., file paths, technology names)
+
+Only suggest labels that already exist in the repo.
+
+### Step 6: Display Triage Report
+
+```
+## Issue Triage Report
+
+**Repository**: {owner/repo}
+**Open issues**: {count}
+**Date**: {today}
+
+### Summary
+
+| Metric | Count |
+|--------|-------|
+| Total open | {count} |
+| Complete | {count} |
+| Partial | {count} |
+| Minimal | {count} |
+| Fresh | {count} |
+| Aging | {count} |
+| Stale | {count} |
+| Very stale | {count} |
+| Unlabeled | {count} |
+| Unassigned | {count} |
+| Potential duplicates | {count pairs} |
+
+### Per-Issue Analysis
+
+| # | Title | Completeness | Clarity | Freshness | Labels | Attention |
+|---|-------|-------------|---------|-----------|--------|-----------|
+| {number} | {title} | {score} | {score} | {bucket} | {existing or suggested} | {flags} |
+
+### Attention Items
+
+#### Potential Duplicates
+
+{List pairs of issues that may be duplicates with their keyword overlap}
+
+#### Stale Issues (90+ days)
+
+{List very stale issues with last update date}
+
+#### Minimal Issues (need more detail)
+
+{List issues with minimal completeness score}
+
+#### Suggested Labels
+
+{For each unlabeled issue, show suggested labels from repo's label set}
+```
+
+## Error Handling
+
+| Error | Message |
+|-------|---------|
+| Not a git repository | "Not in a git repository." |
+| gh CLI missing | "GitHub CLI (`gh`) is not installed." |
+| Not authenticated | "Not authenticated with GitHub. Run `gh auth login` first." |
+| No remote | "No GitHub remote found for this repository." |
+| API rate limit | "GitHub API rate limit reached. Try again later." |
+
+## Notes
+
+- This operation is **read-only** — it never creates, updates, or closes issues
+- Limited to 50 open issues to keep per-issue analysis manageable
+- Duplicate detection uses simple keyword overlap — it flags candidates, not confirmed duplicates
+- Label suggestions only use labels that already exist in the repository

@@ -14,7 +14,7 @@ This creates symlinks from `kit/.claude/` → `~/.claude/`, making commands, ski
 
 ## Architecture
 
-### 4 My Kit Skills
+### 5 My Kit Skills
 
 | Skill | Purpose | Auto-trigger |
 |-------|---------|-------------|
@@ -22,15 +22,16 @@ This creates symlinks from `kit/.claude/` → `~/.claude/`, making commands, ski
 | `mykit-workflow` | Dev workflow (specify → plan → tasks → implement) | Yes |
 | `mykit-ship` | Ship pipeline (commit → pr → release) | Yes |
 | `mykit-ops` | Utilities (audit) | Yes |
+| `mykit-issues` | Issue analysis (triage → deep-dive → bulk review) | Yes |
 
 ### 23 Domain Skills
 
 Auto-triggered by context: a11y, analytics, animation, api-design, astro, biome, ci-cd, cloudflare, copywriting, database, design-system, feedback, git, performance, responsive, security, seo, svelte, tailwind, testing, typescript, web-core, zod.
 
-### Commands (15 total)
+### Commands (16 total)
 
 - **5 full commands**: init, sync, help, status, log
-- **8 thin stubs**: specify, plan, tasks, implement, commit, pr, release, audit
+- **9 thin stubs**: specify, plan, tasks, implement, commit, pr, release, audit, issues
 - **1 standalone**: ship.md (from my-claude)
 - **1 utility**: skill.review
 

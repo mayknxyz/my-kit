@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.0] - 2026-02-14
+
+### Added
+
+- New `mykit-issues` skill for read-only GitHub issue analysis (triage, deep-dive, bulk review)
+- `/mykit.issues` command with argument-based routing (no args → triage, number → deep-dive, keyword → bulk review)
+- Triage operation: completeness, clarity, staleness analysis, duplicate detection, label suggestions
+- Deep-dive operation: single issue analysis with codebase search and implementation suggestions
+- Bulk review operation: categorization, duplicate detection, health metrics, top 5 recommendations
+
+### Changed
+
+- CLAUDE.md updated to reflect 5 My Kit Skills (was 4) and 16 Commands (was 15)
+
 ## [2.0.4] - 2026-02-14
 
 ### Added
@@ -98,7 +112,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Monolithic command routing (replaced by skill routing)
 - Per-project infrastructure file copies (now globally shared via stow symlinks)
 
-[Unreleased]: https://github.com/mayknxyz/my-kit-v2/compare/v2.0.4...HEAD
+[Unreleased]: https://github.com/mayknxyz/my-kit-v2/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/mayknxyz/my-kit-v2/compare/v2.0.4...v2.1.0
 [2.0.4]: https://github.com/mayknxyz/my-kit-v2/compare/v2.0.3...v2.0.4
 [2.0.3]: https://github.com/mayknxyz/my-kit-v2/compare/v2.0.2...v2.0.3
 [2.0.2]: https://github.com/mayknxyz/my-kit-v2/compare/v2.0.1...v2.0.2

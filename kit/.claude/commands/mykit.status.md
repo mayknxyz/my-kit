@@ -32,41 +32,28 @@ git rev-parse --git-dir 2>/dev/null
 Run `git init` to initialize a repository, or navigate to an existing git repository.
 ```
 
-### Step 2: Get Current Branch
-
-Get the current branch name:
+### Step 2: Load Branch Context
 
 ```bash
-git rev-parse --abbrev-ref HEAD
+source $HOME/.claude/skills/mykit/references/scripts/fetch-branch-info.sh
 ```
+
+Sets `BRANCH`, `ISSUE_NUMBER`, `SPEC_PATH`, `PLAN_PATH`, `TASKS_PATH`.
 
 **Handle edge cases**:
 
-- **If result is "HEAD"** (detached HEAD state):
+- **If `BRANCH` is "HEAD"** (detached HEAD state):
   - Get the current commit hash: `git rev-parse --short HEAD`
   - Set `isDetachedHead = true`
   - Display warning in Feature Context section
 
 - **Otherwise**:
-  - Set `branch` to the result
   - Set `isDetachedHead = false`
+  - Set `isFeatureBranch = true` if `ISSUE_NUMBER` is non-empty
 
-### Step 3: Extract Issue Number
+### Step 3: Get GitHub Issue Details (if applicable)
 
-If not in detached HEAD state, extract the issue number from the branch name using pattern `^([0-9]+)-`:
-
-- **If branch matches pattern** (e.g., `006-status-dashboard`):
-  - Extract issue number (e.g., `6` from `006-status-dashboard`)
-  - Set `issueNumber` to the extracted number
-  - Set `isFeatureBranch = true`
-
-- **If branch does NOT match pattern** (e.g., `main`, `develop`, `feature-without-number`):
-  - Set `issueNumber = null`
-  - Set `isFeatureBranch = false`
-
-### Step 4: Get GitHub Issue Details (if applicable)
-
-If `issueNumber` is not null, attempt to fetch issue details:
+If `ISSUE_NUMBER` is non-empty, attempt to fetch issue details:
 
 ```bash
 gh issue view {issueNumber} --json number,title,state
@@ -79,13 +66,13 @@ gh issue view {issueNumber} --json number,title,state
 - **If gh is not authenticated**: Set `ghAuthenticated = false`, display "GitHub CLI not authenticated" note
 - **If issue not found**: Display "Issue #{issueNumber} not found" note
 
-### Step 5: Detect Workflow Phase
+### Step 4: Detect Workflow Phase
 
-Check for spec files in `specs/{branch}/` directory (only if on a feature branch):
+Check for spec files using paths from `fetch-branch-info.sh` (only if on a feature branch):
 
-1. Check if `specs/{branch}/spec.md` exists -> set `specExists`
-2. Check if `specs/{branch}/plan.md` exists -> set `planExists`
-3. Check if `specs/{branch}/tasks.md` exists -> set `tasksExists`
+1. Check if `SPEC_PATH` exists -> set `specExists`
+2. Check if `PLAN_PATH` exists -> set `planExists`
+3. Check if `TASKS_PATH` exists -> set `tasksExists`
 
 **Determine phase**:
 
@@ -96,7 +83,7 @@ else if specExists -> phase = "Specification"
 else -> phase = "Not started"
 ```
 
-### Step 6: Get File Status
+### Step 5: Get File Status
 
 Get the current file status:
 
@@ -128,7 +115,7 @@ Each line has format: `XY filename` where:
 - Limit display to first 10 files
 - Track total count for overflow message
 
-### Step 7: Determine Next Command Suggestion
+### Step 6: Determine Next Command Suggestion
 
 Based on the current state, determine the suggested next command:
 
@@ -136,7 +123,7 @@ Based on the current state, determine the suggested next command:
 
 | Phase | Has Uncommitted Changes | Suggested Command | Reason |
 |-------|------------------------|-------------------|--------|
-| Not started | Any | `/mykit.specify` | Create a specification |
+| Not started | Any | `/mykit.specify <issue#>` | Create a specification |
 | Specification | No | `/mykit.plan` | Create implementation plan |
 | Specification | Yes | `/mykit.commit` | Commit your specification changes |
 | Planning | No | `/mykit.tasks` | Generate implementation tasks |
@@ -146,10 +133,10 @@ Based on the current state, determine the suggested next command:
 
 **Special cases**:
 
-- If on main branch (not feature branch): Suggest `/mykit.specify`
+- If on main branch (not feature branch): Suggest `/mykit.specify <issue#>`
 - If in detached HEAD: Suggest `git checkout {branch}` to return to a branch
 
-### Step 8: Display Dashboard
+### Step 7: Display Dashboard
 
 Format and display the complete status dashboard:
 
@@ -181,7 +168,7 @@ Format and display the complete status dashboard:
 ```
 **Branch**: {branch}
 
-Not on a feature branch. Use `/mykit.specify` to start working on an issue.
+Not on a feature branch. Use `/mykit.specify <issue#>` to start working on an issue.
 ```
 
 **If in detached HEAD state**:
@@ -281,4 +268,4 @@ Where:
 |---------|--------------|
 | `/mykit.help` | Shows command documentation |
 | `/mykit.commit` | Common next step when changes exist |
-| `/mykit.specify` | Suggested when not on a feature branch |
+| `/mykit.specify <issue#>` | Suggested when not on a feature branch |

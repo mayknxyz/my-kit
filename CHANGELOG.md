@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.3.0] - 2026-02-14
+
+### Added
+
+- `references/migrations.md` for database skill: multi-environment D1 migration workflow (local → preview → production)
+- Migration verification commands, pre-deployment checklist, common pitfalls, and rollback patterns
+
+### Changed
+
+- database SKILL.md: add `migration workflow` and `environment` trigger keywords
+- database SKILL.md: add `## References` table pointing to `references/migrations.md`
+- database SKILL.md: add migration-discipline items to MUST DO / MUST NOT sections
+
 ## [2.2.0] - 2026-02-14
 
 ### Added
@@ -133,7 +146,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Monolithic command routing (replaced by skill routing)
 - Per-project infrastructure file copies (now globally shared via stow symlinks)
 
-[Unreleased]: https://github.com/mayknxyz/my-kit-v2/compare/v2.2.0...HEAD
+[Unreleased]: https://github.com/mayknxyz/my-kit-v2/compare/v2.3.0...HEAD
+[2.3.0]: https://github.com/mayknxyz/my-kit-v2/compare/v2.2.0...v2.3.0
 [2.2.0]: https://github.com/mayknxyz/my-kit-v2/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/mayknxyz/my-kit-v2/compare/v2.0.4...v2.1.0
 [2.0.4]: https://github.com/mayknxyz/my-kit-v2/compare/v2.0.3...v2.0.4

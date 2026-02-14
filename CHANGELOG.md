@@ -7,6 +7,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.5.0] - 2026-02-15
+
+### Added
+
+- `fetch-branch-info.sh` shared script — resolves BRANCH, ISSUE_NUMBER, SPEC_PATH, PLAN_PATH, TASKS_PATH; sourced by all commands
+- `issue-review.md` reference — reviews extracted issue details, flags gaps, provides recommendations during specify step
+- Pre-stage safety check in commit workflow — scans for sensitive files (.env, keys, credentials) before staging
+- Auto-detect domain skills during plan step — scans spec for keyword matches against 23 skills
+- Status field in tasks.md — set to `Pending` by tasks, updated to `Complete` by implement
+
+### Changed
+
+- `/mykit.specify` now requires issue number argument (e.g., `/mykit.specify 31`)
+- `/mykit.init` simplified to 2-phase flow (framework + principles); workflow preferences use defaults
+- `/mykit.plan` requires spec.md as prerequisite (was standalone)
+- `/mykit.tasks` requires plan.md as prerequisite (was standalone with guided fallback)
+- `/mykit.implement` loads skills from tasks.md; read-only operations skip permission prompts
+- `/mykit.commit` auto-generates type, scope, description, and version bump from context (was 4 interactive prompts)
+- `/mykit.pr` auto-generates title, description, and labels from artifacts (was interactive menu with View/Update/Close)
+- `/mykit.release` simplified to 6 steps (was 16 + routing menu with flags)
+- `/mykit.status` and `/mykit.help` updated for new workflow conventions
+- Workflow references moved from `references/minor/` to `references/`
+- All commands source `fetch-branch-info.sh` instead of inline branch/issue extraction
+- Skills carried through chain: plan detects → tasks copies → implement loads
+
+### Removed
+
+- `references/minor/` directory (files moved to `references/`)
+- Interactive prompts from commit (type, scope, description, breaking, version bump, confirm)
+- Interactive routing menu from PR (View/Update/Close) and release (Create/View with flags)
+- Guided conversation fallback from tasks (plan prerequisite guarantees artifacts)
+- Ad-hoc spec path generation (issue number now required)
+- CRUD flags and `--force` from release command
+- Redundant git repo/feature branch validation (handled by prerequisite chain)
+
 ## [2.4.0] - 2026-02-14
 
 ### Added
@@ -166,7 +201,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Monolithic command routing (replaced by skill routing)
 - Per-project infrastructure file copies (now globally shared via stow symlinks)
 
-[Unreleased]: https://github.com/mayknxyz/my-kit-v2/compare/v2.4.0...HEAD
+[Unreleased]: https://github.com/mayknxyz/my-kit-v2/compare/v2.5.0...HEAD
+[2.5.0]: https://github.com/mayknxyz/my-kit-v2/compare/v2.4.0...v2.5.0
 [2.4.0]: https://github.com/mayknxyz/my-kit-v2/compare/v2.3.0...v2.4.0
 [2.3.0]: https://github.com/mayknxyz/my-kit-v2/compare/v2.2.0...v2.3.0
 [2.2.0]: https://github.com/mayknxyz/my-kit-v2/compare/v2.1.0...v2.2.0

@@ -31,11 +31,15 @@ Map user intent to one of 4 steps:
 
 Map user intent to one of the 4 steps.
 
-### 2. Handle Existing Artifacts
+### 2. Load Branch Context
 
-For artifact-producing steps (specify, plan, tasks):
-- If the artifact already exists, prompt via `AskUserQuestion`: overwrite or cancel
-- If the artifact does not exist, create it
+All steps start by sourcing shared context:
+
+```bash
+source $HOME/.claude/skills/mykit/references/scripts/fetch-branch-info.sh
+```
+
+Sets `BRANCH`, `ISSUE_NUMBER`, `SPEC_PATH`, `PLAN_PATH`, `TASKS_PATH`.
 
 ### 3. Load Reference File
 
@@ -43,10 +47,10 @@ Based on the step, load the appropriate reference file:
 
 | Step | Reference |
 |------|-----------|
-| specify | `references/minor/specify.md` |
-| plan | `references/minor/plan.md` |
-| tasks | `references/minor/tasks.md` |
-| implement | `references/minor/implement.md` |
+| specify | `references/specify.md` |
+| plan | `references/plan.md` |
+| tasks | `references/tasks.md` |
+| implement | `references/implement.md` |
 
 **Load only the one reference file needed per invocation.**
 
@@ -61,4 +65,4 @@ See `references/routing.md` for shared routing patterns and branch/path conventi
 ## Reference Files
 
 - `references/routing.md` — Shared routing patterns, branch/path conventions
-- `references/minor/` — 4 files (specify, plan, tasks, implement)
+- `references/` — 5 files (specify, plan, tasks, implement, issue-review)

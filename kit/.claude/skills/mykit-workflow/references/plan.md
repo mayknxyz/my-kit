@@ -4,75 +4,21 @@
 
 Create a lightweight implementation plan from a feature specification via guided conversation.
 
-### Step 1: Check Prerequisites
-
-Verify we're in a git repository:
+### Step 1: Check Prerequisite
 
 ```bash
-git rev-parse --git-dir 2>/dev/null
+source $HOME/.claude/skills/mykit/references/scripts/fetch-branch-info.sh
 ```
 
-**If not in a git repository**, display error and stop:
+Check if the spec file exists at `SPEC_PATH`. **If not**, display error and stop:
 
 ```
-**Error**: Not in a git repository.
+**Error**: No specification found at `{SPEC_PATH}`.
 
-Run `git init` to initialize a repository, or navigate to an existing git repository.
+Run `/mykit.specify` first.
 ```
 
-### Step 2: Get Current Branch and Extract Issue Number
-
-Get the current branch name:
-
-```bash
-git rev-parse --abbrev-ref HEAD
-```
-
-Extract the issue number from the branch name using pattern `^([0-9]+)-`:
-- **If branch matches pattern** (e.g., `042-feature-name`):
-  - Extract issue number (e.g., `42`)
-  - Set `issueNumber` to the extracted number
-  - Set `isFeatureBranch = true`
-- **If branch does NOT match pattern** (e.g., `main`, `develop`):
-  - Set `issueNumber = null`
-  - Set `isFeatureBranch = false`
-
-### Step 3: Validate Feature Branch Requirement
-
-**If `isFeatureBranch` is false**:
-
-Display error and stop:
-```
-**Error**: No feature branch detected.
-
-You must be on a feature branch (e.g., `042-feature-name`) to create a plan.
-
-To create a branch: `/mykit.specify`
-```
-
-### Step 4: Determine Paths
-
-Set the following paths based on the current branch:
-- `specPath = specs/{branch}/spec.md`
-- `planPath = specs/{branch}/plan.md`
-- `specsDir = specs/{branch}/`
-
-### Step 5: Check for Existing Spec File
-
-Check if the spec file exists at `specPath`.
-
-**If spec file does NOT exist**:
-
-Display error and stop:
-```
-**Error**: No specification found.
-
-A spec file is required before creating a plan.
-
-To create a specification: `/mykit.specify`
-```
-
-### Step 6: Check for Existing Plan
+### Step 2: Check for Existing Plan
 
 **If plan file exists at `planPath`**:
 
@@ -88,7 +34,7 @@ Use `AskUserQuestion` tool to prompt:
   Operation cancelled. Existing plan preserved.
   ```
 
-### Step 7: Read and Analyze Spec File
+### Step 3: Read and Analyze Spec File
 
 Read the spec file content from `specPath`.
 
@@ -100,7 +46,7 @@ Extract the following information from the spec:
 - **Success Criteria**: All items under `### Measurable Outcomes`
 - **Clarifications**: Any recorded clarifications from `## Clarifications` section
 
-### Step 8: Identify Technical Decisions (Guided Conversation)
+### Step 4: Identify Technical Decisions (Guided Conversation)
 
 Analyze the spec content to identify areas that may need technical clarification.
 
@@ -121,9 +67,40 @@ Use `AskUserQuestion` tool with:
 
 Record each answer for use in plan generation.
 
-**If no ambiguities detected**: Skip to Step 9 without asking questions.
+**If no ambiguities detected**: Skip to Step 5 without asking questions.
 
-### Step 9: Generate Plan Content
+### Step 5: Detect Relevant Skills
+
+Scan the spec content and technical decisions for keywords that map to domain skills. Match against the 23 available skills using their trigger keywords:
+
+| Skill | Match keywords |
+|-------|---------------|
+| a11y | accessibility, ARIA, keyboard navigation, screen reader, WCAG, contrast |
+| analytics | analytics, tracking, events, page views, Umami |
+| animation | animation, transition, scroll effect, motion, fade, slide |
+| api-design | API, REST, endpoint, HTTP, status codes, pagination |
+| astro | Astro, .astro, content collections, islands |
+| biome | Biome, linting, formatting, lint, format |
+| ci-cd | CI/CD, GitHub Actions, workflow, deploy, pipeline |
+| cloudflare | Cloudflare, Workers, Pages, KV, D1, R2, wrangler |
+| copywriting | copywriting, microcopy, CTA, error message, empty state |
+| database | database, D1, SQLite, SQL, schema, migration |
+| design-system | design tokens, color scale, typography, spacing, theming |
+| git | git, commit, branch, PR, merge |
+| performance | performance, Core Web Vitals, LCP, CLS, font loading, lazy loading |
+| responsive | responsive, mobile-first, breakpoints, container queries, fluid |
+| security | security, CSP, XSS, CORS, validation, secrets |
+| seo | SEO, meta tags, JSON-LD, Open Graph, sitemap, structured data |
+| svelte | Svelte, .svelte, runes, $state, $props, SvelteKit |
+| tailwind | Tailwind, utility classes, @theme, dark mode |
+| testing | test, Vitest, Playwright, Testing Library, coverage |
+| typescript | TypeScript, .ts, types, interfaces, generics, strict |
+| web-core | semantic HTML, CSS nesting, container queries, custom elements |
+| zod | Zod, schema validation, safeParse, z.object |
+
+Collect all matched skills into a `relevantSkills[]` list. Each entry has a `name` and a brief `reason` (why it was matched).
+
+### Step 6: Generate Plan Content
 
 Generate the plan content using this structure:
 
@@ -146,6 +123,11 @@ Generate the plan content using this structure:
 **Rationale**: {why this choice makes sense}
 
 {Repeat for each significant design decision}
+
+## Skills
+
+{For each skill in relevantSkills[]:}
+- **{name}** — {reason}
 
 ## Implementation Phases
 
@@ -178,7 +160,7 @@ Where:
 - `branch` = current git branch
 - `currentDate` = today's date in YYYY-MM-DD format
 
-### Step 10: Write Plan
+### Step 7: Write Plan
 
 1. Create the specs directory if it doesn't exist
 2. Write the plan content to `planPath`

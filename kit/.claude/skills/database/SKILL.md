@@ -2,8 +2,9 @@
 name: database
 description: >
   Database patterns with D1/SQLite — schema design, migrations, parameterized queries, batch
-  operations. Use when designing database schemas, writing SQL queries, creating migrations,
-  or working with D1. Triggers: database, D1, SQLite, SQL, schema, migration, query, JOIN,
+  operations, multi-environment migration workflow. Use when designing database schemas, writing
+  SQL queries, creating migrations, managing migration environments, or working with D1. Triggers:
+  database, D1, SQLite, SQL, schema, migration, migration workflow, environment, query, JOIN,
   index, parameterized query, batch operation.
 ---
 
@@ -100,6 +101,12 @@ CREATE VIRTUAL TABLE posts_fts USING fts5(title, content, content=posts);
 SELECT * FROM posts_fts WHERE posts_fts MATCH ?;
 ```
 
+## References
+
+| Topic | File | Load When |
+|-------|------|-----------|
+| Migration workflow | [migrations.md](references/migrations.md) | Multi-environment migrations, migration checklist, environment sync, rollback patterns |
+
 ## MUST DO
 
 - Use parameterized queries with `.bind()` — never interpolate user input
@@ -108,6 +115,8 @@ SELECT * FROM posts_fts WHERE posts_fts MATCH ?;
 - Use `TEXT` for dates in SQLite (ISO 8601 format)
 - Use `env.DB.batch()` for multi-statement transactions
 - Use `RETURNING *` to get inserted/updated rows
+- Apply migrations to all target environments (local, preview, production) before marking schema work complete
+- Write idempotent migration SQL (`IF NOT EXISTS` / `IF EXISTS`)
 
 ## MUST NOT
 
@@ -117,3 +126,5 @@ SELECT * FROM posts_fts WHERE posts_fts MATCH ?;
 - Forget indexes on foreign keys and WHERE clause columns
 - Use auto-increment IDs if they expose business metrics — use random IDs
 - Assume D1 supports all PostgreSQL features — it's SQLite
+- Apply migrations to local only without applying to preview and production
+- Modify the database outside of migration files — migrations are the source of truth

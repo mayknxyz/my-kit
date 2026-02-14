@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.2.0] - 2026-02-14
+
+### Added
+
+- Reference files for 5 domain skills: tailwind/patterns.md, analytics/patterns.md, typescript/advanced.md, git/workflows.md, copywriting/patterns.md
+- `## References` routing tables in tailwind, analytics, typescript, git, copywriting SKILL.md files
+- `load_feature_paths()` wrapper in utils.sh to encapsulate eval pattern
+- Trap handlers in create-new-feature.sh, setup-plan.sh, git-ops.sh
+- Source error guards in check-prerequisites.sh, setup-plan.sh, update-agent-context.sh
+- Copy error checks in create-new-feature.sh, setup-plan.sh
+
+### Changed
+
+- README.md: fix command count (18→15), remove deleted commands, update mykit-ops purpose
+- CLAUDE.md: note 9 domain skills with references/ subdirectories
+- All 8 shell scripts now use `set -euo pipefail` consistently
+- 3 callers updated from `eval "$(get_feature_paths)"` to `load_feature_paths`
+- `get_feature_paths()` now escapes single quotes in paths to prevent injection
+- feedback SKILL.md expanded with evaluation checklist, improvement patterns, good-vs-bad examples
+- create-new-feature.sh: fix grep pipefail issue with `{ grep || true; }` guard
+
 ## [2.1.0] - 2026-02-14
 
 ### Added
@@ -112,7 +133,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Monolithic command routing (replaced by skill routing)
 - Per-project infrastructure file copies (now globally shared via stow symlinks)
 
-[Unreleased]: https://github.com/mayknxyz/my-kit-v2/compare/v2.1.0...HEAD
+[Unreleased]: https://github.com/mayknxyz/my-kit-v2/compare/v2.2.0...HEAD
+[2.2.0]: https://github.com/mayknxyz/my-kit-v2/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/mayknxyz/my-kit-v2/compare/v2.0.4...v2.1.0
 [2.0.4]: https://github.com/mayknxyz/my-kit-v2/compare/v2.0.3...v2.0.4
 [2.0.3]: https://github.com/mayknxyz/my-kit-v2/compare/v2.0.2...v2.0.3

@@ -79,6 +79,12 @@ Standard UTM parameters:
 - `utm_medium` — marketing medium (cpc, social, email)
 - `utm_campaign` — campaign name (launch, spring-sale)
 
+## References
+
+| Topic | File | Load When |
+|-------|------|-----------|
+| Advanced patterns | [patterns.md](references/patterns.md) | Funnel tracking, A/B tests, dashboard queries, error tracking, privacy compliance |
+
 ## MUST DO
 
 - Use Umami (self-hosted) for privacy-first analytics

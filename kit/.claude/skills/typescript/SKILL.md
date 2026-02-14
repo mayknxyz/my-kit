@@ -69,6 +69,12 @@ function getProperty<T, K extends keyof T>(obj: T, key: K): T[K] {
 - Use `interface` for object shapes that may be extended (component props, API responses)
 - Use `type` for unions, intersections, mapped types, and aliases
 
+## References
+
+| Topic | File | Load When |
+|-------|------|-----------|
+| Advanced types | [advanced.md](references/advanced.md) | Conditional types, mapped types, template literals, module augmentation, branded types |
+
 ## MUST DO
 
 - Enable `strict: true` in tsconfig (includes `strictNullChecks`, `noImplicitAny`)

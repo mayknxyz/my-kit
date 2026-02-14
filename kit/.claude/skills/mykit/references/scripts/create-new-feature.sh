@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 
-set -e
+set -euo pipefail
+
+cleanup() {
+  :
+}
+trap cleanup EXIT
 
 JSON_MODE=false
 SHORT_NAME=""
@@ -225,7 +230,7 @@ generate_branch_name() {
         # Fallback to original logic if no meaningful words found
         local cleaned
         cleaned=$(clean_branch_name "$description")
-        echo "$cleaned" | tr '-' '\n' | grep -v '^$' | head -3 | tr '\n' '-' | sed 's/-$//'
+        echo "$cleaned" | tr '-' '\n' | { grep -v '^$' || true; } | head -3 | tr '\n' '-' | sed 's/-$//'
     fi
 }
 
@@ -286,7 +291,11 @@ mkdir -p "$FEATURE_DIR"
 
 TEMPLATE="$HOME/.claude/skills/mykit/references/templates/minor/spec.md"
 SPEC_FILE="$FEATURE_DIR/spec.md"
-if [ -f "$TEMPLATE" ]; then cp "$TEMPLATE" "$SPEC_FILE"; else touch "$SPEC_FILE"; fi
+if [ -f "$TEMPLATE" ]; then
+    cp "$TEMPLATE" "$SPEC_FILE" || { echo "Error: Failed to copy template to $SPEC_FILE" >&2; exit 1; }
+else
+    touch "$SPEC_FILE"
+fi
 
 # Set the MYKIT_FEATURE environment variable for the current session
 export MYKIT_FEATURE="$BRANCH_NAME"

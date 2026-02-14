@@ -73,6 +73,12 @@ main                          # production, always deployable
 - **Size**: Small, focused PRs (< 400 lines changed)
 - **Review**: Self-review diff before requesting review
 
+## References
+
+| Topic | File | Load When |
+|-------|------|-----------|
+| Advanced workflows | [workflows.md](references/workflows.md) | Rebase, cherry-pick, stash, conflict resolution, bisect, reflog |
+
 ## MUST DO
 
 - Use conventional commit format for all commits

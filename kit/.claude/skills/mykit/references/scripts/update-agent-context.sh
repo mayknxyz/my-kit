@@ -38,11 +38,7 @@
 # Agent types: claude|gemini|copilot|cursor-agent|qwen|opencode|codex|windsurf|kilocode|auggie|shai|q|bob|qoder
 # Leave empty to update all existing agent files
 
-set -e
-
-# Enable strict error handling
-set -u
-set -o pipefail
+set -euo pipefail
 
 #==============================================================================
 # Configuration and Global Variables
@@ -51,10 +47,10 @@ set -o pipefail
 # Get script directory and load common functions
 SCRIPT_DIR="$(CDPATH="" cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck source=utils.sh
-source "$SCRIPT_DIR/utils.sh"
+source "$SCRIPT_DIR/utils.sh" || { echo "Error: Failed to source utils.sh" >&2; exit 1; }
 
 # Get all paths and variables from common functions
-eval "$(get_feature_paths)"
+load_feature_paths
 
 NEW_PLAN="$IMPL_PLAN"  # Alias for compatibility with existing code
 AGENT_TYPE="${1:-}"

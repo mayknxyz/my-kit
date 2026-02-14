@@ -22,14 +22,37 @@ Every `SKILL.md` follows this structure:
 6. **MUST NOT** — anti-patterns to avoid (bullet list)
 7. Optional: `references/` subdirectory for detailed docs loaded on demand
 
-## Evaluating Skill Accuracy
+## Skill Evaluation Checklist
 
-When a skill activates during normal work, compare its guidance against actual behavior observed:
+When reviewing a skill, check each criterion:
 
-- Does the code pattern still work with current library versions?
-- Did you override or ignore any rule? That rule may be wrong or unclear
-- Did you use a pattern not covered? That's a gap worth adding
-- Do two skills give conflicting advice? Flag the contradiction
+- **Code examples work** — do snippets reflect current API/syntax for the library version?
+- **Anti-patterns are accurate** — are MUST NOT items genuinely harmful, not just preferences?
+- **Versions are current** — does the skill reference the correct major version (e.g., Tailwind v4, Astro 5)?
+- **Cross-references valid** — do referenced skills actually exist?
+- **Word count in range** — SKILL.md is 200–400 words; longer content lives in `references/`
+- **No duplication** — patterns aren't repeated across multiple skills
+- **Triggers are specific** — frontmatter triggers match real use cases, not generic terms
+
+## Common Improvement Patterns
+
+What to look for when reviewing skills:
+
+- **Missing real-world pattern** — you used a pattern not covered → add it
+- **Outdated API** — a code example uses deprecated syntax → update it
+- **Conflicting advice** — two skills give opposite guidance → reconcile
+- **Override signal** — you ignored a rule during work → the rule may be wrong
+- **Too abstract** — guidance says "follow best practices" without specifics → add concrete examples
+- **Missing reference file** — SKILL.md exceeds 400 words or has complex topics → extract to `references/`
+
+## Good vs Bad Skill Content
+
+| Bad | Good | Why |
+|-----|------|-----|
+| "Use proper error handling" | "Use `{ ok: true; data: T } \| { ok: false; error: string }` Result type" | Concrete pattern |
+| "Follow accessibility guidelines" | "Add `aria-label` to icon-only buttons" | Specific, actionable |
+| Long config file walkthrough | Code snippet + link to docs | Concise, not duplicating docs |
+| "Don't use bad patterns" | "`@apply` excessively — prefer utility classes in markup" | Shows what and why |
 
 ## Structured Reviews
 
@@ -41,6 +64,8 @@ Use `/mykit.skill.review` for end-of-session structured reviews of all activated
 - Keep skills 200–400 words (concise, actionable)
 - Cross-reference related skills in the intro line
 - Verify accuracy against actual behavior before proposing changes
+- Check code examples against current library versions
+- Add a `## References` routing table when creating `references/` files
 
 ## MUST NOT
 
@@ -48,3 +73,4 @@ Use `/mykit.skill.review` for end-of-session structured reviews of all activated
 - Create skills longer than 400 words — split into `references/` files instead
 - Duplicate content across skills — cross-reference instead
 - Remove MUST DO / MUST NOT sections — every skill needs guardrails
+- Add vague guidance without concrete examples or patterns

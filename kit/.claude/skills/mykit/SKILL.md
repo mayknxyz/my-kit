@@ -33,10 +33,6 @@ Template files organized by category:
 - `commands/` — Command template files for distribution
 - `frameworks/` — Framework-specific CLAUDE.md templates (vanilla, astro, sveltekit)
 
-### Version Files
-
-- `VERSION` — Current My Kit version
-
 ## Path Convention
 
 Scripts in this skill use `$HOME/.claude/` prefix for infrastructure paths (after stow deployment).

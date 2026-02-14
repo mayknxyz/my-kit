@@ -91,6 +91,12 @@ Config for `pa11y-ci` (`.pa11yci` at project root):
 }
 ```
 
+## References
+
+| Trigger | File | Purpose |
+|---------|------|---------|
+| dialog, tabs, accordion, focus management, live regions, screen reader testing | `references/patterns.md` | ARIA widget patterns and testing strategies |
+
 ## MUST DO
 
 - Use semantic HTML before reaching for ARIA roles

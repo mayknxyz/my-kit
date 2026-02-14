@@ -28,7 +28,7 @@ This creates symlinks from `kit/.claude/` → `~/.claude/`, making commands, ski
 
 Auto-triggered by context: a11y, analytics, animation, api-design, astro, biome, ci-cd, cloudflare, copywriting, database, design-system, feedback, git, performance, responsive, security, seo, svelte, tailwind, testing, typescript, web-core, zod.
 
-Skills with `references/` subdirectories: analytics, astro, cloudflare, copywriting, git, svelte, tailwind, typescript, web-core.
+Skills with `references/` subdirectories: a11y, analytics, api-design, astro, cloudflare, copywriting, database, git, security, seo, svelte, tailwind, testing, typescript, web-core.
 
 ### Commands (16 total)
 

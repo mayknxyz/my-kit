@@ -4,50 +4,43 @@
 
 Create a lightweight feature specification from a GitHub issue or via guided conversation.
 
-### Step 1: Check Prerequisites
-
-Verify we're in a git repository:
+### Step 1: Load Branch Context
 
 ```bash
-git rev-parse --git-dir 2>/dev/null
+source $HOME/.claude/skills/mykit/references/scripts/fetch-branch-info.sh
 ```
 
-**If not in a git repository**, display error and stop:
+### Step 2: Parse Arguments and Resolve Issue Number
 
-```
-**Error**: Not in a git repository.
+**Step 2.1**: Validate `$ARGUMENTS` is a positive integer using pattern `^\d+$`:
+- **If valid** (e.g., `31`): Set `issueNumber` to that number
+- **If empty**: Display error and stop:
+  ```
+  **Error**: Issue number required.
 
-Run `git init` to initialize a repository, or navigate to an existing git repository.
-```
+  Usage: /mykit.specify <issue-number>
+  Example: /mykit.specify 31
+  ```
+- **If non-integer** (e.g., `gh#31`, `foo`): Display error and stop:
+  ```
+  **Error**: Invalid argument "{$ARGUMENTS}". Expected a number.
 
-### Step 2: Get Current Branch and Extract Issue Number
+  Usage: /mykit.specify <issue-number>
+  Example: /mykit.specify 31
+  ```
 
-Get the current branch name:
+**Step 2.2**: Determine if current branch is correct:
+- **Correct branch**: `ISSUE_NUMBER` equals `issueNumber`
+- **Wrong branch**: `ISSUE_NUMBER` differs from `issueNumber`
+- **No feature branch**: `ISSUE_NUMBER` is empty
 
-```bash
-git rev-parse --abbrev-ref HEAD
-```
+Set `needsNewBranch = true` if wrong branch or no feature branch. Otherwise `false`.
 
-Extract the issue number from the branch name using pattern `^([0-9]+)-`:
-- **If branch matches pattern** (e.g., `042-feature-name`):
-  - Extract issue number (e.g., `42`)
-  - Set `issueNumber` to the extracted number
-  - Set `isFeatureBranch = true`
-- **If branch does NOT match pattern** (e.g., `main`, `develop`):
-  - Set `issueNumber = null`
-  - Set `isFeatureBranch = false`
+### Step 3: Auto-Create Branch (if needed)
 
-### Step 3: Auto-Create Branch (if on default branch)
+**If `needsNewBranch` is false**: Skip to Step 4.
 
-**If `isFeatureBranch` is false**:
-
-1. Check if an issue number was provided in the command arguments (e.g., `github issue #48`). If so, extract and use it. Otherwise, use `AskUserQuestion` to prompt:
-   - header: "Issue Number"
-   - question: "You're on the default branch. Which GitHub issue is this spec for? (Enter the issue number, e.g., 48)"
-   - options:
-     1. label: "Enter number", description: "Provide a GitHub issue number to link this spec to"
-
-2. Store the response as `issueNumber`.
+**If `needsNewBranch` is true**:
 
 3. Fetch the issue title for branch naming:
    ```bash
@@ -142,12 +135,24 @@ Search for common markdown headings and extract content:
 - Set `contentSource = "issue"` if at least summary was extracted
 - If no sections found but body >= 50 chars, use full body as summary
 
-### Step 7: Guided Conversation (if needed)
+### Step 7: Review Issue Details
+
+**If extraction succeeded** (at least `summary` is set):
+
+Load and follow the instructions in `references/issue-review.md`. This step:
+1. Presents extracted details back to the user
+2. Flags missing or vague sections
+3. Provides specific recommendations
+4. Asks user to accept, accept with recommendations, or clarify
+
+After the review, `summary`, `problem`, and `acceptanceCriteria` may be updated.
+
+### Step 8: Guided Conversation (if needed)
 
 **Trigger conversation if**:
-- `issueNumber` is null, OR
 - GitHub issue body < 50 characters, OR
-- No sections could be extracted from issue body
+- No sections could be extracted from issue body, OR
+- Sections are still empty after review
 
 **Question 1: Summary**
 
@@ -181,13 +186,6 @@ Wait for user response and store as `acceptanceCriteria`.
 
 Set `contentSource = "conversation"`
 
-### Step 8: Generate Ad-hoc Spec Path (if needed)
-
-**If `issueNumber` is null AND `specPath` was not set from a feature branch**:
-- Generate a slug from the summary (first 30 chars, lowercase, spaces to hyphens)
-- Set `specPath = specs/adhoc-{slug}/spec.md`
-- Create the directory if it doesn't exist
-
 ### Step 9: Format Spec Content
 
 Generate the spec content using the lite template structure:
@@ -198,7 +196,7 @@ Generate the spec content using the lite template structure:
 **Feature Branch**: `{branch}`
 **Created**: {currentDate}
 **Status**: Draft
-**GitHub Issue**: {issueLink or "N/A (ad-hoc)"}
+**GitHub Issue**: {issueLink}
 
 ## Overview
 
@@ -230,10 +228,10 @@ Generate the spec content using the lite template structure:
 ```
 
 Where:
-- `featureName` = issue title if available, otherwise derived from summary
+- `featureName` = issue title from GitHub
 - `branch` = current git branch
 - `currentDate` = today's date in YYYY-MM-DD format
-- `issueLink` = `[#N](https://github.com/{owner}/{repo}/issues/N)` or "N/A (ad-hoc)"
+- `issueLink` = `[#N](https://github.com/{owner}/{repo}/issues/N)`
 
 ### Step 10: Write Spec
 

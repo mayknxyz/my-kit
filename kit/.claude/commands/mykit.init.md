@@ -1,6 +1,6 @@
 # /mykit.init
 
-Initialize My Kit in the current repository. Produces a single CLAUDE.md file with framework template, project principles, and workflow preferences.
+Initialize My Kit in the current repository. Produces a single CLAUDE.md file with framework template and project principles.
 
 ## Usage
 
@@ -10,9 +10,9 @@ Initialize My Kit in the current repository. Produces a single CLAUDE.md file wi
 
 ## Description
 
-The init command runs a 3-phase Claude-driven flow that bootstraps a project from zero to ready. No external scripts — everything is handled through Claude's tools.
+The init command runs a 2-phase Claude-driven flow that bootstraps a project from zero to ready. No external scripts — everything is handled through Claude's tools.
 
-**Output**: A single `CLAUDE.md` file at the project root containing framework instructions, project principles, and workflow configuration.
+**Output**: A single `CLAUDE.md` file at the project root containing framework instructions, project principles, and default workflow configuration.
 
 ## Implementation
 
@@ -25,13 +25,13 @@ Check if `CLAUDE.md` already exists at the project root.
 - header: "Existing"
 - question: "CLAUDE.md already exists. What would you like to do?"
 - options:
-  1. label: "Update sections", description: "Update Project Principles and/or Workflow sections only"
+  1. label: "Update principles", description: "Update the Project Principles section only"
   2. label: "Start fresh", description: "Overwrite CLAUDE.md with a new framework template"
   3. label: "Cancel", description: "Abort without making changes"
 
 If "Cancel", display `Init cancelled. No files were modified.` and stop.
 
-If "Update sections", skip to Phase 2 (read existing CLAUDE.md as the base instead of a template).
+If "Update principles", skip to Phase 2 (read existing CLAUDE.md as the base instead of a template).
 
 If "Start fresh", continue to Phase 1.
 
@@ -56,17 +56,21 @@ This becomes the base content for the project's CLAUDE.md.
 
 ### Phase 2: Project Principles
 
-**Step 2.1**: Use `AskUserQuestion`:
+Use `AskUserQuestion`:
 
 - header: "Principles"
-- question: "What are the core principles for this project? (describe 3-5 principles, e.g. 'Ship fast, type-safe, accessible')"
+- question: "What are the core principles for this project? (3-7 principles, e.g. 'Ship fast, type-safe, accessible')"
 - options:
-  1. label: "Enter principles", description: "Define project-specific design principles"
-  2. label: "Skip", description: "Leave the principles section empty for now"
+  1. label: "Performance-first", description: "Fast builds, minimal JS, optimized assets, Core Web Vitals"
+  2. label: "Type-safe & accessible", description: "Strict TypeScript, WCAG 2.2 AA, semantic HTML"
+  3. label: "Ship fast", description: "Minimal abstraction, convention over configuration, iterate quickly"
+  4. label: "Skip", description: "Leave the principles section empty for now"
+
+The user can select a preset or use "Other" to provide custom principles as free-text.
 
 **If "Skip"**: Leave the `## Project Principles` section with the placeholder comment.
 
-**If "Enter principles"**: Ask for the principles as free-form text. The user can describe them in natural language. Parse the response into a bulleted list and fill the `## Project Principles` section:
+**Otherwise**: Parse the response (preset or custom) into a bulleted list of 3-7 principles and fill the `## Project Principles` section:
 
 ```markdown
 ## Project Principles
@@ -75,25 +79,9 @@ This becomes the base content for the project's CLAUDE.md.
 - **Principle Name**: Brief description of the principle
 ```
 
-### Phase 3: Workflow Preferences
-
-**Step 3.1**: Show the default workflow values from the template and ask:
-
-Use `AskUserQuestion`:
-
-- header: "Workflow"
-- question: "Customize workflow preferences? Defaults: branch=main, PR format={version}: {title} (#{issue}), auto-assign=yes, draft=no"
-- options:
-  1. label: "Use defaults", description: "Keep the default workflow settings"
-  2. label: "Customize", description: "Change branch, PR format, or other preferences"
-
-**If "Use defaults"**: Keep the `## Workflow` section as-is from the template.
-
-**If "Customize"**: Ask about each preference and update the `## Workflow` section accordingly.
-
 ### Output
 
-Write the completed CLAUDE.md to the project root. Nothing else.
+Write the completed CLAUDE.md to the project root. Keep the `## Workflow` section as-is from the template defaults (branch=main, PR format={version}: {title} (#{issue}), auto-assign=yes, draft=no). Nothing else.
 
 ### Summary
 
@@ -102,7 +90,7 @@ Display:
 ```
 /mykit.init complete
   Framework:  {selected framework label}
-  CLAUDE.md:  ./CLAUDE.md (created)
+  CLAUDE.md:  ./CLAUDE.md ({created|updated})
   Next step:  /mykit.specify
 ```
 

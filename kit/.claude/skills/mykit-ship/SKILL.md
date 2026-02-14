@@ -27,21 +27,15 @@ Handles the 3 shipping steps: commit, pr, and release. Auto-activates when the u
 
 Map user intent to one of the 3 steps: `commit`, `pr`, or `release`.
 
-### 2. Read Shared Git Context
+### 2. Load Branch Context
 
-Before executing any step, gather shared context:
+Before executing any step, source shared context:
 
 ```bash
-# Current branch
-git rev-parse --abbrev-ref HEAD
-
-# Issue number from branch pattern ^([0-9]+)-
-# Uncommitted changes
-git status --porcelain
-
-# Recent commits on branch
-git log --oneline -10
+source $HOME/.claude/skills/mykit/references/scripts/fetch-branch-info.sh
 ```
+
+Sets `BRANCH`, `ISSUE_NUMBER`, `SPEC_PATH`, `PLAN_PATH`, `TASKS_PATH`.
 
 ### 3. Load Reference File
 
@@ -57,9 +51,9 @@ git log --oneline -10
 
 Follow the loaded reference file's instructions exactly. Each reference contains the complete workflow:
 
-- **commit.md**: Interactive commit type selection, message composition, auto-staging, CHANGELOG updates, breaking change detection, issue linkage, version bump selection
-- **pr.md**: Validation gates (tasks complete, code quality, commits exist), PR description generation from artifacts, issue linking, create/update modes
-- **release.md**: Version determination, tag creation, GitHub release publishing, post-release cleanup
+- **commit.md**: Auto-generated conventional commit, CHANGELOG updates, version bump, pre-stage safety check
+- **pr.md**: Auto-generated PR title/description/labels from artifacts, push and create
+- **release.md**: Version calculation, squash merge, tag, GitHub release, branch cleanup
 
 ## Reference Files
 

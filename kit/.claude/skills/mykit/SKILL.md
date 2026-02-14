@@ -12,10 +12,11 @@ This skill contains shared infrastructure files used by other My Kit skills and 
 
 ### Scripts (`references/scripts/`)
 
-8 bash utilities for workflow automation:
+9 bash utilities for workflow automation:
 
 | Script | Purpose |
 |--------|---------|
+| `fetch-branch-info.sh` | Resolve branch context (BRANCH, ISSUE_NUMBER, paths) — sourced by all commands |
 | `check-prerequisites.sh` | Validate git repo, branch, and feature context |
 | `create-new-feature.sh` | Create feature branch from issue number |
 | `git-ops.sh` | Git operations (commit, changelog, branch) |

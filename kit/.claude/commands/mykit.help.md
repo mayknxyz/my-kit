@@ -31,7 +31,7 @@ Quick reference for all `/mykit.*` commands.
 
 **Natural language** (skill auto-trigger):
 ```
-"Write the spec for this feature"  → mykit-workflow activates → specify step
+"Write the spec for issue 31"      → mykit-workflow activates → specify step
 "Let's plan the implementation"    → mykit-workflow activates → plan step
 "Commit these changes"             → mykit-ship activates → commit step
 "Run an audit"                     → mykit-ops activates → audit step
@@ -59,7 +59,7 @@ These execute immediately without an action.
 
 | Command | Description |
 |---------|-------------|
-| `/mykit.specify` | Create feature specification |
+| `/mykit.specify <issue#>` | Create feature specification from GitHub issue |
 | `/mykit.plan` | Create implementation plan |
 | `/mykit.tasks` | Generate task breakdown |
 | `/mykit.implement` | Execute tasks one by one |
@@ -125,26 +125,11 @@ If `$ARGUMENTS` equals "workflow", display workflow guidance:
 Development workflow using 4 steps:
 
 ```
-/mykit.specify → /mykit.plan → /mykit.tasks → /mykit.implement →
-/mykit.audit → /mykit.commit → /mykit.pr
+/mykit.specify 31 → /mykit.plan → /mykit.tasks → /mykit.implement →
+/mykit.audit (optional) → /mykit.commit → /mykit.pr
 ```
 
-## Minimal Flow
-
-For bug fixes and small changes — workflow steps are optional:
-
-```
-/mykit.specify → /mykit.implement → /mykit.commit → /mykit.pr
-```
-
-## Choosing an Approach
-
-| Scenario | Recommended Flow |
-|----------|-----------------|
-| New feature with clear requirements | Full workflow (specify → plan → tasks → implement) |
-| Bug fix or small enhancement | Minimal (specify → implement) |
-| Refactoring existing code | Minimal (specify → implement) |
-| Performance improvements | Minimal (specify → implement) |
+Each step requires its predecessor: `specify` requires a GitHub issue number, `plan` requires `spec.md`, `tasks` requires `plan.md`. Skills are auto-detected during planning and carried through to implementation.
 
 ---
 
@@ -166,7 +151,7 @@ Available commands:
 - `/mykit.plan` - Create implementation plan
 - `/mykit.pr` - Create or update pull request
 - `/mykit.release` - Create release with versioning
-- `/mykit.specify` - Create feature specification
+- `/mykit.specify <issue#>` - Create feature specification
 - `/mykit.status` - Show current workflow state
 - `/mykit.sync` - Install/upgrade My Kit v2
 - `/mykit.skill.review` - Review activated skills and propose improvements

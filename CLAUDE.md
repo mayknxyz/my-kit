@@ -19,7 +19,7 @@ This creates symlinks from `kit/.claude/` → `~/.claude/`, making commands, ski
 | Skill | Purpose | Auto-trigger |
 |-------|---------|-------------|
 | `mykit` | Shared infrastructure (scripts, templates) | No (reference only) |
-| `mykit-workflow` | Dev workflow (specify → plan → tasks → implement) | Yes |
+| `mykit-workflow` | Dev workflow (specify &lt;issue#&gt; → plan → tasks → implement) | Yes |
 | `mykit-ship` | Ship pipeline (commit → pr → release) | Yes |
 | `mykit-ops` | Utilities (audit) | Yes |
 | `mykit-issues` | Issue analysis (triage → deep-dive → bulk review) | Yes |
@@ -33,7 +33,7 @@ Skills with `references/` subdirectories: a11y, analytics, api-design, astro, cl
 ### Commands (16 total)
 
 - **5 full commands**: init, sync, help, status, log
-- **9 thin stubs**: specify, plan, tasks, implement, commit, pr, release, audit, issues
+- **9 thin stubs**: specify (requires issue#), plan (requires spec.md), tasks (requires plan.md), implement, commit, pr, release, audit, issues
 - **1 standalone**: ship.md (from my-claude)
 - **1 utility**: skill.review
 
@@ -45,9 +45,12 @@ mykit-audit-quality, mykit-audit-security, mykit-audit-perf, mykit-audit-a11y, m
 
 - **Infrastructure paths** (scripts, templates): `$HOME/.claude/skills/mykit/references/`
 - **Scripts** use `$HOME/.claude/` prefix, not `~/.claude/`
+- **Branch context**: All commands source `fetch-branch-info.sh` which sets `BRANCH`, `ISSUE_NUMBER`, `SPEC_PATH`, `PLAN_PATH`, `TASKS_PATH`
 
 ## Key Rules
 
 1. **Never edit `~/.claude/` directly** — always edit files in `~/my-kit-v2/kit/.claude/` and re-stow
 2. **CLAUDE.md is the single source of truth** — project principles and workflow config live there
 3. **Skills load one reference file per invocation** — they don't load everything at once
+4. **Workflow steps chain** — specify requires issue#, plan requires spec.md, tasks requires plan.md
+5. **Skills are auto-detected** — plan scans spec for domain skill keywords, tasks carries them to implement

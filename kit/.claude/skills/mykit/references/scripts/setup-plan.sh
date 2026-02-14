@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 
-set -e
+set -euo pipefail
+
+cleanup() {
+  :
+}
+trap cleanup EXIT
 
 # Parse command line arguments
 JSON_MODE=false
@@ -26,10 +31,10 @@ done
 # Get script directory and load common functions
 SCRIPT_DIR="$(CDPATH="" cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck source=utils.sh
-source "$SCRIPT_DIR/utils.sh"
+source "$SCRIPT_DIR/utils.sh" || { echo "Error: Failed to source utils.sh" >&2; exit 1; }
 
 # Get all paths and variables from common functions
-eval "$(get_feature_paths)"
+load_feature_paths
 
 # Check if we're on a proper feature branch (only for git repos)
 check_feature_branch "$CURRENT_BRANCH" "$HAS_GIT" || exit 1
@@ -40,7 +45,7 @@ mkdir -p "$FEATURE_DIR"
 # Copy plan template if it exists
 TEMPLATE="$HOME/.claude/skills/mykit/references/templates/minor/plan.md"
 if [[ -f "$TEMPLATE" ]]; then
-    cp "$TEMPLATE" "$IMPL_PLAN"
+    cp "$TEMPLATE" "$IMPL_PLAN" || { echo "Error: Failed to copy template to $IMPL_PLAN" >&2; exit 1; }
     echo "Copied plan template to $IMPL_PLAN"
 else
     echo "Warning: Plan template not found at $TEMPLATE"

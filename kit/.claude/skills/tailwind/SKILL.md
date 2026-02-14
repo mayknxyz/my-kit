@@ -56,6 +56,12 @@ export default defineConfig({
 - **Astro class merging**: Use `class:list={["base", conditional && "active"]}` in `.astro` files
 - **Dynamic merging**: Use `cn()` (clsx + twMerge) when merging props with defaults
 
+## References
+
+| Topic | File | Load When |
+|-------|------|-----------|
+| Advanced patterns | [patterns.md](references/patterns.md) | Plugin setup, @layer usage, complex color mixing, @theme extensions |
+
 ## MUST DO
 
 - Use `@import "tailwindcss"` with `@tailwindcss/vite` plugin

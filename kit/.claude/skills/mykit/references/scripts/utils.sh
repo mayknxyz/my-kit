@@ -514,18 +514,35 @@ get_feature_paths() {
   feature_dir=$(find_feature_dir_by_prefix "$repo_root" "$current_branch")
 
   cat <<EOF
-REPO_ROOT='$repo_root'
-CURRENT_BRANCH='$current_branch'
+REPO_ROOT='${repo_root//\'/\'\\\'\'}'
+CURRENT_BRANCH='${current_branch//\'/\'\\\'\'}'
 HAS_GIT='$has_git_repo'
-FEATURE_DIR='$feature_dir'
-FEATURE_SPEC='$feature_dir/spec.md'
-IMPL_PLAN='$feature_dir/plan.md'
-TASKS='$feature_dir/tasks.md'
-RESEARCH='$feature_dir/research.md'
-DATA_MODEL='$feature_dir/data-model.md'
-QUICKSTART='$feature_dir/quickstart.md'
-CONTRACTS_DIR='$feature_dir/contracts'
+FEATURE_DIR='${feature_dir//\'/\'\\\'\'}'
+FEATURE_SPEC='${feature_dir//\'/\'\\\'\'}/spec.md'
+IMPL_PLAN='${feature_dir//\'/\'\\\'\'}/plan.md'
+TASKS='${feature_dir//\'/\'\\\'\'}/tasks.md'
+RESEARCH='${feature_dir//\'/\'\\\'\'}/research.md'
+DATA_MODEL='${feature_dir//\'/\'\\\'\'}/data-model.md'
+QUICKSTART='${feature_dir//\'/\'\\\'\'}/quickstart.md'
+CONTRACTS_DIR='${feature_dir//\'/\'\\\'\'}/contracts'
 EOF
+}
+
+#######################################
+# Load feature paths into current shell scope
+# Wrapper around get_feature_paths() that encapsulates the eval.
+# MUST be called as a bare statement, NOT in a subshell.
+# Globals:
+#   Sets REPO_ROOT, CURRENT_BRANCH, HAS_GIT, FEATURE_DIR,
+#   FEATURE_SPEC, IMPL_PLAN, TASKS, RESEARCH, DATA_MODEL,
+#   QUICKSTART, CONTRACTS_DIR
+# Arguments:
+#   None
+# Returns:
+#   0 if successful, 1 if error
+#######################################
+load_feature_paths() {
+  eval "$(get_feature_paths)" || return 1
 }
 
 #######################################

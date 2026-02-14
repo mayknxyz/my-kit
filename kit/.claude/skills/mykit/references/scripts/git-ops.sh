@@ -24,6 +24,11 @@
 
 set -euo pipefail
 
+cleanup() {
+  :
+}
+trap cleanup EXIT
+
 # Script directory and paths
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"

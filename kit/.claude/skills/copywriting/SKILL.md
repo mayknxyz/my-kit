@@ -70,6 +70,12 @@ Pattern: **What happened** + **What to do next**
 - Active voice — "We design websites" not "Websites are designed by us"
 - Second person — "Your business" not "The business"
 
+## References
+
+| Topic | File | Load When |
+|-------|------|-----------|
+| Advanced patterns | [patterns.md](references/patterns.md) | Headlines, social proof, onboarding copy, pricing pages, email sequences, accessibility |
+
 ## MUST DO
 
 - Use action verbs for all buttons and CTAs

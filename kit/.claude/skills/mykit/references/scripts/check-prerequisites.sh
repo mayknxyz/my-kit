@@ -19,7 +19,7 @@
 #   Text mode: FEATURE_DIR:... \n AVAILABLE_DOCS: \n ✓/✗ file.md
 #   Paths only: REPO_ROOT: ... \n BRANCH: ... \n FEATURE_DIR: ... etc.
 
-set -e
+set -euo pipefail
 
 # Parse command line arguments
 JSON_MODE=false
@@ -77,10 +77,10 @@ done
 # Source common functions
 SCRIPT_DIR="$(CDPATH="" cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck source=utils.sh
-source "$SCRIPT_DIR/utils.sh"
+source "$SCRIPT_DIR/utils.sh" || { echo "Error: Failed to source utils.sh" >&2; exit 1; }
 
 # Get feature paths and validate branch
-eval "$(get_feature_paths)"
+load_feature_paths
 check_feature_branch "$CURRENT_BRANCH" "$HAS_GIT" || exit 1
 
 # If paths-only mode, output paths and exit (support JSON + paths-only combined)

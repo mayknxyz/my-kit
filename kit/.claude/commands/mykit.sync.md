@@ -10,14 +10,6 @@ Install or upgrade My Kit v2 from the source repository.
 
 - Executes directly: Shows current vs latest version, prompts to update
 
-## User Input
-
-```text
-$ARGUMENTS
-```
-
-You **MUST** consider the user input before proceeding (if not empty).
-
 ## Implementation
 
 This command works from **any directory** — it always operates on `~/my-kit-v2`.
@@ -49,20 +41,39 @@ CURRENT_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "untagged")
 CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 ```
 
-### Step 3: Fetch Latest
+### Step 3: Check Working Tree
+
+```bash
+cd ~/my-kit-v2
+git status --porcelain
+```
+
+**If output is non-empty** (dirty working tree), display error and stop:
+
+```
+**Error**: Working tree has uncommitted changes in `~/my-kit-v2`.
+
+Commit or stash changes first:
+  cd ~/my-kit-v2 && git status
+```
+
+### Step 4: Fetch Latest
 
 ```bash
 cd ~/my-kit-v2
 git fetch origin 2>/dev/null
 ```
 
-**If fetch fails** (network error), display warning and continue with local info only:
+**If fetch fails** (network error), display local info and stop:
 
 ```
 **Warning**: Could not fetch from remote. Showing local info only.
+
+**Version**: {CURRENT_TAG} ({CURRENT_SHA})
+**Branch**: {CURRENT_BRANCH}
 ```
 
-### Step 4: Check for Updates
+### Step 5: Check for Updates
 
 ```bash
 cd ~/my-kit-v2
@@ -82,7 +93,7 @@ LATEST_TAG=$(git describe --tags --abbrev=0 origin/main 2>/dev/null || echo "unt
 
 Stop execution here.
 
-### Step 5: Show What Would Change
+### Step 6: Show What Would Change
 
 ```bash
 cd ~/my-kit-v2
@@ -104,7 +115,7 @@ Display:
 {DIFF_SUMMARY}
 ```
 
-### Step 6: Prompt to Update
+### Step 7: Prompt to Update
 
 Use `AskUserQuestion`:
 - header: "Update"
@@ -116,7 +127,7 @@ Use `AskUserQuestion`:
 
 **If user selects "Cancel"**: Display "Update cancelled." and stop.
 
-**If user selects "Update to latest"**: Continue to Step 7.
+**If user selects "Update to latest"**: Continue to Step 8.
 
 **If user selects "Pick a version"**:
 
@@ -134,27 +145,28 @@ Use `AskUserQuestion`:
    git checkout {selected_tag}
    ```
 
-4. Continue to Step 8 (skip the pull).
+4. Continue to Step 9 (skip the pull).
 
-### Step 7: Pull Latest
+### Step 8: Pull Latest
 
 ```bash
 cd ~/my-kit-v2
-git pull origin main
+git checkout main 2>/dev/null
+git pull --ff-only origin main
 ```
 
-**If pull fails** (merge conflicts, etc.), display error and stop:
+**If pull fails** (merge conflicts, fast-forward not possible, etc.), display error and stop:
 
 ```
 **Error**: Failed to pull latest changes.
 
 Git error: {error message}
 
-Try resolving manually:
-  cd ~/my-kit-v2 && git status
+If fast-forward is not possible, try resolving manually:
+  cd ~/my-kit-v2 && git log --oneline HEAD..origin/main
 ```
 
-### Step 8: Re-stow
+### Step 9: Re-stow
 
 ```bash
 cd ~/my-kit-v2
@@ -172,7 +184,7 @@ Try resolving manually:
   cd ~/my-kit-v2 && stow -R -t ~ kit
 ```
 
-### Step 9: Display Success
+### Step 10: Display Success
 
 ```bash
 cd ~/my-kit-v2
@@ -193,7 +205,9 @@ Symlinks refreshed via `stow -R`.
 | Error | Message |
 |-------|---------|
 | Source repo missing | Install instructions |
-| Fetch fails | Warning, continue with local info |
+| Dirty working tree | Error, suggest commit or stash |
+| Fetch fails | Warning, show local info, stop |
+| Fast-forward not possible | Error, suggest manual resolution |
 | Pull fails | Show git error, suggest manual resolution |
 | Stow conflicts | Show conflict details |
 

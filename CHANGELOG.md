@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.6.1] - 2026-02-16
+
+### Fixed
+
+- Add dirty working tree guard before fetch — errors if uncommitted changes exist
+- Fetch failure now short-circuits with local info instead of comparing stale remote
+- Add `git checkout main` before pull to handle detached HEAD from version pinning
+- Use `--ff-only` on pull to prevent unexpected merge commits
+- Remove unused `$ARGUMENTS` section (sync takes no arguments)
+
 ## [2.6.0] - 2026-02-16
 
 ### Added
@@ -262,7 +272,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Monolithic command routing (replaced by skill routing)
 - Per-project infrastructure file copies (now globally shared via stow symlinks)
 
-[Unreleased]: https://github.com/mayknxyz/my-kit-v2/compare/v2.6.0...HEAD
+[Unreleased]: https://github.com/mayknxyz/my-kit-v2/compare/v2.6.1...HEAD
+[2.6.1]: https://github.com/mayknxyz/my-kit-v2/compare/v2.6.0...v2.6.1
 [2.6.0]: https://github.com/mayknxyz/my-kit-v2/compare/v2.5.2...v2.6.0
 [2.5.2]: https://github.com/mayknxyz/my-kit-v2/compare/v2.5.1...v2.5.2
 [2.5.1]: https://github.com/mayknxyz/my-kit-v2/compare/v2.5.0...v2.5.1

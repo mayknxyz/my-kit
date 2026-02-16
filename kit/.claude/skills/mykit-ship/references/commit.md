@@ -118,7 +118,7 @@ Before staging, verify no sensitive or critical files will be committed. Load th
 1. **Verify `.gitignore` exists** — If missing, create one with common exclusions (`.env*`, `node_modules/`, `*.pem`, `*.key`, credentials files).
 
 2. **Scan untracked files** — Run `git status --porcelain` and check untracked files (`??`) against known sensitive patterns:
-   - `.env`, `.env.*` — environment variables / secrets
+   - `.env`, `.env.*`, `.dev.vars` — environment variables / secrets
    - `*.pem`, `*.key`, `*.p12`, `*.pfx` — private keys / certificates
    - `credentials.json`, `service-account.json` — API credentials
    - `*.sqlite`, `*.db` — local databases
@@ -196,6 +196,23 @@ COMMIT_SHA=$(create_commit "$COMMIT_TYPE" "$COMMIT_DESCRIPTION" "$COMMIT_SCOPE" 
 | No changes | "No uncommitted changes found. Nothing to commit." |
 | Git commit failure | "Failed to create commit. {error message}" |
 | CHANGELOG failure | Warning only — commit still proceeds |
+
+## git-ops.sh Quick Reference
+
+Functions available after `source $HOME/.claude/skills/mykit/references/scripts/git-ops.sh`:
+
+| Function | Arguments | Returns |
+|----------|-----------|---------|
+| `has_uncommitted_changes` | none | exit 0 if changes exist |
+| `get_changed_files` | none | stdout: file list |
+| `stage_all_changes` | none | stages all via `git add -A` |
+| `stage_files` | `$@ files` | stages specific files |
+| `create_commit` | `$1 type` `$2 description` `$3 scope?` `$4 body?` | stdout: commit SHA |
+| `update_changelog` | `$1 type` `$2 description` `$3 version?` | updates CHANGELOG.md |
+| `calculate_next_version` | `$1 base_tag?` | stdout: `vX.Y.Z` |
+| `get_commit_count` | `$1 base_branch?` | stdout: count |
+| `get_branch_commits` | `$1 base_branch?` `$2 format?` | stdout: commit list |
+| `get_pr_for_branch` | none | stdout: JSON `{number, title, headRefOid}` |
 
 ## Notes
 

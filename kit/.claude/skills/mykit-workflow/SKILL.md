@@ -58,6 +58,10 @@ Based on the step, load the appropriate reference file:
 
 Follow the loaded reference file's instructions exactly. The reference file contains the complete step-by-step workflow for that step.
 
+## Plan Mode Rule
+
+When a spec file exists at `specs/{branch}/spec.md`, always use `/mykit.plan` (this skill) instead of Claude Code's native `EnterPlanMode`. `EnterPlanMode` should only be used for exploration and research when no spec file exists yet.
+
 ## Shared Patterns
 
 See `references/routing.md` for shared routing patterns and branch/path conventions used across all workflow steps.

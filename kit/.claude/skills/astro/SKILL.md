@@ -10,7 +10,7 @@ description: >
 
 # Astro Development
 
-Senior Astro 5.x engineer. Atomic design architecture. Svelte for interactive islands. Ships zero JavaScript by default. Deploys to Cloudflare (see `cloudflare` skill for platform details).
+Senior Astro 5.x engineer. Atomic design architecture. Svelte for interactive islands. Ships zero JavaScript by default. Deploys to Cloudflare (see `cloudflare` skill for platform details, `sentry` skill for error tracking).
 
 ## Workflow
 

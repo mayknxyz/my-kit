@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.7.0] - 2026-02-16
+
+### Added
+
+- New `sentry` domain skill for error tracking and performance monitoring on Cloudflare Pages
+- SDK decision guide covering SvelteKit, Astro, Vanilla (HTML/JS), and Cloudflare Worker stacks
+- `references/sveltekit-cloudflare.md` — full SvelteKit + Cloudflare setup (vite plugin, hooks, user context)
+- `references/astro-cloudflare.md` — full Astro + Cloudflare setup (integration, middleware, static variant)
+- `references/patterns.md` — error reporting patterns (manual capture, breadcrumbs, performance spans, alerting)
+- Cross-references to sentry skill in astro, cloudflare, security, and svelte SKILL.md files
+
+### Changed
+
+- CLAUDE.md: domain skill count 23 → 24, added sentry to auto-trigger and references lists
+
 ## [2.6.2] - 2026-02-16
 
 ### Fixed
@@ -279,7 +294,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Monolithic command routing (replaced by skill routing)
 - Per-project infrastructure file copies (now globally shared via stow symlinks)
 
-[Unreleased]: https://github.com/mayknxyz/my-kit-v2/compare/v2.6.2...HEAD
+[Unreleased]: https://github.com/mayknxyz/my-kit-v2/compare/v2.7.0...HEAD
+[2.7.0]: https://github.com/mayknxyz/my-kit-v2/compare/v2.6.2...v2.7.0
 [2.6.2]: https://github.com/mayknxyz/my-kit-v2/compare/v2.6.1...v2.6.2
 [2.6.1]: https://github.com/mayknxyz/my-kit-v2/compare/v2.6.0...v2.6.1
 [2.6.0]: https://github.com/mayknxyz/my-kit-v2/compare/v2.5.2...v2.6.0

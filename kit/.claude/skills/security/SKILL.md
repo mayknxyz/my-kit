@@ -152,9 +152,9 @@ snyk monitor                             # monitor for new vulnerabilities
 
 ## References
 
-| Trigger | File | Purpose |
-|---------|------|---------|
-| CSP config, CORS middleware, security checklist, headers file, secrets management | `references/patterns.md` | Reusable security configurations and middleware |
+| Topic | File | Load When |
+|-------|------|-----------|
+| Security configurations | [patterns.md](references/patterns.md) | CSP config, CORS middleware, security checklist, headers file, secrets management |
 
 ## MUST DO
 

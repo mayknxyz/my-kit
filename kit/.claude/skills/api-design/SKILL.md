@@ -134,9 +134,9 @@ export async function POST({ request }: APIContext) {
 
 ## References
 
-| Trigger | File | Purpose |
-|---------|------|---------|
-| API route boilerplate, error helper, cursor pagination, Turnstile verification | `references/patterns.md` | Reusable API route patterns and middleware |
+| Topic | File | Load When |
+|-------|------|-----------|
+| API route patterns | [patterns.md](references/patterns.md) | Route boilerplate, error helper, cursor pagination, Turnstile verification |
 
 ## MUST DO
 

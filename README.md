@@ -14,7 +14,7 @@ This creates symlinks from `kit/.claude/` → `~/.claude/`, making all commands,
 
 ## What's Included
 
-### Commands (16)
+### Commands (21)
 
 | Category | Commands |
 |----------|----------|
@@ -22,8 +22,9 @@ This creates symlinks from `kit/.claude/` → `~/.claude/`, making all commands,
 | Read-Only | `/mykit.status`, `/mykit.help` |
 | Development | `/mykit.specify <issue#>`, `/mykit.plan`, `/mykit.tasks`, `/mykit.implement` |
 | Ship | `/mykit.commit`, `/mykit.pr`, `/mykit.release` |
-| Ops | `/mykit.audit`, `/mykit.issues` |
-| Utilities | `/mykit.log`, `/mykit.skill.review` |
+| Audit | `/mykit.audit.all`, `.quality`, `.security`, `.perf`, `.a11y`, `.deps` |
+| Review | `/mykit.review.issues`, `/mykit.review.skills` |
+| Utilities | `/mykit.log` |
 
 ### Skills (28)
 
@@ -49,7 +50,7 @@ Audit agents for parallel quality analysis: quality, security, performance, a11y
 
 ```
 /mykit.specify 31 → /mykit.plan → /mykit.tasks → /mykit.implement →
-/mykit.audit → /mykit.commit → /mykit.pr
+/mykit.audit.all → /mykit.commit → /mykit.pr
 ```
 
 Each step requires its predecessor: `specify` requires a GitHub issue number, `plan` requires `spec.md`, `tasks` requires `plan.md`. Skills are auto-detected during planning and carried through to implementation.
@@ -62,7 +63,7 @@ You can also describe what you want in natural language — skills auto-activate
 "Write the spec for issue 31"       → mykit-workflow (specify step)
 "Let's plan the implementation"     → mykit-workflow (plan step)
 "Commit these changes"              → mykit-ship (commit step)
-"Run a security audit"              → mykit-ops (audit step)
+"Run a security audit"              → mykit-ops (audit step) or /mykit.audit.security
 ```
 
 ## Upgrading

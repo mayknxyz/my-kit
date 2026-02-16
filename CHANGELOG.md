@@ -7,6 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.6.0] - 2026-02-16
+
+### Added
+
+- `/mykit.audit.all` command — runs all audit domains (renamed from `/mykit.audit`)
+- `/mykit.audit.quality` command — run quality audit only (shellcheck, markdownlint)
+- `/mykit.audit.security` command — run security audit only (gitleaks)
+- `/mykit.audit.perf` command — run performance audit only (AI analysis)
+- `/mykit.audit.a11y` command — run accessibility audit only (AI analysis)
+- `/mykit.audit.deps` command — run dependency audit only (AI analysis)
+- Commands table in audit reference listing all `/mykit.audit.*` commands
+- Domain-specific trigger keywords in mykit-ops SKILL.md
+
+### Changed
+
+- Rename `/mykit.audit` → `/mykit.audit.all`
+- Rename `/mykit.issues` → `/mykit.review.issues`
+- Rename `/mykit.skill.review` → `/mykit.review.skills`
+- Update mykit.help.md with new Audit section and updated command lists
+- Update workflow templates to reference `/mykit.audit.all`
+- Update CLAUDE.md and README.md command counts (16 → 21)
+
+### Removed
+
+- `/mykit.audit` command (replaced by `/mykit.audit.all`)
+- `/mykit.issues` command (replaced by `/mykit.review.issues`)
+- `/mykit.skill.review` command (replaced by `/mykit.review.skills`)
+
 ## [2.5.2] - 2026-02-16
 
 ### Added
@@ -234,7 +262,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Monolithic command routing (replaced by skill routing)
 - Per-project infrastructure file copies (now globally shared via stow symlinks)
 
-[Unreleased]: https://github.com/mayknxyz/my-kit-v2/compare/v2.5.2...HEAD
+[Unreleased]: https://github.com/mayknxyz/my-kit-v2/compare/v2.6.0...HEAD
+[2.6.0]: https://github.com/mayknxyz/my-kit-v2/compare/v2.5.2...v2.6.0
 [2.5.2]: https://github.com/mayknxyz/my-kit-v2/compare/v2.5.1...v2.5.2
 [2.5.1]: https://github.com/mayknxyz/my-kit-v2/compare/v2.5.0...v2.5.1
 [2.5.0]: https://github.com/mayknxyz/my-kit-v2/compare/v2.4.0...v2.5.0

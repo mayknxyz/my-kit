@@ -1,4 +1,4 @@
-# /mykit.issues — Triage
+# /mykit.review.issues — Triage
 
 Review and triage open GitHub issues. Analyzes completeness, clarity, staleness, and potential duplicates. Suggests labels from the repo's existing label set.
 
@@ -7,8 +7,8 @@ Review and triage open GitHub issues. Analyzes completeness, clarity, staleness,
 ## Usage
 
 ```
-/mykit.issues
-/mykit.issues triage
+/mykit.review.issues
+/mykit.review.issues triage
 ```
 
 ## User Input

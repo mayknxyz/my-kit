@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.5.2] - 2026-02-16
+
+### Added
+
+- Plan Mode Rule in mykit-workflow — prefer `/mykit.plan` over native `EnterPlanMode` when spec file exists
+- Scope Expansion section in implement reference — append new tasks mid-implementation without breaking the loop
+- Broaden skills detection in tasks reference — scan spec/plan for additional skill keywords beyond plan's original list
+- `git-ops.sh` quick reference table in commit reference — function signatures for faster lookups
+
+### Changed
+
+- Commit pre-stage safety check now includes `.dev.vars` (Cloudflare convention) in sensitive file patterns
+
 ## [2.5.1] - 2026-02-16
 
 ### Added
@@ -221,7 +234,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Monolithic command routing (replaced by skill routing)
 - Per-project infrastructure file copies (now globally shared via stow symlinks)
 
-[Unreleased]: https://github.com/mayknxyz/my-kit-v2/compare/v2.5.1...HEAD
+[Unreleased]: https://github.com/mayknxyz/my-kit-v2/compare/v2.5.2...HEAD
+[2.5.2]: https://github.com/mayknxyz/my-kit-v2/compare/v2.5.1...v2.5.2
 [2.5.1]: https://github.com/mayknxyz/my-kit-v2/compare/v2.5.0...v2.5.1
 [2.5.0]: https://github.com/mayknxyz/my-kit-v2/compare/v2.4.0...v2.5.0
 [2.4.0]: https://github.com/mayknxyz/my-kit-v2/compare/v2.3.0...v2.4.0

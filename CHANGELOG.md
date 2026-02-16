@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.5.1] - 2026-02-16
+
+### Added
+
+- `agent-file-template.md` template for `update-agent-context.sh` new agent file creation
+- Top 5 Recommendations section to triage report output
+- Key Recommendations section to deep-dive report output
+
+### Changed
+
+- Flatten `templates/minor/` — moved `spec.md`, `plan.md`, `tasks.md` to `templates/` directly
+- `tasks.md` template updated to flat list format; `/mykit.tasks` workflow wired to use it
+- Standardized all 15 domain skill reference tables to "Topic | File | Load When" format
+- Updated 3 script template paths (`create-new-feature.sh`, `setup-plan.sh`, `update-agent-context.sh`)
+
+### Removed
+
+- `templates/minor/` subdirectory (files promoted to `templates/`)
+- Unused `ARGS=()` variable from `setup-plan.sh`
+
 ## [2.5.0] - 2026-02-15
 
 ### Added
@@ -201,7 +221,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Monolithic command routing (replaced by skill routing)
 - Per-project infrastructure file copies (now globally shared via stow symlinks)
 
-[Unreleased]: https://github.com/mayknxyz/my-kit-v2/compare/v2.5.0...HEAD
+[Unreleased]: https://github.com/mayknxyz/my-kit-v2/compare/v2.5.1...HEAD
+[2.5.1]: https://github.com/mayknxyz/my-kit-v2/compare/v2.5.0...v2.5.1
 [2.5.0]: https://github.com/mayknxyz/my-kit-v2/compare/v2.4.0...v2.5.0
 [2.4.0]: https://github.com/mayknxyz/my-kit-v2/compare/v2.3.0...v2.4.0
 [2.3.0]: https://github.com/mayknxyz/my-kit-v2/compare/v2.2.0...v2.3.0

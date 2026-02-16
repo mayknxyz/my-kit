@@ -192,6 +192,15 @@ Compare the current issue's keywords and labels against other open issues. List 
 ### Comments Summary
 
 {Summary of discussion thread, if any comments exist}
+
+### Key Recommendations
+
+{3–5 actionable recommendations based on the deep-dive analysis, e.g.:}
+1. {Add missing reproduction steps / acceptance criteria to clarify scope}
+2. {Start with [specific file] — it has the highest relevance and lowest risk}
+3. {Split into smaller issues if complexity is Large}
+4. {Close as outdated if the related code has been removed/refactored}
+5. {Link to related issue #N and consider resolving together}
 ```
 
 ## Error Handling

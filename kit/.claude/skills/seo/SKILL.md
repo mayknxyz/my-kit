@@ -102,9 +102,9 @@ lighthouse https://example.com --only-categories=seo --output json
 
 ## References
 
-| Trigger | File | Purpose |
-|---------|------|---------|
-| JSON-LD templates, SEO component, sitemap, robots.txt, structured data | `references/patterns.md` | JSON-LD templates, Astro SEO component, technical SEO configs |
+| Topic | File | Load When |
+|-------|------|-----------|
+| SEO patterns | [patterns.md](references/patterns.md) | JSON-LD templates, SEO component, sitemap, robots.txt, structured data |
 
 ## MUST DO
 

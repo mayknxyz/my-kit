@@ -62,29 +62,13 @@ Read both `specPath` and `planPath`.
 
 ### Step 5: Format and Write Tasks
 
-Generate and write `tasksPath` using this structure:
+Read the template at `$HOME/.claude/skills/mykit/references/templates/tasks.md` and generate `tasksPath` by filling placeholders:
 
-```markdown
-# Tasks: {featureName}
-
-**Branch**: `{branch}` | **Created**: {currentDate} | **Status**: Pending
-
-## Skills
-
-{Copy the ## Skills section from plan.md}
-
-## Implementation
-
-- [ ] T001 {first task description}
-- [ ] T002 {second task description}
-...
-- [ ] T0XX {last implementation task}
-```
-
-Where:
-- `featureName` = extracted from spec header
-- `branch` = current git branch
-- `currentDate` = today's date in YYYY-MM-DD format
+- `[FEATURE NAME]` = extracted from spec header
+- `[BRANCH]` = current git branch
+- `[DATE]` = today's date in YYYY-MM-DD format
+- `[SKILLS FROM PLAN]` = copy the `## Skills` section content from plan.md
+- Replace the example `T001`–`T003` rows with the actual generated tasks
 
 Display confirmation:
 

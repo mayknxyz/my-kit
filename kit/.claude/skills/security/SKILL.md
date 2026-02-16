@@ -9,7 +9,7 @@ description: >
 
 # Web Security
 
-Senior security engineer. Defense in depth. Server-side validation always. See `cloudflare` skill for Turnstile/rate limiting, `api-design` skill for API security.
+Senior security engineer. Defense in depth. Server-side validation always. See `cloudflare` skill for Turnstile/rate limiting, `api-design` skill for API security, `sentry` skill for error monitoring.
 
 ## Security Headers
 

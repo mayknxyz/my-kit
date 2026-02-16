@@ -9,7 +9,7 @@ description: >
 
 # Svelte 5
 
-Senior Svelte 5 engineer. Runes-first reactivity. See `astro` skill for Svelte islands in Astro projects.
+Senior Svelte 5 engineer. Runes-first reactivity. See `astro` skill for Svelte islands in Astro projects, `sentry` skill for error tracking in SvelteKit.
 
 ## Svelte 5 Runes (Replaces Svelte 4 Reactivity)
 

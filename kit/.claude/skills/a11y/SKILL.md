@@ -93,9 +93,9 @@ Config for `pa11y-ci` (`.pa11yci` at project root):
 
 ## References
 
-| Trigger | File | Purpose |
-|---------|------|---------|
-| dialog, tabs, accordion, focus management, live regions, screen reader testing | `references/patterns.md` | ARIA widget patterns and testing strategies |
+| Topic | File | Load When |
+|-------|------|-----------|
+| ARIA widget patterns | [patterns.md](references/patterns.md) | dialog, tabs, accordion, focus management, live regions, screen reader testing |
 
 ## MUST DO
 

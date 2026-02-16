@@ -289,7 +289,7 @@ fi
 FEATURE_DIR="$SPECS_DIR/$BRANCH_NAME"
 mkdir -p "$FEATURE_DIR"
 
-TEMPLATE="$HOME/.claude/skills/mykit/references/templates/minor/spec.md"
+TEMPLATE="$HOME/.claude/skills/mykit/references/templates/spec.md"
 SPEC_FILE="$FEATURE_DIR/spec.md"
 if [ -f "$TEMPLATE" ]; then
     cp "$TEMPLATE" "$SPEC_FILE" || { echo "Error: Failed to copy template to $SPEC_FILE" >&2; exit 1; }

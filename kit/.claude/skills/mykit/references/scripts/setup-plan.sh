@@ -9,7 +9,6 @@ trap cleanup EXIT
 
 # Parse command line arguments
 JSON_MODE=false
-ARGS=()
 
 for arg in "$@"; do
     case "$arg" in
@@ -21,9 +20,6 @@ for arg in "$@"; do
             echo "  --json    Output results in JSON format"
             echo "  --help    Show this help message"
             exit 0
-            ;;
-        *)
-            ARGS+=("$arg")
             ;;
     esac
 done
@@ -43,7 +39,7 @@ check_feature_branch "$CURRENT_BRANCH" "$HAS_GIT" || exit 1
 mkdir -p "$FEATURE_DIR"
 
 # Copy plan template if it exists
-TEMPLATE="$HOME/.claude/skills/mykit/references/templates/minor/plan.md"
+TEMPLATE="$HOME/.claude/skills/mykit/references/templates/plan.md"
 if [[ -f "$TEMPLATE" ]]; then
     cp "$TEMPLATE" "$IMPL_PLAN" || { echo "Error: Failed to copy template to $IMPL_PLAN" >&2; exit 1; }
     echo "Copied plan template to $IMPL_PLAN"

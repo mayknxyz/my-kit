@@ -176,7 +176,37 @@ Only suggest labels that already exist in the repo.
 #### Suggested Labels
 
 {For each unlabeled issue, show suggested labels from repo's label set}
+
+### Recommendations
+
+Generate 3-7 prioritized, actionable recommendations based on the triage findings. Each recommendation must include the specific issue numbers and a concrete action. Always include recommendations for:
+
+1. **Stale issues** (if any): Close, reprioritize, or request updates — list issue numbers
+2. **Unlabeled issues** (if any): Suggest specific labels for each — list issue numbers and labels
+3. **Minimal/ambiguous issues** (if any): Request detail or clarify — list issue numbers
+4. **Duplicate candidates** (if any): Close the less detailed duplicate — list pairs
+5. **Unassigned issues** (if any): Self-assign or delegate — list issue numbers
+6. **Completed issues still open** (if any): Cross-reference with git history/commits and flag for closure — list issue numbers
+7. **Related issues that could be grouped** (if any): Suggest milestones or batching — list issue numbers
+
+Skip any category with zero matches.
 ```
+
+## Bulk Actions
+
+After displaying the triage report, if the user asks to act on recommendations (e.g., "apply", "close stale", "label all", "assign all"), execute the requested actions using `gh` CLI commands. Common patterns:
+
+- **Close issues**: `gh issue close {number} --reason {completed|"not planned"} --comment "{reason}"`
+- **Add labels**: `gh issue edit {number} --add-label "{label}"`
+- **Self-assign**: `gh issue edit {number} --add-assignee @me`
+- **Close duplicates**: `gh issue close {number} --reason "not planned" --comment "Duplicate of #{other}"`
+
+These actions require user confirmation — never auto-execute them as part of the triage report itself.
+
+## Output Formatting
+
+- Replace em dashes in issue titles with regular hyphens for consistency with project style
+- Truncate long titles to 60 characters in the per-issue table
 
 ## Error Handling
 

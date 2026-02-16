@@ -102,9 +102,9 @@ it("toggles menu", async () => {
 
 ## References
 
-| Trigger | File | Purpose |
-|---------|------|---------|
-| Vitest config, Playwright setup, page objects, test factories, test organization | `references/patterns.md` | Test configurations, fixtures, and patterns |
+| Topic | File | Load When |
+|-------|------|-----------|
+| Test patterns | [patterns.md](references/patterns.md) | Vitest config, Playwright setup, page objects, test factories, test organization |
 
 ## MUST DO
 

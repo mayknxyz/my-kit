@@ -16,7 +16,7 @@ Before doing anything else, use AskUserQuestion to present a version type select
   - `minor` — New features, enhancements (e.g. 1.12.1 → 1.13.0)
   - `major` — Breaking changes (e.g. 1.13.0 → 2.0.0)
 
-Wait for the user's selection before proceeding.
+Wait for the user's selection before proceeding. If the user interrupts or corrects the selection, use their latest response.
 
 ## Step 2: Determine the next version
 
@@ -26,7 +26,7 @@ Wait for the user's selection before proceeding.
 ## Step 3: Create GitHub issue
 
 - Title should summarize the changes on the current branch
-- Body should list the changes (inspect staged/unstaged files and diffs)
+- Body should list the changes (inspect working tree via `git status` and `git diff`)
 - Add appropriate label (`enhancement`, `bug`, or `documentation`)
 - Self-assign (`--assignee` with your GitHub username)
 

@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.6.2] - 2026-02-16
+
+### Fixed
+
+- Ship command: add user interruption/correction handling note to version selection step
+- Ship command: clarify working tree inspection wording — use `git status` and `git diff` instead of ambiguous "staged/unstaged files and diffs"
+
 ## [2.6.1] - 2026-02-16
 
 ### Fixed
@@ -272,7 +279,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Monolithic command routing (replaced by skill routing)
 - Per-project infrastructure file copies (now globally shared via stow symlinks)
 
-[Unreleased]: https://github.com/mayknxyz/my-kit-v2/compare/v2.6.1...HEAD
+[Unreleased]: https://github.com/mayknxyz/my-kit-v2/compare/v2.6.2...HEAD
+[2.6.2]: https://github.com/mayknxyz/my-kit-v2/compare/v2.6.1...v2.6.2
 [2.6.1]: https://github.com/mayknxyz/my-kit-v2/compare/v2.6.0...v2.6.1
 [2.6.0]: https://github.com/mayknxyz/my-kit-v2/compare/v2.5.2...v2.6.0
 [2.5.2]: https://github.com/mayknxyz/my-kit-v2/compare/v2.5.1...v2.5.2

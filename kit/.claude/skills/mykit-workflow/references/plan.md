@@ -4,6 +4,8 @@
 
 Create a lightweight implementation plan from a feature specification via guided conversation.
 
+**Important**: When a spec file exists for the current branch, always use this custom plan skill (`/mykit.plan`) instead of Claude Code's native `EnterPlanMode`. `EnterPlanMode` is only appropriate for exploration and research when no spec file exists yet.
+
 ### Step 1: Check Prerequisite
 
 ```bash

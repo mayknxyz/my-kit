@@ -80,3 +80,14 @@ Read-only operations (reading files, searching code, checking status) do not req
 **On failure**: Keep task as `[>]` (in-progress). Display the error and stop.
 
 After completing a task, loop back to Step 4 to pick up the next task. Continue until all tasks are complete or a failure occurs.
+
+### Scope Expansion
+
+If the user requests additional work after all tasks are complete (or while implementing), and the work is related to the current branch/feature:
+
+1. **Reopen tasks.md** — Change `**Status**: Complete` back to `**Status**: Pending` (or keep as `Pending` if not yet complete)
+2. **Append new tasks** — Add new `- [ ] T0XX` entries after the last task, continuing the numbering sequence
+3. **Resume the loop** — Go back to Step 4 to execute the new tasks
+4. **Update plan.md** — After all new tasks are done, update the plan and spec files to reflect the expanded scope
+
+This avoids needing to manually edit tasks.md outside the workflow.

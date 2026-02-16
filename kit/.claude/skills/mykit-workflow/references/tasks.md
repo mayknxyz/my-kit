@@ -49,6 +49,8 @@ Read both `specPath` and `planPath`.
 - **Implementation Phases**: All sections matching `### Phase N: {title}` with key tasks
 - **Design Decisions**: All sections under `## Design Decisions`
 
+**Broaden skills detection**: In addition to skills explicitly listed in the plan, scan the spec and plan content for keywords that match other available skills (see the skill keyword table in `references/plan.md` Step 5). Add any additionally detected skills to the `## Skills` section in tasks.md. This ensures the implement step has all relevant domain skills active, not just the ones originally identified during planning.
+
 ### Step 4: Generate Task List
 
 **Rules**:

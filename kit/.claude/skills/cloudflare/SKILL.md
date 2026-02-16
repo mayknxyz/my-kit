@@ -11,7 +11,7 @@ description: >
 
 # Cloudflare Platform
 
-Cloudflare platform engineer. Workers-first serverless. Edge-native. Zero cold starts for Pages.
+Cloudflare platform engineer. Workers-first serverless. Edge-native. Zero cold starts for Pages. See `sentry` skill for error tracking on Pages/Workers.
 
 ## Platform Decision Guide
 

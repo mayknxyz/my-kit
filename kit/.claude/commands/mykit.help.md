@@ -72,13 +72,24 @@ These execute immediately without an action.
 | `/mykit.pr` | Create or update pull request |
 | `/mykit.release` | Create release with versioning |
 
+## Audit
+
+| Command | Description |
+|---------|-------------|
+| `/mykit.audit.all` | Run all audit domains (quality, security, perf, a11y, deps) |
+| `/mykit.audit.quality` | Quality audit (shellcheck, markdownlint) |
+| `/mykit.audit.security` | Security audit (gitleaks) |
+| `/mykit.audit.perf` | Performance audit (AI analysis) |
+| `/mykit.audit.a11y` | Accessibility audit (AI analysis) |
+| `/mykit.audit.deps` | Dependency audit (AI analysis) |
+
 ## Utilities
 
 | Command | Description |
 |---------|-------------|
-| `/mykit.audit` | Run comprehensive audit (quality, security, perf, a11y, deps) |
 | `/mykit.log` | Export session summary to ~/my-log |
-| `/mykit.skill.review` | Review activated skills and propose improvements |
+| `/mykit.review.issues` | Triage, deep-dive, or bulk review GitHub issues |
+| `/mykit.review.skills` | Review activated skills and propose improvements |
 
 ---
 
@@ -126,7 +137,7 @@ Development workflow using 4 steps:
 
 ```
 /mykit.specify 31 → /mykit.plan → /mykit.tasks → /mykit.implement →
-/mykit.audit (optional) → /mykit.commit → /mykit.pr
+/mykit.audit.all (optional) → /mykit.commit → /mykit.pr
 ```
 
 Each step requires its predecessor: `specify` requires a GitHub issue number, `plan` requires `spec.md`, `tasks` requires `plan.md`. Skills are auto-detected during planning and carried through to implementation.
@@ -142,7 +153,12 @@ If `$ARGUMENTS` doesn't match any known command name or "workflow":
 **Unknown topic**: "{$ARGUMENTS}"
 
 Available commands:
-- `/mykit.audit` - Run comprehensive audit
+- `/mykit.audit.all` - Run all audit domains
+- `/mykit.audit.quality` - Quality audit
+- `/mykit.audit.security` - Security audit
+- `/mykit.audit.perf` - Performance audit
+- `/mykit.audit.a11y` - Accessibility audit
+- `/mykit.audit.deps` - Dependency audit
 - `/mykit.commit` - Create commit with CHANGELOG
 - `/mykit.help` - Show command documentation
 - `/mykit.implement` - Execute tasks one by one
@@ -154,7 +170,8 @@ Available commands:
 - `/mykit.specify <issue#>` - Create feature specification
 - `/mykit.status` - Show current workflow state
 - `/mykit.sync` - Install/upgrade My Kit v2
-- `/mykit.skill.review` - Review activated skills and propose improvements
+- `/mykit.review.issues` - Triage, deep-dive, or bulk review GitHub issues
+- `/mykit.review.skills` - Review activated skills and propose improvements
 - `/mykit.tasks` - Generate task breakdown
 Special topics:
 - `workflow` - Show workflow cheatsheets
@@ -166,7 +183,12 @@ Run `/mykit.help` for the full command reference.
 ## Valid Command Names
 
 For reference, these are valid command names to check against:
-- `audit`
+- `audit.all`
+- `audit.quality`
+- `audit.security`
+- `audit.perf`
+- `audit.a11y`
+- `audit.deps`
 - `commit`
 - `help`
 - `implement`
@@ -178,5 +200,6 @@ For reference, these are valid command names to check against:
 - `specify`
 - `status`
 - `sync`
-- `skill.review`
+- `review.issues`
+- `review.skills`
 - `tasks`

@@ -45,7 +45,7 @@ Read the tasks.md file and extract all tasks with the following structure:
    ```
    All tasks complete!
 
-   Next steps: `/mykit.audit` (optional) → `/mykit.commit` → `/mykit.pr`
+   Next steps: `/mykit.audit.all` (optional) → `/mykit.commit` → `/mykit.pr`
    ```
 
 ### Step 5: Mark Task In-Progress

@@ -1,4 +1,4 @@
-# /mykit.issues {number} — Deep Dive
+# /mykit.review.issues {number} — Deep Dive
 
 Deep-dive analysis of a single GitHub issue. Searches the codebase for related files, assesses validity and complexity, and suggests an implementation approach.
 
@@ -7,8 +7,8 @@ Deep-dive analysis of a single GitHub issue. Searches the codebase for related f
 ## Usage
 
 ```
-/mykit.issues 42
-/mykit.issues #42
+/mykit.review.issues 42
+/mykit.review.issues #42
 ```
 
 ## User Input
@@ -63,7 +63,7 @@ Extract the issue number from `$ARGUMENTS`:
 If invalid, display error and stop:
 
 ```
-**Error**: Invalid issue number '{arg}'. Usage: `/mykit.issues 42` or `/mykit.issues #42`
+**Error**: Invalid issue number '{arg}'. Usage: `/mykit.review.issues 42` or `/mykit.review.issues #42`
 ```
 
 ### Step 3: Fetch Issue Details

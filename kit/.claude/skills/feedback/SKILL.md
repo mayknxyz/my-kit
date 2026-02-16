@@ -56,7 +56,7 @@ What to look for when reviewing skills:
 
 ## Structured Reviews
 
-Use `/mykit.skill.review` for end-of-session structured reviews of all activated skills.
+Use `/mykit.review.skills` for end-of-session structured reviews of all activated skills.
 
 ## MUST DO
 

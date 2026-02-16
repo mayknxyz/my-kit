@@ -10,12 +10,13 @@ Handles standalone utility operations: audit. Auto-activates when the user expre
 ## Trigger Keywords
 
 - **audit**: "audit", "run audit", "code audit", "quality check", "security check", "check code quality"
+- **audit domain**: "quality audit", "security audit", "performance audit", "accessibility audit", "dependency audit"
 
 ## Step Identification
 
 | Step | Keywords | Description |
 |------|----------|-------------|
-| `audit` | audit, quality check, security check | Run comprehensive audit (quality, security, perf, a11y, deps) |
+| `audit` | audit, quality check, security check | Run audit (all domains or specific domain) |
 
 ## Routing Logic
 

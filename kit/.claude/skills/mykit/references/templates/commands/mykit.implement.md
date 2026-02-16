@@ -186,7 +186,7 @@ Based on the task description, determine the execution approach:
 
 1. **If task references a command** (contains `/mykit.` or shell command):
    - Execute the referenced command
-   - Example: "Run validation: `/mykit.audit`" -> Execute /mykit.audit
+   - Example: "Run validation: `/mykit.audit.all`" -> Execute /mykit.audit.all
 
 2. **If task references file paths or code changes**:
    - Read the relevant files for context
@@ -328,6 +328,6 @@ Congratulations! You've completed all tasks for this feature.
 |---------|------------|
 | `/mykit.tasks` | Generate tasks before running this command |
 | `/mykit.status` | View overall workflow status |
-| `/mykit.audit` | Validation step in completion phase |
+| `/mykit.audit.all` | Validation step in completion phase |
 | `/mykit.commit` | Commit step in completion phase |
 | `/mykit.pr` | Create PR after all tasks complete |

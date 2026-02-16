@@ -1,14 +1,27 @@
-# /mykit.audit
+# /mykit.audit.*
 
-Run a comprehensive audit across multiple check domains: quality, security, performance, accessibility, and dependencies.
+Run audits across check domains: quality, security, performance, accessibility, and dependencies.
+
+## Commands
+
+| Command | Description |
+|---------|-------------|
+| `/mykit.audit.all` | Run all domains |
+| `/mykit.audit.quality` | Quality only (shellcheck, markdownlint) |
+| `/mykit.audit.security` | Security only (gitleaks) |
+| `/mykit.audit.perf` | Performance only (AI analysis) |
+| `/mykit.audit.a11y` | Accessibility only (AI analysis) |
+| `/mykit.audit.deps` | Dependencies only (AI analysis) |
 
 ## Usage
 
 ```
-/mykit.audit [--only domain1,domain2]
+/mykit.audit.all [--only domain1,domain2]
+/mykit.audit.{domain}
 ```
 
-- Executes directly: Launch all subagents in parallel, collect reports, display summary, propose fixes
+- `/mykit.audit.all`: Launch all subagents in parallel, collect reports, display summary, propose fixes
+- `/mykit.audit.{domain}`: Run a single domain audit
 - `--only`: Comma-separated list of domains to run (e.g., `--only quality,security`). Valid domains: `quality`, `security`, `perf`, `a11y`, `deps`
 
 ## User Input
@@ -73,7 +86,7 @@ Parse the command arguments to determine:
   **Error**: Invalid domain '{domain}'.
 
   Valid domains: quality, security, perf, a11y, deps
-  Example: `/mykit.audit --only quality,security`
+  Example: `/mykit.audit.all --only quality,security`
   ```
 
 ### Step 3: Get Current Branch and Determine Report Directory
@@ -134,8 +147,9 @@ The following checks will be performed:
 ---
 
 **Next Steps**:
-- Run `/mykit.audit` to execute all checks
-- Run `/mykit.audit --only quality,security` to run specific checks only
+- Run `/mykit.audit.all` to execute all checks
+- Run `/mykit.audit.{domain}` to run a specific domain (e.g., `/mykit.audit.quality`)
+- Run `/mykit.audit.all --only quality,security` to run specific checks only
 ```
 
 Stop after displaying preview.
@@ -279,7 +293,7 @@ Use `AskUserQuestion` to prompt the user:
   ```
   Reports saved. No fixes applied.
 
-  Review reports in `{reportDir}` and fix manually, or re-run `/mykit.audit` later.
+  Review reports in `{reportDir}` and fix manually, or re-run `/mykit.audit.all` later.
   ```
 
 ---

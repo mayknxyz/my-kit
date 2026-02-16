@@ -1,4 +1,4 @@
-# /mykit.issues audit — Bulk Review
+# /mykit.review.issues audit — Bulk Review
 
 Bulk audit of all open GitHub issues. Categorizes issues, detects duplicates, analyzes staleness, and computes health metrics.
 
@@ -7,9 +7,9 @@ Bulk audit of all open GitHub issues. Categorizes issues, detects duplicates, an
 ## Usage
 
 ```
-/mykit.issues audit
-/mykit.issues bulk
-/mykit.issues all
+/mykit.review.issues audit
+/mykit.review.issues bulk
+/mykit.review.issues all
 ```
 
 ## User Input

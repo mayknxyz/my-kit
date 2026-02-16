@@ -194,7 +194,7 @@ Always append the following standard completion tasks at the end:
 ```markdown
 ## Completion
 
-- [ ] T0XX Run validation: `/mykit.audit`
+- [ ] T0XX Run validation: `/mykit.audit.all`
 - [ ] T0XX Create commit: `/mykit.commit`
 - [ ] T0XX Create pull request: `/mykit.pr`
 ```
@@ -219,7 +219,7 @@ Generate the tasks.md content using this structure:
 
 ## Completion
 
-- [ ] T0XX Run validation: `/mykit.audit`
+- [ ] T0XX Run validation: `/mykit.audit.all`
 - [ ] T0XX Create commit: `/mykit.commit`
 - [ ] T0XX Create pull request: `/mykit.pr`
 ```
@@ -283,7 +283,7 @@ Where `contentSource description` is:
 
 ## Completion
 
-- [ ] T006 Run validation: `/mykit.audit`
+- [ ] T006 Run validation: `/mykit.audit.all`
 - [ ] T007 Create commit: `/mykit.commit`
 - [ ] T008 Create pull request: `/mykit.pr`
 ```

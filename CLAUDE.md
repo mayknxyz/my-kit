@@ -30,12 +30,12 @@ Auto-triggered by context: a11y, analytics, animation, api-design, astro, biome,
 
 Skills with `references/` subdirectories: a11y, analytics, api-design, astro, cloudflare, copywriting, database, git, security, seo, svelte, tailwind, testing, typescript, web-core.
 
-### Commands (16 total)
+### Commands (21 total)
 
 - **5 full commands**: init, sync, help, status, log
-- **9 thin stubs**: specify (requires issue#), plan (requires spec.md), tasks (requires plan.md), implement, commit, pr, release, audit, issues
+- **14 thin stubs**: specify (requires issue#), plan (requires spec.md), tasks (requires plan.md), implement, commit, pr, release, audit.all, audit.quality, audit.security, audit.perf, audit.a11y, audit.deps, review.issues
 - **1 standalone**: ship.md (from my-claude)
-- **1 utility**: skill.review
+- **1 utility**: review.skills
 
 ### 5 Audit Agents
 

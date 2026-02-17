@@ -222,3 +222,5 @@ Functions available after `source $HOME/.claude/skills/mykit/references/scripts/
 - Commit follows conventional commits specification
 - Version bump is auto-detected from commit type (feat=minor, fix=patch, breaking=major)
 - `package.json` version is updated automatically when CHANGELOG is updated
+- **Version ownership**: The commit step handles version bumping and CHANGELOG updates on the feature branch. The release step does NOT re-bump the version — it reads the version from CHANGELOG/package.json after merging
+- When shell scripts are unavailable, follow the logical steps (check prerequisites, infer commit type, update CHANGELOG, bump version, stage, commit) using the equivalent tool calls rather than sourcing bash scripts

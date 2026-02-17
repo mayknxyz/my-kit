@@ -91,14 +91,16 @@ Build the description from available artifacts:
 Closes #{ISSUE_NUMBER}
 ```
 
-### Step 5: Auto-Detect Labels
+### Step 5: Auto-Detect Labels (Required)
 
-Read the canonical label list from `$HOME/.claude/skills/mykit/references/labels.md`. Only labels defined there are allowed — never create new labels.
+Read the canonical label list from `$HOME/.claude/skills/mykit/references/labels.md`. Only labels defined there are allowed — never create new labels. **Do not skip this step** — every PR should have at least one label matching the commit type.
 
 Auto-match based on:
 
 - Commit type: `feat` → `enhancement`, `fix` → `bug`, `docs` → `documentation`
 - Spec/plan content keywords matching the auto-detection keywords table in the canonical list
+
+If `labels.md` is not found, fall back to applying the commit-type label only (e.g., `enhancement` for `feat`).
 
 ### Step 6: Push and Create PR
 

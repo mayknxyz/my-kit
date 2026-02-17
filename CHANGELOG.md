@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.8.3] - 2026-02-17
+
+### Changed
+
+- Ship commit reference: add version ownership note and shell script fallback guidance
+- Ship PR reference: make label auto-detection required, add fallback when `labels.md` not found
+- Ship release reference: rework to read version instead of recalculating, use `--delete-branch` on merge, add post-merge version bump step, simplify cleanup
+- Workflow implement reference: add parallel execution guidance (Task tool) and context window management for resumable sessions
+
 ## [2.8.2] - 2026-02-17
 
 ### Changed
@@ -356,7 +365,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Monolithic command routing (replaced by skill routing)
 - Per-project infrastructure file copies (now globally shared via stow symlinks)
 
-[Unreleased]: https://github.com/mayknxyz/my-kit/compare/v2.8.2...HEAD
+[Unreleased]: https://github.com/mayknxyz/my-kit/compare/v2.8.3...HEAD
+[2.8.3]: https://github.com/mayknxyz/my-kit/compare/v2.8.2...v2.8.3
 [2.8.2]: https://github.com/mayknxyz/my-kit/compare/v2.8.1...v2.8.2
 [2.8.1]: https://github.com/mayknxyz/my-kit/compare/v2.8.0...v2.8.1
 [2.8.0]: https://github.com/mayknxyz/my-kit/compare/v2.7.0...v2.8.0

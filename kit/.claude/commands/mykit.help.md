@@ -64,13 +64,17 @@ These execute immediately without an action.
 | `/mykit.tasks` | Generate task breakdown |
 | `/mykit.implement` | Execute tasks one by one |
 
-## Commit & Release
+## Ship & Release
 
 | Command | Description |
 |---------|-------------|
 | `/mykit.commit` | Create commit with CHANGELOG |
 | `/mykit.pr` | Create or update pull request |
-| `/mykit.release` | Create release with versioning |
+| `/mykit.ship.approve` | Ship to PR — review, issue, branch, PR, stop for review |
+| `/mykit.ship.bypass` | Ship to release — full pipeline, no stops |
+| `/mykit.release` | Release — aborts if test plan incomplete |
+| `/mykit.release.complete` | Release — marks unchecked test plan items as complete |
+| `/mykit.release.bypass` | Release — removes unchecked test plan items |
 
 ## Audit
 
@@ -82,6 +86,16 @@ These execute immediately without an action.
 | `/mykit.audit.perf` | Performance audit (AI analysis) |
 | `/mykit.audit.a11y` | Accessibility audit (AI analysis) |
 | `/mykit.audit.deps` | Dependency audit (AI analysis) |
+
+## Issues & Labels
+
+| Command | Description |
+|---------|-------------|
+| `/mykit.issue.create` | Create issue from conversation context |
+| `/mykit.issue.edit <number>` | Edit an existing issue |
+| `/mykit.issue.view <number>` | Quick view of a single issue |
+| `/mykit.issue.list` | List issues with optional filters |
+| `/mykit.label.sync` | Enforce canonical labels on the repo |
 
 ## Utilities
 
@@ -163,15 +177,24 @@ Available commands:
 - `/mykit.help` - Show command documentation
 - `/mykit.implement` - Execute tasks one by one
 - `/mykit.init` - Initialize My Kit in repository
+- `/mykit.issue.create` - Create issue from conversation context
+- `/mykit.issue.edit <number>` - Edit an existing issue
+- `/mykit.issue.list` - List issues with optional filters
+- `/mykit.issue.view <number>` - Quick view of a single issue
+- `/mykit.label.sync` - Enforce canonical labels on the repo
 - `/mykit.log` - Export session summary to ~/my-log
 - `/mykit.plan` - Create implementation plan
 - `/mykit.pr` - Create or update pull request
-- `/mykit.release` - Create release with versioning
+- `/mykit.release` - Release (aborts if test plan incomplete)
+- `/mykit.release.bypass` - Release (removes unchecked test plan items)
+- `/mykit.release.complete` - Release (marks test plan items as complete)
+- `/mykit.review.issues` - Triage, deep-dive, or bulk review GitHub issues
+- `/mykit.review.skills` - Review activated skills and propose improvements
+- `/mykit.ship.approve` - Ship to PR, stop for manual review
+- `/mykit.ship.bypass` - Ship to release, full pipeline
 - `/mykit.specify <issue#>` - Create feature specification
 - `/mykit.status` - Show current workflow state
 - `/mykit.sync` - Install/upgrade My Kit v2
-- `/mykit.review.issues` - Triage, deep-dive, or bulk review GitHub issues
-- `/mykit.review.skills` - Review activated skills and propose improvements
 - `/mykit.tasks` - Generate task breakdown
 Special topics:
 - `workflow` - Show workflow cheatsheets
@@ -193,13 +216,22 @@ For reference, these are valid command names to check against:
 - `help`
 - `implement`
 - `init`
+- `issue.create`
+- `issue.edit`
+- `issue.list`
+- `issue.view`
+- `label.sync`
 - `log`
 - `plan`
 - `pr`
 - `release`
+- `release.bypass`
+- `release.complete`
+- `review.issues`
+- `review.skills`
+- `ship.approve`
+- `ship.bypass`
 - `specify`
 - `status`
 - `sync`
-- `review.issues`
-- `review.skills`
 - `tasks`

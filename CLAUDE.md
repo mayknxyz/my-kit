@@ -30,11 +30,10 @@ Auto-triggered by context: a11y, analytics, animation, api-design, astro, biome,
 
 Skills with `references/` subdirectories: a11y, analytics, api-design, astro, cloudflare, copywriting, database, git, security, sentry, seo, svelte, tailwind, testing, typescript, web-core.
 
-### Commands (21 total)
+### Commands (29 total)
 
-- **5 full commands**: init, sync, help, status, log
-- **14 thin stubs**: specify (requires issue#), plan (requires spec.md), tasks (requires plan.md), implement, commit, pr, release, audit.all, audit.quality, audit.security, audit.perf, audit.a11y, audit.deps, review.issues
-- **1 standalone**: ship.md (from my-claude)
+- **12 full commands**: init, sync, help, status, log, issue.create, issue.edit, issue.view, issue.list, label.sync, ship.bypass, ship.approve
+- **16 thin stubs**: specify (requires issue#), plan (requires spec.md), tasks (requires plan.md), implement, commit, pr, release, release.complete, release.bypass, audit.all, audit.quality, audit.security, audit.perf, audit.a11y, audit.deps, review.issues
 - **1 utility**: review.skills
 
 ### 5 Audit Agents
@@ -54,3 +53,4 @@ mykit-audit-quality, mykit-audit-security, mykit-audit-perf, mykit-audit-a11y, m
 3. **Skills load one reference file per invocation** — they don't load everything at once
 4. **Workflow steps chain** — specify requires issue#, plan requires spec.md, tasks requires plan.md
 5. **Skills are auto-detected** — plan scans spec for domain skill keywords, tasks carries them to implement
+6. **Canonical labels only** — all commands/skills must use labels from `$HOME/.claude/skills/mykit/references/labels.md`; never create labels outside this list

@@ -23,6 +23,8 @@ source $HOME/.claude/skills/mykit/references/scripts/fetch-branch-info.sh
 source $HOME/.claude/skills/mykit/references/scripts/git-ops.sh
 
 PR_JSON=$(get_pr_for_branch)
+# Ensure body is included for test plan check
+# get_pr_for_branch must return: number, title, headRefOid, body
 ```
 
 **If no open PR**, display error and stop:
@@ -41,7 +43,65 @@ PR_TITLE=$(echo "$PR_JSON" | jq -r '.title')
 PR_HEAD_SHA=$(echo "$PR_JSON" | jq -r '.headRefOid')
 ```
 
-### Step 2: Calculate Version and Display Summary
+### Step 2: Check Test Plan Completion
+
+Fetch the PR body and extract test plan checkboxes:
+
+```bash
+PR_BODY=$(echo "$PR_JSON" | jq -r '.body')
+```
+
+Parse all checkbox lines matching `- [ ]` (unchecked) and `- [x]` (checked). A test plan exists if any checkbox lines are found.
+
+**If no checkboxes found**: Skip this step — no test plan to verify.
+
+**If all checkboxes are checked**: Display `Test plan: all items complete.` and continue.
+
+**If unchecked items exist**, display them:
+
+```
+### Test Plan — {checked}/{total} complete
+
+Unchecked:
+- [ ] {unchecked item 1}
+- [ ] {unchecked item 2}
+```
+
+Then apply the **test plan mode** (passed from the invoking command):
+
+#### Mode: `abort` (default — `/mykit.release`)
+
+Display error and stop:
+
+```
+**Error**: Test plan incomplete ({checked}/{total}).
+
+Complete the test plan first, or use:
+- `/mykit.release.complete` — mark all items as checked and release
+- `/mykit.release.bypass` — remove unchecked items and release
+```
+
+#### Mode: `complete` (`/mykit.release.complete`)
+
+Update the PR body, replacing all `- [ ]` with `- [x]`:
+
+```bash
+gh pr edit "$PR_NUMBER" --body "$UPDATED_BODY"
+```
+
+Display: `Test plan: marked {unchecked_count} items as complete.`
+
+#### Mode: `bypass` (`/mykit.release.bypass`)
+
+Update the PR body, removing all unchecked `- [ ]` lines:
+
+```bash
+gh pr edit "$PR_NUMBER" --body "$UPDATED_BODY"
+```
+
+Display: `Test plan: removed {unchecked_count} unchecked items.`
+
+### Step 3: Calculate Version and Display Summary
 
 Read base branch from CLAUDE.md `## Workflow` section (default: `main`).
 
@@ -65,7 +125,7 @@ Display release summary:
 **Commits**: {COMMIT_COUNT}
 ```
 
-### Step 3: Squash Merge PR
+### Step 4: Squash Merge PR
 
 ```bash
 MERGE_SUBJECT="${NEXT_VERSION}: ${PR_TITLE} (#${PR_NUMBER})"
@@ -79,7 +139,7 @@ gh pr merge "$PR_NUMBER" \
 
 **If merge fails**, display error with manual recovery steps and stop. No tag or release will be created.
 
-### Step 4: Tag and Release
+### Step 5: Tag and Release
 
 Switch to base branch and pull:
 
@@ -105,7 +165,7 @@ gh release create "$NEXT_VERSION" \
 
 **If tag or release fails**, display warning with manual recovery commands but continue cleanup.
 
-### Step 5: Cleanup
+### Step 6: Cleanup
 
 Delete feature branch (local and remote):
 
@@ -123,7 +183,7 @@ gh issue close "$ISSUE_NUMBER" \
 
 Both are best-effort — warn on failure but don't stop.
 
-### Step 6: Display Success
+### Step 7: Display Success
 
 ```
 **Release {NEXT_VERSION} published!**
@@ -142,6 +202,7 @@ Both are best-effort — warn on failure but don't stop.
 | Error | Message |
 |-------|---------|
 | No open PR | "No open PR found. Run `/mykit.pr` first." |
+| Test plan incomplete (abort mode) | "Test plan incomplete. Use `/mykit.release.complete` or `/mykit.release.bypass`." |
 | Merge failure | "Failed to merge PR. {error}. No tag or release created." |
 | Tag/release failure | Warning only — PR already merged, show manual recovery |
 | Branch deletion failure | Warning only — best-effort |

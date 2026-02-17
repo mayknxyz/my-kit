@@ -7,6 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.8.0] - 2026-02-17
+
+### Added
+
+- `/mykit.issue.create` command — create GitHub issues from conversation context with auto-label detection
+- `/mykit.issue.edit` command — edit existing issues (title, body, labels, assignees, milestone)
+- `/mykit.issue.view` command — quick operational view of a single issue
+- `/mykit.issue.list` command — quick list with optional state/label/assignee filters
+- `/mykit.label.sync` command — enforce canonical labels on a repo (add missing, prompt for extras, re-label old issues)
+- `/mykit.ship.approve` command — ship up to PR creation, stop for manual review
+- `/mykit.ship.bypass` command — full ship pipeline with review step (replaces `/ship`)
+- `labels.md` canonical label reference — 19 labels (9 GitHub defaults + 10 custom) with auto-detection keywords
+- Key Rule #6 in CLAUDE.md: canonical labels only, never create labels outside the list
+- Merged branch detection in `/mykit.status` — shows "Completed" phase, suggests cleanup actions
+
+### Changed
+
+- All label-using commands/skills now read from canonical list instead of `gh label list`
+- Updated: `pr.md`, `triage.md`, `bulk-review.md`, `mykit.pr.md` template for canonical label enforcement
+- CLAUDE.md: command count 21 → 27, full commands 5 → 12
+- Performance SKILL.md: add sentry cross-reference
+
+### Removed
+
+- `/ship` command (replaced by `/mykit.ship.bypass` and `/mykit.ship.approve`)
+
 ## [2.7.0] - 2026-02-16
 
 ### Added
@@ -294,7 +320,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Monolithic command routing (replaced by skill routing)
 - Per-project infrastructure file copies (now globally shared via stow symlinks)
 
-[Unreleased]: https://github.com/mayknxyz/my-kit-v2/compare/v2.7.0...HEAD
+[Unreleased]: https://github.com/mayknxyz/my-kit-v2/compare/v2.8.0...HEAD
+[2.8.0]: https://github.com/mayknxyz/my-kit-v2/compare/v2.7.0...v2.8.0
 [2.7.0]: https://github.com/mayknxyz/my-kit-v2/compare/v2.6.2...v2.7.0
 [2.6.2]: https://github.com/mayknxyz/my-kit-v2/compare/v2.6.1...v2.6.2
 [2.6.1]: https://github.com/mayknxyz/my-kit-v2/compare/v2.6.0...v2.6.1

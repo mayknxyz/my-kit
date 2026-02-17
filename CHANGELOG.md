@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.8.1] - 2026-02-17
+
+### Added
+
+- `.gitignore` — prevents local settings, env files, OS artifacts, and editor files from being committed
+- MIT `LICENSE` file for open-source readiness
+
+### Fixed
+
+- README.md: command count 21 → 29, added Issues and Ship command categories
+- README.md: skill count 28 → 29, domain skill count 23 → 24, added missing `sentry` skill
+- README.md: added License section
+
 ## [2.8.0] - 2026-02-17
 
 ### Added
@@ -320,7 +333,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Monolithic command routing (replaced by skill routing)
 - Per-project infrastructure file copies (now globally shared via stow symlinks)
 
-[Unreleased]: https://github.com/mayknxyz/my-kit-v2/compare/v2.8.0...HEAD
+[Unreleased]: https://github.com/mayknxyz/my-kit-v2/compare/v2.8.1...HEAD
+[2.8.1]: https://github.com/mayknxyz/my-kit-v2/compare/v2.8.0...v2.8.1
 [2.8.0]: https://github.com/mayknxyz/my-kit-v2/compare/v2.7.0...v2.8.0
 [2.7.0]: https://github.com/mayknxyz/my-kit-v2/compare/v2.6.2...v2.7.0
 [2.6.2]: https://github.com/mayknxyz/my-kit-v2/compare/v2.6.1...v2.6.2

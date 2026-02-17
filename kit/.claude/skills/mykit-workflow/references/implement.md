@@ -27,6 +27,7 @@ Read the `## Skills` section from tasks.md. For each listed skill, load it so it
 Read the tasks.md file and extract all tasks with the following structure:
 
 **For each line matching pattern** `^- \[(.)\] (T[0-9]{3}) (.+)$`:
+
 - Extract `marker`: The character inside brackets (`[ ]`, `[>]`, `[x]`, `[~]`)
 - Extract `id`: Task ID (e.g., `T001`)
 - Extract `description`: The task description text
@@ -42,6 +43,7 @@ Read the tasks.md file and extract all tasks with the following structure:
 1. **If any task has status = in-progress**: Use that task (resume)
 2. **Else if any task has status = pending**: Use the first pending task
 3. **Else** (all complete/skipped): Update tasks.md **Status** field from `Pending` to `Complete`. Display completion and stop:
+
    ```
    All tasks complete!
 
@@ -53,6 +55,7 @@ Read the tasks.md file and extract all tasks with the following structure:
 Update tasks.md: replace `- [ ]` with `- [>]` for the target task.
 
 Display:
+
 ```
 **Starting Task**: {targetTask.id} — {targetTask.description}
 ```
@@ -73,6 +76,7 @@ Read-only operations (reading files, searching code, checking status) do not req
 ### Step 7: Update Task Status
 
 **On success**: Update tasks.md — replace `- [>]` with `- [x]`. Display:
+
 ```
 **Task Complete**: {targetTask.id}
 ```

@@ -40,6 +40,7 @@ async function verifyTurnstile(token: string, secretKey: string, ip?: string) {
 ```
 
 ### Error Codes
+
 - `missing-input-secret` — secret key not provided
 - `invalid-input-secret` — secret key is wrong
 - `missing-input-response` — token not provided
@@ -61,6 +62,7 @@ https://imagedelivery.net/{account_hash}/{image_id}/{variant}
 ```
 
 ### Variants (named presets)
+
 - `public` — full size
 - `w512`, `w384`, `w128`, `w64` — width-constrained
 
@@ -139,6 +141,7 @@ export const OPTIONS: APIRoute = async ({ request }) => {
 ```
 
 ### Response Codes
+
 - **200** — success
 - **400** — validation error (missing/invalid fields)
 - **403** — Turnstile verification failed
@@ -157,4 +160,4 @@ await fetch(env.WEBHOOK_URL, {
 });
 ```
 
-Docs: https://developers.cloudflare.com/turnstile/ | https://developers.cloudflare.com/images/
+Docs: <https://developers.cloudflare.com/turnstile/> | <https://developers.cloudflare.com/images/>

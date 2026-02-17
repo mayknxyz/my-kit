@@ -5,6 +5,7 @@ Analyze the codebase for performance anti-patterns and bottlenecks using AI-driv
 ## Inputs
 
 You will receive these variables from the orchestrator:
+
 - `REPO_ROOT`: Absolute path to the repository root
 - `REPORT_PATH`: Absolute path where the report should be written (e.g., `specs/{branch}/audit/perf.md`)
 
@@ -13,6 +14,7 @@ You will receive these variables from the orchestrator:
 ### 1. Discover Code Files
 
 Search the repository for code files to analyze. Prioritize:
+
 - Shell scripts: `$HOME/.claude/skills/mykit/references/scripts/*.sh`
 - Command prompts: `.claude/commands/*.md` (check for embedded bash)
 - Application code: `src/`, `lib/`, `app/` directories
@@ -25,6 +27,7 @@ Use Glob and Read tools to discover and read files. Focus on the most impactful 
 Check for these categories:
 
 **Shell Script Performance**:
+
 - Unnecessary subshell spawning in loops (e.g., `$(cmd)` inside `while` loops)
 - Repeated file reads that could be cached in a variable
 - Using `cat file | cmd` instead of `cmd < file` (useless use of cat)
@@ -34,6 +37,7 @@ Check for these categories:
 - Unnecessary use of external commands where bash builtins suffice
 
 **General Code Performance**:
+
 - N+1 query patterns (repeated calls inside loops)
 - Missing caching for expensive operations
 - Synchronous operations that could be parallelized
@@ -41,6 +45,7 @@ Check for these categories:
 - Redundant computations
 
 **I/O Performance**:
+
 - Excessive disk reads/writes
 - Missing buffering for file operations
 - Unnecessary file existence checks before reads
@@ -54,6 +59,7 @@ Check for these categories:
 ### 4. Generate Proposed Fixes
 
 For each finding:
+
 - Show the current code (problematic pattern)
 - Show the improved code (with the fix applied)
 - Explain the performance difference
@@ -89,15 +95,19 @@ Write the report to `{REPORT_PATH}` using this format:
   ```bash
   {problematic code snippet}
   ```
+
 - **Proposed Fix**:
+
   ```bash
   {improved code snippet}
   ```
+
 - **Impact**: {expected improvement}
 
 ---
 
 {Repeat for each finding. If no findings, write: "No performance issues found."}
+
 ```
 
 ## Return Value

@@ -43,6 +43,7 @@ git rev-parse --abbrev-ref HEAD
 ```
 
 Extract the issue number from the branch name using pattern `^([0-9]+)-`:
+
 - **If branch matches pattern** (e.g., `042-feature-name`):
   - Set `isFeatureBranch = true`
 - **If branch does NOT match pattern** (e.g., `main`, `develop`):
@@ -53,6 +54,7 @@ Extract the issue number from the branch name using pattern `^([0-9]+)-`:
 **If `isFeatureBranch` is false**:
 
 Display error and stop:
+
 ```
 **Error**: No feature branch detected.
 
@@ -64,6 +66,7 @@ To select an issue and create a branch: `/mykit.specify`
 ### Step 4: Determine Paths
 
 Set the following paths based on the current branch:
+
 - `tasksPath = specs/{branch}/tasks.md`
 
 ### Step 5: Check for tasks.md
@@ -73,6 +76,7 @@ Check if tasks.md exists at `tasksPath`.
 **If tasks.md does NOT exist**:
 
 Display error and stop:
+
 ```
 **Error**: No tasks file found at `{tasksPath}`.
 
@@ -84,6 +88,7 @@ Run `/mykit.tasks` to generate a task list from your spec and plan.
 Read the tasks.md file and extract all tasks with the following structure:
 
 **For each line matching pattern** `^- \[(.)\] (T[0-9]{3}) (.+)$`:
+
 - Extract `marker`: The character inside brackets (`[ ]`, `[>]`, `[x]`, `[~]`)
 - Extract `id`: Task ID (e.g., `T001`)
 - Extract `description`: The task description text
@@ -95,12 +100,14 @@ Read the tasks.md file and extract all tasks with the following structure:
 - Store `lineNumber` for later updates
 
 **Determine section** for each task based on position:
+
 - Tasks under `## Implementation` or similar implementation headers = "implementation"
 - Tasks under `## Completion` = "completion"
 
 ### Step 7: Detect Checkbox Markers
 
 When reading tasks, recognize these checkbox markers:
+
 - `- [ ]` = pending (standard markdown, not started)
 - `- [>]` = in-progress (custom, currently being worked on)
 - `- [x]` = complete (standard markdown, finished)
@@ -109,6 +116,7 @@ When reading tasks, recognize these checkbox markers:
 ### Step 8: Calculate Progress
 
 Calculate progress metrics from the parsed tasks:
+
 - `totalCount`: Total number of tasks
 - `completedCount`: Tasks with status = complete
 - `pendingCount`: Tasks with status = pending
@@ -135,6 +143,7 @@ Congratulations! You've completed all tasks for this feature.
 ```
 
 Where `skippedTasksReminder`:
+
 - If skippedCount > 0: "**Note**: {skippedCount} task(s) were skipped. Consider reviewing before creating the PR."
 - If skippedCount = 0: (omit this line)
 
@@ -147,6 +156,7 @@ Where `skippedTasksReminder`:
 ### Step 10: Find Next Task to Execute
 
 Find the task to execute:
+
 1. **If any task has status = in-progress**: Use that task (resume)
 2. **Else if any task has status = pending**: Use the first pending task
 3. **Else** (all complete): Go to Step 9 (display completion)
@@ -158,11 +168,13 @@ Store the found task as `targetTask`.
 **If `targetTask` status is pending** (not already in-progress):
 
 Update tasks.md file:
+
 - Find the line with `targetTask.id`
 - Replace `- [ ]` with `- [>]`
 - Write updated content back to file
 
 Display:
+
 ```
 **Starting Task**: {targetTask.id}
 ```
@@ -208,11 +220,13 @@ Based on the task description, determine the execution approach:
 After successful task execution:
 
 Update tasks.md file:
+
 - Find the line with `targetTask.id`
 - Replace `- [>]` with `- [x]`
 - Write updated content back to file
 
 Display:
+
 ```
 **Task Complete**: {targetTask.id}
 ```
@@ -224,6 +238,7 @@ After completing the task:
 **If there are more pending tasks**:
 
 Find the next pending task and display:
+
 ```
 ### Next Task Available
 
@@ -233,6 +248,7 @@ Run `/mykit.implement` to continue.
 ```
 
 **If entering completion phase** (last implementation task just completed):
+
 ```
 ### Implementation Complete!
 
@@ -255,6 +271,7 @@ If task execution encounters an error:
 Keep the task as in-progress (do NOT change checkbox marker).
 
 Display:
+
 ```
 **Task Execution Failed**: {targetTask.id}
 

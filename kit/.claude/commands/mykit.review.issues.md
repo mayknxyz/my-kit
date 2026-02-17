@@ -7,6 +7,7 @@ Invoke the mykit-issues skill to handle **issue analysis**.
 User arguments: $ARGUMENTS
 
 Routing hint:
+
 - No arguments → triage open issues
 - Numeric argument (e.g., `42`, `#42`) → deep-dive on that issue
 - Keyword (`audit`, `bulk`, `all`) → bulk review all issues

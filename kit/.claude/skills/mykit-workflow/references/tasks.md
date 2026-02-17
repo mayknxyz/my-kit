@@ -23,13 +23,15 @@ Run `/mykit.plan` first.
 **If tasks file exists at `tasksPath`**:
 
 Use `AskUserQuestion` tool to prompt:
-  - header: "Existing Tasks"
-  - question: "A tasks file already exists at this location. What would you like to do?"
-  - options:
+
+- header: "Existing Tasks"
+- question: "A tasks file already exists at this location. What would you like to do?"
+- options:
     1. label: "Overwrite", description: "Replace the existing tasks entirely"
     2. label: "Cancel", description: "Abort and keep the existing tasks"
 
 - If user selects "Cancel", display message and stop:
+
   ```
   Operation cancelled. Existing tasks preserved.
   ```
@@ -39,12 +41,14 @@ Use `AskUserQuestion` tool to prompt:
 Read both `specPath` and `planPath`.
 
 **From spec**, extract:
+
 - **Feature name**: From the `# Feature Specification:` heading
 - **User Stories**: All sections matching `### User Story N - {title} (Priority: {P#})`
 - **Functional Requirements**: All items under `### Functional Requirements`
 - **Success Criteria**: All items under `### Measurable Outcomes`
 
 **From plan**, extract:
+
 - **Skills**: All items under `## Skills`
 - **Implementation Phases**: All sections matching `### Phase N: {title}` with key tasks
 - **Design Decisions**: All sections under `## Design Decisions`
@@ -54,6 +58,7 @@ Read both `specPath` and `planPath`.
 ### Step 4: Generate Task List
 
 **Rules**:
+
 - Generate 5-15 implementation tasks
 - Each task should represent approximately 30 minutes to 2 hours of focused work
 - Align tasks with plan phase structure

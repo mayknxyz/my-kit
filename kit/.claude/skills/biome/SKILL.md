@@ -138,6 +138,7 @@ bun biome ci .                 # CI mode (no fixes, exit code on errors)
 ## Astro File Overrides
 
 Astro files need special handling because:
+
 - `useImportType` conflicts with Astro's component imports (needs runtime value)
 - `useConst` conflicts with Astro's frontmatter variable patterns
 - `noUnusedVariables` / `noUnusedImports` false-positive on frontmatter exports consumed by Astro
@@ -174,4 +175,4 @@ jscpd ./src --format json --output report.json
 - Forget to ignore `.wrangler` — wrangler generates minified build artifacts that produce thousands of false lint errors
 - Use v1 config syntax (`"ignore"`, `"include"`, top-level `"organizeImports"`) with v2
 
-Docs: https://biomejs.dev
+Docs: <https://biomejs.dev>

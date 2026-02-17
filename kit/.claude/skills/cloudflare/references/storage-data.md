@@ -166,6 +166,7 @@ bunx wrangler r2 bucket cors set my-bucket --file r2-cors.json --force
 ```
 
 **Checklist for R2 browser uploads**:
+
 1. R2 bucket exists (`wrangler r2 bucket create`)
 2. R2 API credentials set (account ID, access key, secret key)
 3. CORS rules configured on bucket (`wrangler r2 bucket cors set`)
@@ -249,4 +250,4 @@ Stateful, single-instance actors with strong consistency. Each object runs in on
 
 **Gotcha**: Single-threaded per instance. Use for coordination and state management, not bulk compute. Each object has its own transactional storage.
 
-Docs: https://developers.cloudflare.com/kv/ | https://developers.cloudflare.com/d1/ | https://developers.cloudflare.com/r2/
+Docs: <https://developers.cloudflare.com/kv/> | <https://developers.cloudflare.com/d1/> | <https://developers.cloudflare.com/r2/>

@@ -63,6 +63,7 @@ git status --short
 Infer commit details from context — no user prompts needed:
 
 **Type**: Determine from the nature of changes:
+
 - New files added → `feat`
 - Existing files modified with bug fix context → `fix`
 - Only markdown/doc files changed → `docs`
@@ -82,6 +83,7 @@ Infer commit details from context — no user prompts needed:
 ### Step 4: Auto-Detect Version Bump
 
 Determine version bump from commit type:
+
 - `feat` → minor
 - `fix`, `docs`, `test`, `chore`, `perf`, `refactor`, `style` → patch
 - Breaking change → major
@@ -147,7 +149,7 @@ source $HOME/.claude/skills/mykit/references/scripts/git-ops.sh
 update_changelog "$COMMIT_TYPE" "$COMMIT_DESCRIPTION" "$CHANGELOG_VERSION"
 ```
 
-2. **Update package.json** version (if it exists):
+1. **Update package.json** version (if it exists):
 
 ```bash
 REPO_ROOT="$(git rev-parse --show-toplevel)"
@@ -158,13 +160,13 @@ if [[ -f "$PKG_FILE" ]]; then
 fi
 ```
 
-3. **Stage all changes** (including CHANGELOG.md and package.json):
+1. **Stage all changes** (including CHANGELOG.md and package.json):
 
 ```bash
 stage_all_changes
 ```
 
-4. **Create the commit**:
+1. **Create the commit**:
 
 Build subject: `{type}{(scope)}: {description}`
 Build body with footers: `Refs #{ISSUE_NUMBER}` (and `BREAKING CHANGE: {description}` if applicable).

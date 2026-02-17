@@ -77,4 +77,4 @@ bun astro sync         # generate types
 bunx wrangler pages dev dist  # preview (Cloudflare adapter does NOT support astro preview)
 ```
 
-Docs: https://docs.astro.build
+Docs: <https://docs.astro.build>

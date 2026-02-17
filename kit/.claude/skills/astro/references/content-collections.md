@@ -43,6 +43,7 @@ export const collections = { blog, team };
 ```
 
 ### Built-in Loaders
+
 - **`glob()`** — directories of Markdown/MDX/JSON/YAML files
 - **`file()`** — single data file (JSON array, YAML)
 - **Async function** — custom loader for remote/API data
@@ -112,4 +113,4 @@ const { Content } = await render(post);
 | `import { z } from 'astro:content'` | same (still works) |
 | `import { z } from 'astro/zod'` | also valid |
 
-Docs: https://docs.astro.build/en/guides/content-collections/
+Docs: <https://docs.astro.build/en/guides/content-collections/>

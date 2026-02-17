@@ -1,0 +1,22 @@
+config:
+  # Line length — disabled; skill files have long trigger keyword lines
+  line-length: false
+
+  # Allow duplicate sibling headings (CHANGELOG "Added", "Changed", "Fixed")
+  no-duplicate-heading:
+    siblings_only: true
+
+  # Disable first-line heading — command files use YAML frontmatter
+  first-line-heading: false
+
+  # Disable table column style — tables use mixed alignment intentionally
+  table-column-style: false
+
+  # Disable code fence language requirement — many blocks are intentionally generic
+  fenced-code-language: false
+
+  # Allow bold text for emphasis (not always a heading substitute)
+  no-emphasis-as-heading: false
+
+  # Allow multiple top-level headings in multi-section docs
+  single-title: false

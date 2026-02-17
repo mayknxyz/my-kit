@@ -98,4 +98,4 @@ Components accept snippets as props:
 |-------|------|-----------|
 | Coding conventions | [conventions.md](references/conventions.md) | Component patterns, state management, forms, styling, testing |
 
-Docs: https://svelte.dev/docs
+Docs: <https://svelte.dev/docs>

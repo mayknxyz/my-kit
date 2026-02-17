@@ -49,6 +49,7 @@ umami.track("experiment_conversion", {
 ```
 
 Rules:
+
 - Assign variant once per session, persist it
 - Track exposure separately from conversion
 - Include experiment name in every event for filtering
@@ -80,6 +81,7 @@ const metrics = await fetch(
 ### Custom Dashboards
 
 Build with Umami's API + a simple Astro page:
+
 - Top converting pages (page views → CTA clicks ratio)
 - Traffic sources by conversion rate
 - Core Web Vitals trends over time

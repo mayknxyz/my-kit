@@ -34,6 +34,7 @@ Error tracking and performance monitoring for Cloudflare Pages. Framework-aware 
 | Team members | 1 |
 
 Tune `tracesSampleRate` to stay within limits:
+
 - **Low traffic** (<500 daily transactions): `0.5` - `1.0`
 - **Medium traffic** (500-2,000): `0.1` - `0.3`
 - **High traffic** (2,000+): `0.05` - `0.1`
@@ -128,4 +129,4 @@ npx astro add @sentry/astro && bun add @sentry/cloudflare
 bun add @sentry/browser
 ```
 
-Docs: https://docs.sentry.io/platforms/javascript/
+Docs: <https://docs.sentry.io/platforms/javascript/>

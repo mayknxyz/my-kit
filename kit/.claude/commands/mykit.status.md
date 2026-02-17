@@ -111,6 +111,7 @@ git status --porcelain
 **Parse the output**:
 
 Each line has format: `XY filename` where:
+
 - First character (X) = index/staging status
 - Second character (Y) = working tree status
 - Common codes: M=modified, A=added, D=deleted, R=renamed, ?=untracked
@@ -118,13 +119,13 @@ Each line has format: `XY filename` where:
 **Create file list**:
 
 - Parse each line and categorize:
-  - `M ` (first char M, second space) → "staged modified"
-  - ` M` (first space, second M) → "modified"
-  - `A ` → "staged added"
-  - `D ` → "staged deleted"
-  - ` D` → "deleted"
+  - `M` (first char M, second space) → "staged modified"
+  - `M` (first space, second M) → "modified"
+  - `A` → "staged added"
+  - `D` → "staged deleted"
+  - `D` → "deleted"
   - `??` → "untracked"
-  - `R ` → "staged renamed"
+  - `R` → "staged renamed"
   - `MM` → "staged modified, with unstaged changes"
   - `AM` → "staged added, with unstaged changes"
 
@@ -169,29 +170,34 @@ Format and display the complete status dashboard:
 ## Feature Context
 
 **If on a feature branch with issue details**:
+
 ```
 **Branch**: {branch}
 **Issue**: #{issueNumber} - {issueTitle} ({issueState})
 ```
 
 **If `issueMismatch = true`**, append a warning line:
+
 ```
 **Note**: Issue is still OPEN but branch has been merged — consider closing it with `gh issue close {issueNumber}`
 ```
 
 **If on a feature branch but gh unavailable**:
+
 ```
 **Branch**: {branch}
 **Issue**: #{issueNumber} (GitHub info unavailable)
 ```
 
 **If on a feature branch but issue not found**:
+
 ```
 **Branch**: {branch}
 **Issue**: #{issueNumber} (not found in GitHub)
 ```
 
 **If NOT on a feature branch** (e.g., main, develop):
+
 ```
 **Branch**: {branch}
 
@@ -199,6 +205,7 @@ Not on a feature branch. Use `/mykit.specify <issue#>` to start working on an is
 ```
 
 **If in detached HEAD state**:
+
 ```
 **Warning**: Detached HEAD state at {commitHash}
 
@@ -208,17 +215,20 @@ You are not on a branch. Use `git checkout {branchName}` to return to a branch.
 ## Workflow Phase
 
 **If on a feature branch and phase is "Completed"**:
+
 ```
 **Current**: Completed (merged to main)
 ```
 
 **If on a feature branch and phase is NOT "Completed"**:
+
 ```
 **Current**: {phase}
 **Progress**: spec.md {specExists ? "✓" : "○"} | plan.md {planExists ? "✓" : "○"} | tasks.md {tasksExists ? "✓" : "○"}
 ```
 
 **If NOT on a feature branch**:
+
 ```
 No active feature workflow.
 ```
@@ -226,11 +236,13 @@ No active feature workflow.
 ## File Status
 
 **If working directory is clean**:
+
 ```
 Working directory clean
 ```
 
 **If there are changes (10 or fewer)**:
+
 ```
 {statusIcon} {statusLabel}  {filepath}
 {statusIcon} {statusLabel}  {filepath}
@@ -240,10 +252,12 @@ Working directory clean
 ```
 
 Where:
+
 - `statusIcon` = "✓" for staged files, " " (space) for unstaged
 - `statusLabel` = "modified", "added", "deleted", "renamed", "untracked"
 
 **If there are more than 10 changes**:
+
 ```
 {first 10 files listed as above}
 

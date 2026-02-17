@@ -57,6 +57,7 @@ If not authenticated, display error and stop:
 ### Step 2: Parse Issue Number
 
 Extract the issue number from `$ARGUMENTS`:
+
 - Strip leading `#` if present
 - Validate it's a positive integer
 
@@ -81,6 +82,7 @@ If the issue doesn't exist or is not accessible, display error and stop:
 ### Step 4: Extract Keywords
 
 From the issue title and body, extract:
+
 - **Technical terms**: function names, class names, component names
 - **File paths**: any paths mentioned (e.g., `src/lib/auth.ts`)
 - **Error messages**: quoted errors, stack traces, error codes
@@ -91,6 +93,7 @@ Skip common stop words and generic terms.
 ### Step 5: Search Codebase
 
 For each extracted keyword, search the codebase using Grep:
+
 - Search for file path references
 - Search for function/class/component names
 - Search for error message strings
@@ -127,6 +130,7 @@ Based on number of related files and scope of changes implied:
 ### Step 7: Suggest Implementation Approach
 
 Based on the codebase analysis:
+
 - List affected files with brief description of needed changes
 - Suggest order of implementation
 - Note any dependencies or prerequisites

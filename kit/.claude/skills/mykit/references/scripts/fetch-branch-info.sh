@@ -12,6 +12,7 @@ BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "")
 
 if [[ -z "$BRANCH" ]]; then
   echo "**Error**: Not in a git repository."
+  # shellcheck disable=SC2317  # intentional dual-context pattern (sourced vs direct)
   return 1 2>/dev/null || exit 1
 fi
 

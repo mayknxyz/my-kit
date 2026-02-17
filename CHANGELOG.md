@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.8.2] - 2026-02-17
+
+### Changed
+
+- Rename repo from `my-kit-v2` to `my-kit` — all file references updated
+- README: add Supported Stack table, prerequisites, docs link, changelog link, categorized skills, HTTPS clone URL
+- README: update tagline to "spec-driven, skill-based"
+- CLAUDE.md: update heading to "Internal Reference", replace tagline with architecture context
+- CI: rename `shellcheck.yml` → `lint.yml`, add markdownlint job
+
+### Fixed
+
+- Shellcheck: remove 4 unused `SCRIPT_DIR` variables, add `-x` flag for source resolution, suppress SC2317 false positive, replace sed with parameter expansion (SC2001)
+- Markdownlint: add `.markdownlint-cli2.yaml` config, auto-fix formatting across 116 files (1694 → 0 issues)
+- README: disambiguate duplicate `.bypass` in Ship command row
+- `mykit.help.md`: fix heading level increment (MD001)
+- `mykit.review.skills.md`: fix ordered list numbering (MD029)
+
+### Added
+
+- `.markdownlint-cli2.yaml` — project-wide markdownlint configuration
+- `.gitignore`: add `specs/audit/` for generated audit reports
+
 ## [2.8.1] - 2026-02-17
 
 ### Added
@@ -302,7 +325,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Update settings.json permission patterns for v2 script paths
-- Resolve GNU Stow conflicts between my-claude and my-kit-v2 deployments
+- Resolve GNU Stow conflicts between my-claude and my-kit deployments
 
 ## [2.0.0] - 2026-02-13
 
@@ -333,22 +356,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Monolithic command routing (replaced by skill routing)
 - Per-project infrastructure file copies (now globally shared via stow symlinks)
 
-[Unreleased]: https://github.com/mayknxyz/my-kit-v2/compare/v2.8.1...HEAD
-[2.8.1]: https://github.com/mayknxyz/my-kit-v2/compare/v2.8.0...v2.8.1
-[2.8.0]: https://github.com/mayknxyz/my-kit-v2/compare/v2.7.0...v2.8.0
-[2.7.0]: https://github.com/mayknxyz/my-kit-v2/compare/v2.6.2...v2.7.0
-[2.6.2]: https://github.com/mayknxyz/my-kit-v2/compare/v2.6.1...v2.6.2
-[2.6.1]: https://github.com/mayknxyz/my-kit-v2/compare/v2.6.0...v2.6.1
-[2.6.0]: https://github.com/mayknxyz/my-kit-v2/compare/v2.5.2...v2.6.0
-[2.5.2]: https://github.com/mayknxyz/my-kit-v2/compare/v2.5.1...v2.5.2
-[2.5.1]: https://github.com/mayknxyz/my-kit-v2/compare/v2.5.0...v2.5.1
-[2.5.0]: https://github.com/mayknxyz/my-kit-v2/compare/v2.4.0...v2.5.0
-[2.4.0]: https://github.com/mayknxyz/my-kit-v2/compare/v2.3.0...v2.4.0
-[2.3.0]: https://github.com/mayknxyz/my-kit-v2/compare/v2.2.0...v2.3.0
-[2.2.0]: https://github.com/mayknxyz/my-kit-v2/compare/v2.1.0...v2.2.0
-[2.1.0]: https://github.com/mayknxyz/my-kit-v2/compare/v2.0.4...v2.1.0
-[2.0.4]: https://github.com/mayknxyz/my-kit-v2/compare/v2.0.3...v2.0.4
-[2.0.3]: https://github.com/mayknxyz/my-kit-v2/compare/v2.0.2...v2.0.3
-[2.0.2]: https://github.com/mayknxyz/my-kit-v2/compare/v2.0.1...v2.0.2
-[2.0.1]: https://github.com/mayknxyz/my-kit-v2/compare/v2.0.0...v2.0.1
-[2.0.0]: https://github.com/mayknxyz/my-kit-v2/releases/tag/v2.0.0
+[Unreleased]: https://github.com/mayknxyz/my-kit/compare/v2.8.2...HEAD
+[2.8.2]: https://github.com/mayknxyz/my-kit/compare/v2.8.1...v2.8.2
+[2.8.1]: https://github.com/mayknxyz/my-kit/compare/v2.8.0...v2.8.1
+[2.8.0]: https://github.com/mayknxyz/my-kit/compare/v2.7.0...v2.8.0
+[2.7.0]: https://github.com/mayknxyz/my-kit/compare/v2.6.2...v2.7.0
+[2.6.2]: https://github.com/mayknxyz/my-kit/compare/v2.6.1...v2.6.2
+[2.6.1]: https://github.com/mayknxyz/my-kit/compare/v2.6.0...v2.6.1
+[2.6.0]: https://github.com/mayknxyz/my-kit/compare/v2.5.2...v2.6.0
+[2.5.2]: https://github.com/mayknxyz/my-kit/compare/v2.5.1...v2.5.2
+[2.5.1]: https://github.com/mayknxyz/my-kit/compare/v2.5.0...v2.5.1
+[2.5.0]: https://github.com/mayknxyz/my-kit/compare/v2.4.0...v2.5.0
+[2.4.0]: https://github.com/mayknxyz/my-kit/compare/v2.3.0...v2.4.0
+[2.3.0]: https://github.com/mayknxyz/my-kit/compare/v2.2.0...v2.3.0
+[2.2.0]: https://github.com/mayknxyz/my-kit/compare/v2.1.0...v2.2.0
+[2.1.0]: https://github.com/mayknxyz/my-kit/compare/v2.0.4...v2.1.0
+[2.0.4]: https://github.com/mayknxyz/my-kit/compare/v2.0.3...v2.0.4
+[2.0.3]: https://github.com/mayknxyz/my-kit/compare/v2.0.2...v2.0.3
+[2.0.2]: https://github.com/mayknxyz/my-kit/compare/v2.0.1...v2.0.2
+[2.0.1]: https://github.com/mayknxyz/my-kit/compare/v2.0.0...v2.0.1
+[2.0.0]: https://github.com/mayknxyz/my-kit/releases/tag/v2.0.0

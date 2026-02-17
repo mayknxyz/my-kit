@@ -69,11 +69,14 @@ Run `git init` to initialize a repository, or navigate to an existing git reposi
 ### Step 2: Parse Arguments
 
 Parse the command arguments to determine:
+
 - `action`: `null` (no action = preview) or `"run"` (execute)
 - `onlyDomains`: If `--only` flag is present, parse the comma-separated domain list. If not present, default to all domains: `["quality", "security", "perf", "a11y", "deps"]`
 
 **Validation**:
+
 - If an invalid action is provided (not `run`), display error:
+
   ```
   **Error**: Invalid action '{action}'.
 
@@ -82,6 +85,7 @@ Parse the command arguments to determine:
   ```
 
 - If `--only` contains an invalid domain name, display error:
+
   ```
   **Error**: Invalid domain '{domain}'.
 
@@ -100,9 +104,11 @@ git rev-parse --abbrev-ref HEAD
 Extract the issue number from the branch name using pattern `^([0-9]+)-`:
 
 **If on a feature branch** (e.g., `116-audit-command`):
+
 - Set `reportDir = specs/{branch}/audit/`
 
 **If NOT on a feature branch** (e.g., `main`):
+
 - Set `reportDir = specs/audit/`
 
 ### Step 4: Route Based on Action
@@ -180,18 +186,21 @@ Subagent prompt files live in `$HOME/.claude/agents/`. Each file contains the fu
 
 1. Read the subagent prompt file from `$HOME/.claude/agents/audit-{domain}.md`
 2. Construct the Task tool call by prepending these runtime variables to the prompt:
+
    ```
    REPO_ROOT: {absolute path to repository root}
    REPORT_PATH: {absolute path to reportDir}/{domain}.md
 
    {contents of the subagent prompt file}
    ```
+
 3. Set `subagent_type` from the table above
 4. Set `description` to `"audit-{domain}"`
 
 **Launch ALL subagents in a single message** (parallel execution). Use the Task tool with `run_in_background: false` so all complete before proceeding.
 
 Example for quality:
+
 ```
 Task(
   subagent_type: "Bash",
@@ -205,6 +214,7 @@ Repeat for each domain. All Task calls go in a single message for parallel execu
 ### Step 8: Collect Results
 
 After all subagents complete, read all report files from `{reportDir}/`:
+
 - `quality.md`
 - `security.md`
 - `perf.md`
@@ -212,6 +222,7 @@ After all subagents complete, read all report files from `{reportDir}/`:
 - `deps.md`
 
 For each report, extract:
+
 - `status`: passed, failed, or skipped
 - `issueCount`: Number of findings
 - `findings`: List of individual issues with proposed fixes
@@ -277,10 +288,12 @@ Use `AskUserQuestion` to prompt the user:
   3. label: "Skip fixes", description: "Save reports only — fix nothing now"
 
 **If user selects "Fix all"**:
+
 - Apply all proposed fixes from all reports
 - Display what was changed
 
 **If user selects "Select fixes"**:
+
 - For each domain that has findings, use `AskUserQuestion` with multiSelect:
   - header: "{Domain} fixes"
   - question: "Which {domain} fixes should be applied?"
@@ -289,7 +302,9 @@ Use `AskUserQuestion` to prompt the user:
 - Display what was changed
 
 **If user selects "Skip fixes"**:
+
 - Display:
+
   ```
   Reports saved. No fixes applied.
 

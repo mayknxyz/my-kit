@@ -22,8 +22,7 @@
 
 set -euo pipefail
 
-# Script directory and paths
-SECURITY_SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# Paths
 SECURITY_REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
 
 # Security scan results (populated by scan functions)

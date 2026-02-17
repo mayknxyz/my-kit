@@ -77,6 +77,7 @@ Use Tailwind's three layers for custom CSS that respects the cascade:
 ```
 
 When to use each layer:
+
 - **base**: Element-level defaults, CSS resets, global typography
 - **components**: Multi-property patterns reused across pages (cards, buttons, badges)
 - **utilities**: Single-purpose helpers not provided by Tailwind

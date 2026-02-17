@@ -25,13 +25,15 @@ Run `/mykit.specify` first.
 **If plan file exists at `planPath`**:
 
 Use `AskUserQuestion` tool to prompt:
-  - header: "Existing Plan"
-  - question: "A plan file already exists at this location. What would you like to do?"
-  - options:
+
+- header: "Existing Plan"
+- question: "A plan file already exists at this location. What would you like to do?"
+- options:
     1. label: "Overwrite", description: "Replace the existing plan entirely"
     2. label: "Cancel", description: "Abort and keep the existing plan"
 
 - If user selects "Cancel", display message and stop:
+
   ```
   Operation cancelled. Existing plan preserved.
   ```
@@ -41,6 +43,7 @@ Use `AskUserQuestion` tool to prompt:
 Read the spec file content from `specPath`.
 
 Extract the following information from the spec:
+
 - **Feature name**: From the `# Feature Specification:` heading
 - **User Stories**: All sections matching `### User Story N -`
 - **Functional Requirements**: All items under `### Functional Requirements`
@@ -62,6 +65,7 @@ Analyze the spec content to identify areas that may need technical clarification
 **For each identified ambiguity** (maximum 3-5 questions total):
 
 Use `AskUserQuestion` tool with:
+
 - header: "Plan: {topic}"
 - question: "{specific question about the technical decision}"
 - multiSelect: false
@@ -158,6 +162,7 @@ Generate the plan content using this structure:
 ```
 
 Where:
+
 - `featureName` = extracted from spec header
 - `branch` = current git branch
 - `currentDate` = today's date in YYYY-MM-DD format

@@ -53,6 +53,7 @@ staff time." — Jane Smith, CFO at Acme Corp
 ```
 
 Rules:
+
 - Include full name and title (anonymous quotes have low trust)
 - Lead with the transformation, not praise ("Great product!" is useless)
 - Include a specific metric when possible
@@ -91,6 +92,7 @@ Step 4: "You're all set! Here's what to explore first."
 ```
 
 Principles:
+
 - Celebrate progress ("Step 2 of 4 — you're halfway there!")
 - Offer escape hatches ("Skip for now", "Do this later")
 - Explain why each step matters, not just what to do
@@ -126,6 +128,7 @@ Enterprise — "For organizations at scale"
 ```
 
 Rules:
+
 - Name plans by audience, not features
 - Badge the recommended plan ("Most Popular" or "Best Value")
 - List features as benefits, not specs ("Unlimited projects" not "100GB storage")
@@ -208,6 +211,7 @@ Don't let it default to "View in browser" or navigation links.
 ### Reading Level Check
 
 Test with Hemingway Editor or readability formulas. Aim for:
+
 - Flesch Reading Ease: 60+ (higher is easier)
 - Flesch-Kincaid Grade: 8 or below
 
@@ -225,6 +229,7 @@ Test with Hemingway Editor or readability formulas. Aim for:
 ```
 
 Rules:
+
 - Describe what the image communicates, not what it looks like
 - Keep under 125 characters
 - Don't start with "Image of..." or "Picture of..."

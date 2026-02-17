@@ -50,6 +50,7 @@ If "Start fresh", continue to Phase 1.
   - For any other directory name, use the directory name as the label with description: "Custom framework template"
 
 **Step 1.3**: Read the selected framework's CLAUDE.md template:
+
 - `$HOME/.claude/skills/mykit/references/templates/frameworks/{selected}/CLAUDE.md`
 
 This becomes the base content for the project's CLAUDE.md.
@@ -102,6 +103,7 @@ Display:
 ## Extensibility
 
 Adding a new framework requires only:
+
 1. Create a new directory under `$HOME/.claude/skills/mykit/references/templates/frameworks/{name}/`
 2. Add `CLAUDE.md` with Project Principles and Workflow sections
 3. The init wizard will automatically detect and offer it as an option

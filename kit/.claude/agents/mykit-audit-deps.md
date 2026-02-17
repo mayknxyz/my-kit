@@ -5,6 +5,7 @@ Analyze project dependencies for outdated packages, known vulnerabilities, licen
 ## Inputs
 
 You will receive these variables from the orchestrator:
+
 - `REPO_ROOT`: Absolute path to the repository root
 - `REPORT_PATH`: Absolute path where the report should be written (e.g., `specs/{branch}/audit/deps.md`)
 
@@ -15,6 +16,7 @@ You will receive these variables from the orchestrator:
 Search for dependency files in the repository root and common subdirectories:
 
 **Package managers**:
+
 - Node.js: `package.json`, `package-lock.json`, `yarn.lock`, `pnpm-lock.yaml`
 - Python: `requirements.txt`, `pyproject.toml`, `Pipfile`, `setup.py`, `setup.cfg`
 - Rust: `Cargo.toml`, `Cargo.lock`
@@ -31,23 +33,28 @@ Use Glob to search. Read each manifest found.
 **If package manifests exist**:
 
 **Version Pinning**:
+
 - Flag dependencies using ranges (`^`, `~`, `>=`, `*`) without lock files
 - Flag unpinned dependencies in requirements.txt (no `==`)
 - Note which dependencies have lock files for reproducibility
 
 **Known Vulnerabilities**:
+
 - Cross-reference dependencies against your knowledge of known CVEs
 - Check for packages with major known security issues
 - Flag any dependency with a critical or high severity CVE
 
 **Outdated Packages**:
+
 - If lock files exist, check for significantly outdated major versions
 - Note packages that are end-of-life or unmaintained
 
 **Deprecated Packages**:
+
 - Flag packages known to be deprecated with recommended replacements
 
 **License Issues**:
+
 - If license info is available (package.json `license` field, Cargo.toml `license`), check for:
   - Copyleft licenses (GPL) in permissive-licensed projects
   - Missing license declarations
@@ -56,6 +63,7 @@ Use Glob to search. Read each manifest found.
 ### 3. Analyze Shell Script Dependencies
 
 Also check `$HOME/.claude/skills/mykit/references/scripts/*.sh` for external tool dependencies:
+
 - Read each script and identify `command -v` checks and direct tool invocations
 - List all external tools the scripts depend on (e.g., `gh`, `jq`, `shellcheck`, `gitleaks`, `git`)
 - Note which are required vs optional (checked with `command -v` guards)
@@ -71,6 +79,7 @@ Also check `$HOME/.claude/skills/mykit/references/scripts/*.sh` for external too
 ### 5. Generate Proposed Fixes
 
 For each finding:
+
 - **Vulnerable package**: Specify the safe version to upgrade to
 - **Unpinned dependency**: Show the pinned version syntax
 - **Deprecated package**: Name the recommended replacement

@@ -14,19 +14,19 @@ This creates symlinks from `kit/.claude/` → `~/.claude/`, making all commands,
 
 ## What's Included
 
-### Commands (21)
+### Commands (29)
 
 | Category | Commands |
 |----------|----------|
 | Setup | `/mykit.init`, `/mykit.sync` |
-| Read-Only | `/mykit.status`, `/mykit.help` |
+| Read-Only | `/mykit.status`, `/mykit.help`, `/mykit.log` |
 | Development | `/mykit.specify <issue#>`, `/mykit.plan`, `/mykit.tasks`, `/mykit.implement` |
-| Ship | `/mykit.commit`, `/mykit.pr`, `/mykit.release` |
+| Issues | `/mykit.issue.create`, `.edit`, `.view`, `.list`, `/mykit.label.sync` |
+| Ship | `/mykit.commit`, `/mykit.pr`, `/mykit.release`, `.complete`, `.bypass`, `/mykit.ship.approve`, `.bypass` |
 | Audit | `/mykit.audit.all`, `.quality`, `.security`, `.perf`, `.a11y`, `.deps` |
 | Review | `/mykit.review.issues`, `/mykit.review.skills` |
-| Utilities | `/mykit.log` |
 
-### Skills (28)
+### Skills (29)
 
 **5 My Kit skills** — workflow, ship, ops, issues, and infrastructure:
 
@@ -38,9 +38,9 @@ This creates symlinks from `kit/.claude/` → `~/.claude/`, making all commands,
 | `mykit-ops` | Yes | Audit utilities |
 | `mykit-issues` | Yes | Issue triage, deep-dive, bulk review |
 
-**23 domain skills** — auto-triggered by project context:
+**24 domain skills** — auto-triggered by project context:
 
-a11y, analytics, animation, api-design, astro, biome, ci-cd, cloudflare, copywriting, database, design-system, feedback, git, performance, responsive, security, seo, svelte, tailwind, testing, typescript, web-core, zod.
+a11y, analytics, animation, api-design, astro, biome, ci-cd, cloudflare, copywriting, database, design-system, feedback, git, performance, responsive, security, sentry, seo, svelte, tailwind, testing, typescript, web-core, zod.
 
 ### Agents (5)
 
@@ -73,3 +73,7 @@ cd ~/my-kit-v2 && git pull && stow -R -t ~ kit
 ```
 
 Or use the command: `/mykit.sync`
+
+## License
+
+[MIT](LICENSE)

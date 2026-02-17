@@ -73,6 +73,8 @@ Read-only operations (reading files, searching code, checking status) do not req
 
 **Execute the task fully before proceeding.**
 
+**Parallel execution**: For independent tasks that don't depend on each other's output (e.g., updating similar service files across different features), use the Task tool to execute multiple tasks concurrently with specialized agents. This significantly reduces total implementation time for large changesets.
+
 ### Step 7: Update Task Status
 
 **On success**: Update tasks.md — replace `- [>]` with `- [x]`. Display:
@@ -95,3 +97,13 @@ If the user requests additional work after all tasks are complete (or while impl
 4. **Update plan.md** — After all new tasks are done, update the plan and spec files to reflect the expanded scope
 
 This avoids needing to manually edit tasks.md outside the workflow.
+
+### Context Window Management
+
+If the context window is running low during implementation:
+
+1. **Update tasks.md** — Ensure the current task is marked `[>]` (in-progress) with any relevant notes
+2. **Save progress** — Any partially completed work should be written to disk
+3. **Let the session end** — The next session can resume from the in-progress task by re-invoking `/mykit.implement`
+
+The implement step is designed to be resumable: it always picks up from the first in-progress or pending task.

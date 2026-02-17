@@ -93,4 +93,4 @@ function getProperty<T, K extends keyof T>(obj: T, key: K): T[K] {
 - Use `Function` type — use specific signatures like `() => void`
 - Ignore `strict` mode errors — fix them properly
 
-Docs: https://www.typescriptlang.org/docs
+Docs: <https://www.typescriptlang.org/docs>

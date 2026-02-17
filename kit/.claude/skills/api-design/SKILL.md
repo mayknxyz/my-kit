@@ -95,6 +95,7 @@ export async function POST({ request }: APIContext) {
 ```
 
 **Sanitization notes:**
+
 - Plain-text fields (forms): strip HTML tags via Zod `.transform()` — works on Workers edge
 - HTML content (CMS/blog): sanitize with `sanitize-html` at build time before storage (see `security` skill)
 - Always sanitize before forwarding to external services (webhooks, CRMs, email templates)

@@ -17,6 +17,7 @@ This command manages pull requests with an informational check dashboard and ric
 ## Routing
 
 Use `AskUserQuestion` to present the interactive menu:
+
 - header: "PR"
 - question: "What would you like to do?"
 - options:
@@ -300,6 +301,7 @@ PR_TITLE="${PR_TITLE//\{title\}/$ISSUE_TITLE}"
 Read the canonical label list from `$HOME/.claude/skills/mykit/references/labels.md`. Only labels defined there are allowed — never create new labels.
 
 Auto-detect best-match labels based on:
+
 - Commit type: `feat` → `enhancement`, `fix` → `bug`, `docs` → `documentation`
 - Spec/plan content keywords matching the auto-detection keywords table in the canonical list
 
@@ -316,6 +318,7 @@ Store selected labels as `SELECTED_LABELS`.
 ### Step 12: Confirm PR Creation
 
 Use `AskUserQuestion` to confirm:
+
 - header: "Create PR"
 - question: "Create this pull request?"
 - options:

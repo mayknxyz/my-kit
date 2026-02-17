@@ -25,11 +25,13 @@ Quick reference for all `/mykit.*` commands.
 ## Invocation Methods
 
 **Slash commands** (explicit):
+
 ```
 /mykit.{command}
 ```
 
 **Natural language** (skill auto-trigger):
+
 ```
 "Write the spec for issue 31"      → mykit-workflow activates → specify step
 "Let's plan the implementation"    → mykit-workflow activates → plan step
@@ -53,7 +55,7 @@ These execute immediately without an action.
 | Command | Description |
 |---------|-------------|
 | `/mykit.init` | Initialize My Kit in repository (creates CLAUDE.md) |
-| `/mykit.sync` | Install/upgrade My Kit v2 |
+| `/mykit.sync` | Install/upgrade My Kit |
 
 ## Development Workflow
 
@@ -158,7 +160,7 @@ Each step requires its predecessor: `specify` requires a GitHub issue number, `p
 
 ---
 
-### Mode 4: Unknown Command Error
+## Mode 4: Unknown Command Error
 
 If `$ARGUMENTS` doesn't match any known command name or "workflow":
 
@@ -167,6 +169,7 @@ If `$ARGUMENTS` doesn't match any known command name or "workflow":
 **Unknown topic**: "{$ARGUMENTS}"
 
 Available commands:
+
 - `/mykit.audit.all` - Run all audit domains
 - `/mykit.audit.quality` - Quality audit
 - `/mykit.audit.security` - Security audit
@@ -194,7 +197,7 @@ Available commands:
 - `/mykit.ship.bypass` - Ship to release, full pipeline
 - `/mykit.specify <issue#>` - Create feature specification
 - `/mykit.status` - Show current workflow state
-- `/mykit.sync` - Install/upgrade My Kit v2
+- `/mykit.sync` - Install/upgrade My Kit
 - `/mykit.tasks` - Generate task breakdown
 Special topics:
 - `workflow` - Show workflow cheatsheets
@@ -206,6 +209,7 @@ Run `/mykit.help` for the full command reference.
 ## Valid Command Names
 
 For reference, these are valid command names to check against:
+
 - `audit.all`
 - `audit.quality`
 - `audit.security`

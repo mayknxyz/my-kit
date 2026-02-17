@@ -1,6 +1,6 @@
 # /mykit.sync
 
-Install or upgrade My Kit v2 from the source repository.
+Install or upgrade My Kit from the source repository.
 
 ## Usage
 
@@ -12,30 +12,30 @@ Install or upgrade My Kit v2 from the source repository.
 
 ## Implementation
 
-This command works from **any directory** — it always operates on `~/my-kit-v2`.
+This command works from **any directory** — it always operates on `~/my-kit`.
 
 ### Step 1: Verify Source Repository
 
-Check that `~/my-kit-v2` exists and is a git repo:
+Check that `~/my-kit` exists and is a git repo:
 
 ```bash
-test -d ~/my-kit-v2/.git
+test -d ~/my-kit/.git
 ```
 
 **If not found**, display error and stop:
 
 ```
-**Error**: My Kit v2 source repository not found at `~/my-kit-v2`.
+**Error**: My Kit source repository not found at `~/my-kit`.
 
 To install:
-  git clone git@github.com:mayknxyz/my-kit-v2.git ~/my-kit-v2
-  cd ~/my-kit-v2 && stow -t ~ kit
+  git clone https://github.com/mayknxyz/my-kit.git ~/my-kit
+  cd ~/my-kit && stow -t ~ kit
 ```
 
 ### Step 2: Get Current Version
 
 ```bash
-cd ~/my-kit-v2
+cd ~/my-kit
 CURRENT_SHA=$(git rev-parse --short HEAD)
 CURRENT_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "untagged")
 CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
@@ -44,23 +44,23 @@ CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 ### Step 3: Check Working Tree
 
 ```bash
-cd ~/my-kit-v2
+cd ~/my-kit
 git status --porcelain
 ```
 
 **If output is non-empty** (dirty working tree), display error and stop:
 
 ```
-**Error**: Working tree has uncommitted changes in `~/my-kit-v2`.
+**Error**: Working tree has uncommitted changes in `~/my-kit`.
 
 Commit or stash changes first:
-  cd ~/my-kit-v2 && git status
+  cd ~/my-kit && git status
 ```
 
 ### Step 4: Fetch Latest
 
 ```bash
-cd ~/my-kit-v2
+cd ~/my-kit
 git fetch origin 2>/dev/null
 ```
 
@@ -76,7 +76,7 @@ git fetch origin 2>/dev/null
 ### Step 5: Check for Updates
 
 ```bash
-cd ~/my-kit-v2
+cd ~/my-kit
 LOCAL_SHA=$(git rev-parse HEAD)
 REMOTE_SHA=$(git rev-parse origin/main 2>/dev/null || echo "")
 LATEST_TAG=$(git describe --tags --abbrev=0 origin/main 2>/dev/null || echo "untagged")
@@ -85,7 +85,7 @@ LATEST_TAG=$(git describe --tags --abbrev=0 origin/main 2>/dev/null || echo "unt
 **If `LOCAL_SHA` equals `REMOTE_SHA`**:
 
 ```
-**My Kit v2** is up to date.
+**My Kit** is up to date.
 
 **Version**: {CURRENT_TAG} ({CURRENT_SHA})
 **Branch**: {CURRENT_BRANCH}
@@ -96,7 +96,7 @@ Stop execution here.
 ### Step 6: Show What Would Change
 
 ```bash
-cd ~/my-kit-v2
+cd ~/my-kit
 COMMITS_BEHIND=$(git rev-list HEAD..origin/main --count 2>/dev/null || echo "?")
 DIFF_SUMMARY=$(git diff --stat HEAD..origin/main 2>/dev/null || echo "")
 ```
@@ -104,7 +104,7 @@ DIFF_SUMMARY=$(git diff --stat HEAD..origin/main 2>/dev/null || echo "")
 Display:
 
 ```
-**My Kit v2** update available.
+**My Kit** update available.
 
 **Current**: {CURRENT_TAG} ({CURRENT_SHA})
 **Latest**: {LATEST_TAG} ({REMOTE_SHA short})
@@ -118,8 +118,9 @@ Display:
 ### Step 7: Prompt to Update
 
 Use `AskUserQuestion`:
+
 - header: "Update"
-- question: "Update My Kit v2 to latest?"
+- question: "Update My Kit to latest?"
 - options:
   1. label: "Update to latest (Recommended)", description: "Pull latest from main and re-stow"
   2. label: "Pick a version", description: "Choose a specific tagged version"
@@ -132,16 +133,18 @@ Use `AskUserQuestion`:
 **If user selects "Pick a version"**:
 
 1. List available tags:
+
    ```bash
-   cd ~/my-kit-v2
+   cd ~/my-kit
    git tag --sort=-v:refname | head -10
    ```
 
 2. Use `AskUserQuestion` to let user pick from available tags (show up to 4 most recent).
 
 3. Checkout the selected tag:
+
    ```bash
-   cd ~/my-kit-v2
+   cd ~/my-kit
    git checkout {selected_tag}
    ```
 
@@ -150,7 +153,7 @@ Use `AskUserQuestion`:
 ### Step 8: Pull Latest
 
 ```bash
-cd ~/my-kit-v2
+cd ~/my-kit
 git checkout main 2>/dev/null
 git pull --ff-only origin main
 ```
@@ -163,13 +166,13 @@ git pull --ff-only origin main
 Git error: {error message}
 
 If fast-forward is not possible, try resolving manually:
-  cd ~/my-kit-v2 && git log --oneline HEAD..origin/main
+  cd ~/my-kit && git log --oneline HEAD..origin/main
 ```
 
 ### Step 9: Re-stow
 
 ```bash
-cd ~/my-kit-v2
+cd ~/my-kit
 stow -R -t ~ kit
 ```
 
@@ -181,19 +184,19 @@ stow -R -t ~ kit
 {error output}
 
 Try resolving manually:
-  cd ~/my-kit-v2 && stow -R -t ~ kit
+  cd ~/my-kit && stow -R -t ~ kit
 ```
 
 ### Step 10: Display Success
 
 ```bash
-cd ~/my-kit-v2
+cd ~/my-kit
 NEW_SHA=$(git rev-parse --short HEAD)
 NEW_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "untagged")
 ```
 
 ```
-**My Kit v2 updated successfully.**
+**My Kit updated successfully.**
 
 **Version**: {NEW_TAG} ({NEW_SHA})
 

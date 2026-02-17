@@ -1,12 +1,32 @@
-# My Kit v2
+# My Kit
 
-Skill-based development workflow toolkit for Claude Code. Manages the full development lifecycle from issue selection through specification, planning, implementation, and shipping.
+Spec-driven, skill-based development workflow toolkit for Claude Code. Manages the full development lifecycle from issue selection through specification, planning, implementation, and shipping.
+
+**Docs**: [mykit.mikenavales.xyz](https://mykit.mikenavales.xyz)
+
+## Supported Stack
+
+The domain skills are built for this specific stack. If your project uses a different framework or platform, the workflow commands still work but you won't get domain-specific guidance.
+
+| Layer | Technologies |
+|-------|-------------|
+| Frameworks | **Astro**, **Svelte / SvelteKit** |
+| Styling | **Tailwind CSS v4** |
+| Language | **TypeScript** (strict mode) |
+| Platform | **Cloudflare** (Pages, Workers, D1, KV, R2, Queues) |
+| Validation | **Zod** |
+| Tooling | **Biome** (lint/format), **Vitest** + **Playwright** (testing) |
+| Monitoring | **Sentry** |
+
+Not supported: React, Vue, Angular, Next.js, Nuxt, Node/Express, AWS, Vercel, Netlify, ESLint/Prettier, Jest, or other stacks.
 
 ## Setup
 
+Requires [Claude Code](https://docs.anthropic.com/en/docs/claude-code) and [GNU Stow](https://www.gnu.org/software/stow/).
+
 ```bash
-git clone git@github.com:mayknxyz/my-kit-v2.git ~/my-kit-v2
-cd ~/my-kit-v2
+git clone https://github.com/mayknxyz/my-kit.git ~/my-kit
+cd ~/my-kit
 stow -t ~ kit
 ```
 
@@ -22,13 +42,13 @@ This creates symlinks from `kit/.claude/` → `~/.claude/`, making all commands,
 | Read-Only | `/mykit.status`, `/mykit.help`, `/mykit.log` |
 | Development | `/mykit.specify <issue#>`, `/mykit.plan`, `/mykit.tasks`, `/mykit.implement` |
 | Issues | `/mykit.issue.create`, `.edit`, `.view`, `.list`, `/mykit.label.sync` |
-| Ship | `/mykit.commit`, `/mykit.pr`, `/mykit.release`, `.complete`, `.bypass`, `/mykit.ship.approve`, `.bypass` |
+| Ship | `/mykit.commit`, `/mykit.pr`, `/mykit.release`, `.complete`, `.bypass`, `/mykit.ship.approve`, `/mykit.ship.bypass` |
 | Audit | `/mykit.audit.all`, `.quality`, `.security`, `.perf`, `.a11y`, `.deps` |
 | Review | `/mykit.review.issues`, `/mykit.review.skills` |
 
 ### Skills (29)
 
-**5 My Kit skills** — workflow, ship, ops, issues, and infrastructure:
+**5 workflow skills** — framework-agnostic, work with any project:
 
 | Skill | Auto-trigger | Purpose |
 |-------|-------------|---------|
@@ -38,9 +58,16 @@ This creates symlinks from `kit/.claude/` → `~/.claude/`, making all commands,
 | `mykit-ops` | Yes | Audit utilities |
 | `mykit-issues` | Yes | Issue triage, deep-dive, bulk review |
 
-**24 domain skills** — auto-triggered by project context:
+**24 domain skills** — auto-triggered by project context, tuned for the supported stack:
 
-a11y, analytics, animation, api-design, astro, biome, ci-cd, cloudflare, copywriting, database, design-system, feedback, git, performance, responsive, security, sentry, seo, svelte, tailwind, testing, typescript, web-core, zod.
+| Category | Skills |
+|----------|--------|
+| Frameworks | astro, svelte |
+| Styling & UI | tailwind, design-system, animation, responsive |
+| Platform & Infra | cloudflare, database (D1/SQLite), ci-cd, sentry |
+| Code Quality | typescript, biome, zod, testing, security, performance |
+| Content & SEO | copywriting, seo, analytics, a11y |
+| General | api-design, git, web-core, feedback |
 
 ### Agents (5)
 
@@ -69,10 +96,14 @@ You can also describe what you want in natural language — skills auto-activate
 ## Upgrading
 
 ```bash
-cd ~/my-kit-v2 && git pull && stow -R -t ~ kit
+cd ~/my-kit && git pull && stow -R -t ~ kit
 ```
 
 Or use the command: `/mykit.sync`
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for version history.
 
 ## License
 

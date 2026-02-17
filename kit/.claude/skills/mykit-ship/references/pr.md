@@ -96,6 +96,7 @@ Closes #{ISSUE_NUMBER}
 Read the canonical label list from `$HOME/.claude/skills/mykit/references/labels.md`. Only labels defined there are allowed — never create new labels.
 
 Auto-match based on:
+
 - Commit type: `feat` → `enhancement`, `fix` → `bug`, `docs` → `documentation`
 - Spec/plan content keywords matching the auto-detection keywords table in the canonical list
 
@@ -153,7 +154,7 @@ PR_URL=$("${PR_CMD[@]}" 2>&1)
 |-------|---------|
 | No commits | "No commits on branch. Run `/mykit.commit` first." |
 | PR already exists | "Pull request already exists. {URL}" |
-| gh CLI not found | "GitHub CLI (gh) not found. Install: https://github.com/cli/cli#installation" |
+| gh CLI not found | "GitHub CLI (gh) not found. Install: <https://github.com/cli/cli#installation>" |
 | Not authenticated | "Not authenticated with GitHub. Run: `gh auth login`" |
 | Push failure | "Failed to push branch. Push manually: `git push -u origin {branch}`" |
 | PR creation failure | "Failed to create PR. {error}" |

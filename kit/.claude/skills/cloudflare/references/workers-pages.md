@@ -123,4 +123,4 @@ bunx wrangler dev
 - **`nodejs_compat` flag**: Required for many npm packages. Always set it.
 - **Bindings only in SSR**: Static/prerendered pages cannot access KV, D1, R2, or secrets at runtime.
 
-Docs: https://developers.cloudflare.com/workers/ | https://developers.cloudflare.com/pages/
+Docs: <https://developers.cloudflare.com/workers/> | <https://developers.cloudflare.com/pages/>

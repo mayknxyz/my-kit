@@ -114,12 +114,14 @@ Based on `updatedAt`:
 #### Duplicate Detection
 
 Compare each pair of issues by keyword overlap in titles:
+
 - Extract significant words (skip common stop words like "the", "is", "a", "an", "in", "to", "for", "and", "or", "bug", "feature", "request", "issue")
 - Flag pairs with >50% keyword overlap as potential duplicates
 
 ### Step 5: Suggest Labels
 
 For each unlabeled issue, suggest labels from the canonical label list based on:
+
 - Keywords in title and body matched against the auto-detection keywords table
 - Issue type (bug report, feature request, question, documentation)
 - Domain indicators (e.g., file paths, technology names)

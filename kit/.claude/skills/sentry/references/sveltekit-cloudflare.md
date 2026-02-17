@@ -2,7 +2,7 @@
 
 Package: `@sentry/sveltekit` (handles both client and server)
 
-Docs: https://docs.sentry.io/platforms/javascript/guides/cloudflare/frameworks/sveltekit/
+Docs: <https://docs.sentry.io/platforms/javascript/guides/cloudflare/frameworks/sveltekit/>
 
 ## Install
 

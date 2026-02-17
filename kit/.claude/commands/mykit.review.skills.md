@@ -37,7 +37,7 @@ Read `~/.claude/skills/feedback/SKILL.md` to load the Skill Evaluation Checklist
 
 For each activated skill, read `~/.claude/skills/{name}/SKILL.md`
 
-For each invoked command, read `~/my-kit-v2/kit/.claude/commands/{name}.md`
+For each invoked command, read `~/my-kit/kit/.claude/commands/{name}.md`
 
 ### Step 4: Evaluate Each Skill
 
@@ -60,15 +60,18 @@ Display numbered, actionable list grouped by skill:
 ## Skill Review
 
 ### tailwind (activated)
+
 1. Helpful: @theme directive guidance prevented v3 patterns
 2. Gap: Missing `@variant` directive documentation
 3. Outdated: `color-mix()` syntax changed in v4.1
 
 ### svelte (activated)
-4. Helpful: Runes migration table caught $: usage
-5. Gap: No guidance on $state.snapshot() for deep copies
+
+1. Helpful: Runes migration table caught $: usage
+2. Gap: No guidance on $state.snapshot() for deep copies
 
 ### Summary
+
 - {n} skills reviewed, {n} commands reviewed
 - {n} improvements proposed
 - Priority: {highest-impact change}
@@ -77,6 +80,6 @@ Display numbered, actionable list grouped by skill:
 
 ### Step 6: Offer to Apply
 
-Always offer to apply improvements directly. Skills live at `~/.claude/skills/` (symlinked from `~/my-kit-v2/kit/.claude/skills/`) and commands live at `~/my-kit-v2/kit/.claude/commands/` - both are writable from any working directory.
+Always offer to apply improvements directly. Skills live at `~/.claude/skills/` (symlinked from `~/my-kit/kit/.claude/skills/`) and commands live at `~/my-kit/kit/.claude/commands/` - both are writable from any working directory.
 
 When the user says "apply all" or references specific numbers, edit the files directly.

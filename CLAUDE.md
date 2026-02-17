@@ -1,13 +1,13 @@
-# My Kit v2
+# My Kit — Internal Reference
 
-Skill-based development workflow toolkit for Claude Code.
+Architecture and rules reference for Claude Code.
 
 ## Structure
 
 This is a **stow package**. The `kit/` directory mirrors `~/` and is deployed via GNU Stow:
 
 ```bash
-cd ~/my-kit-v2 && stow -t ~ kit
+cd ~/my-kit && stow -t ~ kit
 ```
 
 This creates symlinks from `kit/.claude/` → `~/.claude/`, making commands, skills, and agents globally available.
@@ -48,7 +48,7 @@ mykit-audit-quality, mykit-audit-security, mykit-audit-perf, mykit-audit-a11y, m
 
 ## Key Rules
 
-1. **Never edit `~/.claude/` directly** — always edit files in `~/my-kit-v2/kit/.claude/` and re-stow
+1. **Never edit `~/.claude/` directly** — always edit files in `~/my-kit/kit/.claude/` and re-stow
 2. **CLAUDE.md is the single source of truth** — project principles and workflow config live there
 3. **Skills load one reference file per invocation** — they don't load everything at once
 4. **Workflow steps chain** — specify requires issue#, plan requires spec.md, tasks requires plan.md

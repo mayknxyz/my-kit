@@ -5,6 +5,7 @@ Common patterns used across all mykit-workflow steps.
 ## Branch Context
 
 All steps start by sourcing `fetch-branch-info.sh` which sets:
+
 - `BRANCH` — current git branch name
 - `ISSUE_NUMBER` — extracted from branch pattern `^([0-9]+)-`, or empty
 - `SPEC_PATH` — `specs/{branch}/spec.md`

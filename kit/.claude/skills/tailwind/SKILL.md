@@ -79,4 +79,4 @@ export default defineConfig({
 - Use `bg-opacity-*` utilities — use slash syntax `bg-primary/50`
 - Mix `tailwind.config.js` with `@theme` — pick one (always `@theme` for v4)
 
-Docs: https://tailwindcss.com/docs
+Docs: <https://tailwindcss.com/docs>

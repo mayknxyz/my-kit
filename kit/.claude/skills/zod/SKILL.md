@@ -147,6 +147,7 @@ type ContactInput = z.infer<typeof ContactSchema>;
 ```
 
 **Key points:**
+
 - `.transform()` runs **after** validation — types stay clean (`z.infer` produces `string`, not `string | undefined`)
 - `.max()` limits prevent DoS via oversized payloads
 - `.regex()` on phone acts as a character allowlist — stricter than HTML stripping

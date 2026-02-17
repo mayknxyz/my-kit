@@ -59,4 +59,4 @@ Does this component need JavaScript in the browser?
 - **Test without JS** — pages should still render meaningful content when directives haven't hydrated yet.
 - **Svelte 5 runes** — `$props()` works seamlessly with Astro prop passing.
 
-Docs: https://docs.astro.build/en/guides/integrations-guide/svelte/
+Docs: <https://docs.astro.build/en/guides/integrations-guide/svelte/>

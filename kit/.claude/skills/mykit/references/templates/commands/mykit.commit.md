@@ -146,6 +146,7 @@ Show what will be committed:
 ### Step 8: Confirm Commit
 
 Use `AskUserQuestion` to confirm:
+
 - header: "Confirm"
 - question: "Create this commit?"
 - options:

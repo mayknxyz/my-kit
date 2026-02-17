@@ -75,6 +75,7 @@ https://example.com/?utm_source=linkedin&utm_medium=social&utm_campaign=launch
 ```
 
 Standard UTM parameters:
+
 - `utm_source` — where traffic comes from (google, linkedin, newsletter)
 - `utm_medium` — marketing medium (cpc, social, email)
 - `utm_campaign` — campaign name (launch, spring-sale)

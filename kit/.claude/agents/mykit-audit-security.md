@@ -5,6 +5,7 @@ Run security scans using gitleaks to detect leaked secrets, API keys, tokens, an
 ## Inputs
 
 You will receive these variables from the orchestrator:
+
 - `REPO_ROOT`: Absolute path to the repository root
 - `REPORT_PATH`: Absolute path where the report should be written (e.g., `specs/{branch}/audit/security.md`)
 
@@ -19,6 +20,7 @@ run_all_security_checks 2>&1
 ```
 
 Capture the output and the exit code:
+
 - Exit 0 = no secrets detected
 - Exit 1 = secrets found or scan error
 
@@ -35,12 +37,14 @@ If gitleaks is not installed, set status to "skipped" and note install instructi
 ### 3. Parse Results
 
 From the security scan output, extract:
+
 - Whether secrets were detected
 - For each detected secret: file path, line number, rule that matched, type of secret
 
 ### 4. Generate Proposed Fixes
 
 For each finding:
+
 - Identify the type of secret (API key, token, password, private key)
 - Recommend removal from source code
 - Suggest environment variable or secret manager alternative

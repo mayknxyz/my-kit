@@ -68,4 +68,4 @@ bunx wrangler r2           # R2 bucket commands
 bunx wrangler kv           # KV namespace commands
 ```
 
-Docs: https://developers.cloudflare.com
+Docs: <https://developers.cloudflare.com>

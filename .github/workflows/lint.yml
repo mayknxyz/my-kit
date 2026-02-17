@@ -1,0 +1,48 @@
+name: Lint
+
+on:
+  push:
+    paths:
+      - "kit/.claude/**/*.md"
+      - "kit/.claude/skills/mykit/references/scripts/**"
+      - "README.md"
+      - "CLAUDE.md"
+      - "CHANGELOG.md"
+      - ".markdownlint-cli2.yaml"
+  pull_request:
+    paths:
+      - "kit/.claude/**/*.md"
+      - "kit/.claude/skills/mykit/references/scripts/**"
+      - "README.md"
+      - "CLAUDE.md"
+      - "CHANGELOG.md"
+      - ".markdownlint-cli2.yaml"
+
+jobs:
+  shellcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run ShellCheck
+        uses: ludeeus/action-shellcheck@2.0.0
+        env:
+          SHELLCHECK_OPTS: -x
+        with:
+          scandir: kit/.claude/skills/mykit/references/scripts
+          severity: warning
+
+  markdownlint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run markdownlint
+        uses: DavidAnson/markdownlint-cli2-action@v19
+        with:
+          globs: |
+            kit/.claude/commands/*.md
+            kit/.claude/skills/**/SKILL.md
+            kit/.claude/skills/**/references/**/*.md
+            kit/.claude/agents/*.md
+            README.md
+            CLAUDE.md
+            CHANGELOG.md

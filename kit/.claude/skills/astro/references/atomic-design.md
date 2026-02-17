@@ -11,26 +11,31 @@ src/components/
 ```
 
 ### Atoms
+
 Smallest building blocks. No child component dependencies. Reusable everywhere.
 
 Examples: `Button`, `Icon`, `Divider`, `TurnstileWidget`, `OptimizedImage`, `LoadingSpinner`, `StructuredData`, `ScrollToTop`, `HeroImage`
 
 ### Molecules
+
 Combine multiple atoms into a functional unit with a single purpose.
 
 Examples: `Card`, `CTASection`, `AudioPlayer`, `YouTubeEmbed`, `Pagination`, `PlatformIcons`, `FormThankYou`
 
 ### Organisms
+
 Complete page sections. Compose atoms + molecules. May have internal state or scripts.
 
 Examples: `Header`, `Footer`, `Hero`, `MusicShowcase`, `ContactForm`, `VideoShowcase`, `StreamingPlatforms`
 
 ### Templates
+
 Page-level layout wrappers. Define shared HTML structure, meta tags, global scripts.
 
 Examples: `BaseLayout`, `BaseTemplate`, `BlogPostLayout`
 
 ### Promotion Rules
+
 - Atom → Molecule: when it composes other atoms or gains internal interaction logic
 - Molecule → Organism: when it represents a complete page section, not a reusable widget
 - Organism → Template: when it wraps an entire page and manages `<html>`, `<head>`, slots for page content
@@ -58,6 +63,7 @@ src/data/
 ```
 
 ### Conventions
+
 - Export `readonly` typed objects with `interface` definitions
 - Use barrel exports (`index.ts`) for clean imports
 - Split by page when data is page-specific (`data/home/`, `data/pages/`)

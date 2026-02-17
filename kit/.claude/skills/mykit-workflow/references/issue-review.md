@@ -7,6 +7,7 @@ Review extracted issue details for completeness, flag gaps, and get user clarifi
 ### Inputs
 
 Expects these variables from the extraction step:
+
 - `issueTitle` — Issue title
 - `issueNumber` — GitHub issue number
 - `summary` — Extracted or empty
@@ -29,6 +30,7 @@ Display a concise review of what was extracted:
 ### 2. Flag Gaps
 
 Identify which sections are missing or vague. A section is **vague** if it:
+
 - Is fewer than 20 characters
 - Uses only generic language without specifics (e.g., "make it better", "fix the thing")
 - Lacks measurable outcomes or concrete details
@@ -68,6 +70,7 @@ Use `AskUserQuestion`:
 **If "Accept with recommendations"**: Apply recommendations to fill missing/vague sections. Update `summary`, `problem`, `acceptanceCriteria` with recommended values. Set `contentSource = "issue+recommendations"`.
 
 **If "Clarify"**: For each gap, prompt with `AskUserQuestion`:
+
 - header: "Clarify: {field}"
 - question: "{targeted question about the gap}"
 - options:

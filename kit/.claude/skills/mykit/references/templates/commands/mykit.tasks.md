@@ -43,6 +43,7 @@ git rev-parse --abbrev-ref HEAD
 ```
 
 Extract the issue number from the branch name using pattern `^([0-9]+)-`:
+
 - **If branch matches pattern** (e.g., `042-feature-name`):
   - Extract issue number (e.g., `42`)
   - Set `issueNumber` to the extracted number
@@ -56,6 +57,7 @@ Extract the issue number from the branch name using pattern `^([0-9]+)-`:
 **If `isFeatureBranch` is false**:
 
 Display error and stop:
+
 ```
 **Error**: No feature branch detected.
 
@@ -67,6 +69,7 @@ To select an issue and create a branch: `/mykit.specify`
 ### Step 4: Determine Paths
 
 Set the following paths based on the current branch:
+
 - `specPath = specs/{branch}/spec.md`
 - `planPath = specs/{branch}/plan.md`
 - `tasksPath = specs/{branch}/tasks.md`
@@ -77,6 +80,7 @@ Set the following paths based on the current branch:
 **If tasks file exists at `tasksPath`**:
 
 Use `AskUserQuestion` to prompt:
+
 - header: "Existing Tasks"
 - question: "A tasks file already exists. What would you like to do?"
 - options:
@@ -91,10 +95,12 @@ Use `AskUserQuestion` to prompt:
 ### Step 6: Detect Available Artifacts
 
 Check which documentation artifacts exist:
+
 - `hasSpec`: true if spec.md exists and has content >= 50 characters
 - `hasPlan`: true if plan.md exists and has content >= 50 characters
 
 **Determine content source**:
+
 - If both exist: `contentSource = "spec+plan"`
 - If only spec exists: `contentSource = "spec"`
 - If only plan exists: `contentSource = "plan"`
@@ -107,6 +113,7 @@ Check which documentation artifacts exist:
 Read the spec file content from `specPath`.
 
 Extract the following information:
+
 - **Feature name**: From the `# Feature Specification:` heading
 - **User Stories**: All sections matching `### User Story N - {title} (Priority: {P#})`
   - Extract: story number, title, priority, description, acceptance scenarios
@@ -120,6 +127,7 @@ Extract the following information:
 Read the plan file content from `planPath`.
 
 Extract the following information:
+
 - **Summary**: From `## Summary` section
 - **Implementation Phases**: All sections matching `### Phase N: {title}`
   - Extract: phase number, title, description, key tasks
@@ -133,6 +141,7 @@ Extract the following information:
 **Question 1: What to Build**
 
 Use `AskUserQuestion` tool:
+
 - header: "Tasks: Q1/3"
 - question: "What needs to be built or changed?"
 - multiSelect: false
@@ -143,6 +152,7 @@ Wait for user response and store as `whatToBuild`.
 **Question 2: Components Affected**
 
 Use `AskUserQuestion` tool:
+
 - header: "Tasks: Q2/3"
 - question: "What components or files are affected?"
 - multiSelect: false
@@ -153,6 +163,7 @@ Wait for user response and store as `componentsAffected`.
 **Question 3: Definition of Done**
 
 Use `AskUserQuestion` tool:
+
 - header: "Tasks: Q3/3"
 - question: "What defines 'done' for this work?"
 - multiSelect: false
@@ -165,6 +176,7 @@ Wait for user response and store as `definitionOfDone`.
 Generate tasks based on the content source:
 
 **Task Generation Rules**:
+
 - Generate 5-15 implementation tasks (excluding completion tasks)
 - Each task should represent approximately 30 minutes to 2 hours of focused work
 - Tasks should be ordered by dependency and priority
@@ -172,16 +184,19 @@ Generate tasks based on the content source:
 - Format: `- [ ] T### {task description}`
 
 **If `contentSource` is "spec" or "spec+plan"**:
+
 - Prioritize P1 user stories for task extraction
 - Map functional requirements to implementation tasks
 - If plan phases exist, align tasks with phase structure
 
 **If `contentSource` is "plan"**:
+
 - Extract tasks from implementation phases
 - Use key tasks from each phase
 - Order by phase number
 
 **If `contentSource` is "guided"**:
+
 - Generate tasks from the three guided answers
 - Break down `whatToBuild` into logical implementation steps
 - Consider `componentsAffected` for task scoping
@@ -225,6 +240,7 @@ Generate the tasks.md content using this structure:
 ```
 
 Where:
+
 - `featureName` = extracted from spec header, plan summary, or derived from guided answers
 - `branch` = current git branch
 - `currentDate` = today's date in YYYY-MM-DD format
@@ -247,6 +263,7 @@ Next step: `/mykit.implement` to start working through tasks.
 ```
 
 Where `contentSource description` is:
+
 - "spec": "Extracted from feature specification"
 - "plan": "Extracted from implementation plan"
 - "spec+plan": "Combined from specification and plan"

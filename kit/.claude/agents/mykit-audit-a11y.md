@@ -5,6 +5,7 @@ Analyze the codebase for accessibility issues in UI code using AI-driven review,
 ## Inputs
 
 You will receive these variables from the orchestrator:
+
 - `REPO_ROOT`: Absolute path to the repository root
 - `REPORT_PATH`: Absolute path where the report should be written (e.g., `specs/{branch}/audit/a11y.md`)
 
@@ -13,6 +14,7 @@ You will receive these variables from the orchestrator:
 ### 1. Discover UI Code
 
 Search the repository for UI-related files:
+
 - HTML files: `**/*.html`, `**/*.htm`
 - React/JSX: `**/*.jsx`, `**/*.tsx`
 - Vue: `**/*.vue`
@@ -22,6 +24,7 @@ Search the repository for UI-related files:
 - Template files: `**/*.ejs`, `**/*.hbs`, `**/*.pug`
 
 Use Glob to search. If no UI files are found, also check for:
+
 - CLI output formatting (terminal accessibility — color contrast, screen reader compatibility)
 - Markdown documentation (structural accessibility — heading hierarchy, alt text in images, link text quality)
 
@@ -30,6 +33,7 @@ Use Glob to search. If no UI files are found, also check for:
 **If UI code exists**, check for:
 
 **WCAG 2.1 Level A (Critical)**:
+
 - Missing `alt` attributes on `<img>` tags
 - Missing form `<label>` elements or `aria-label`/`aria-labelledby`
 - Missing `lang` attribute on `<html>`
@@ -38,6 +42,7 @@ Use Glob to search. If no UI files are found, also check for:
 - Color used as the only visual means of conveying information
 
 **WCAG 2.1 Level AA (Important)**:
+
 - Missing ARIA landmarks (`<main>`, `<nav>`, `<header>`, `<footer>`)
 - Missing `aria-live` regions for dynamic content
 - Insufficient color contrast (check hardcoded color values)
@@ -46,11 +51,13 @@ Use Glob to search. If no UI files are found, also check for:
 - Autoplaying media without controls
 
 **Semantic HTML**:
+
 - Using `<div>` or `<span>` for interactive elements instead of `<button>` or `<a>`
 - Incorrect heading hierarchy (skipping levels)
 - Missing list semantics for list-like content
 
 **If no UI code exists**, check for:
+
 - Markdown documents: heading hierarchy, alt text in images, descriptive link text
 - CLI scripts: whether output relies solely on color (no text fallback)
 - If nothing applicable, report "No UI code found — a11y checks not applicable" with status "passed"
@@ -64,6 +71,7 @@ Use Glob to search. If no UI files are found, also check for:
 ### 4. Generate Proposed Fixes
 
 For each finding:
+
 - Show the current code
 - Show the corrected code with the accessibility fix
 - Reference the WCAG criterion where applicable
@@ -101,7 +109,9 @@ Write the report to `{REPORT_PATH}` using this format:
   ```html
   {problematic code snippet}
   ```
+
 - **Proposed Fix**:
+
   ```html
   {corrected code snippet}
   ```
@@ -109,6 +119,7 @@ Write the report to `{REPORT_PATH}` using this format:
 ---
 
 {Repeat for each finding. If no findings, write: "No accessibility issues found." or "No UI code found — a11y checks not applicable."}
+
 ```
 
 ## Return Value

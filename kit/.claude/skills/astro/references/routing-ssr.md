@@ -37,6 +37,7 @@ export const prerender = false;
 ```
 
 ### What requires `prerender = false`
+
 - `Astro.request` (headers, method, body)
 - `Astro.cookies` (read/write)
 - Cloudflare bindings (`Astro.locals.runtime.env`)
@@ -71,4 +72,4 @@ export const POST: APIRoute = async ({ request }) => {
 };
 ```
 
-Docs: https://docs.astro.build/en/guides/routing/
+Docs: <https://docs.astro.build/en/guides/routing/>

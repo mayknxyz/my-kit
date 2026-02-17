@@ -21,6 +21,7 @@ You **MUST** consider the user input before proceeding (if not empty).
 ## Description
 
 This command gathers session data from git and formats a structured log entry:
+
 1. Gathering session data (branch, issue title, artifacts, commits, files changed)
 2. Formatting a structured log entry
 3. Showing a preview and prompting to write
@@ -103,6 +104,7 @@ Extract total files changed count from the summary line.
 **Artifacts that exist** (check each file):
 
 Check existence of:
+
 - `specs/{BRANCH}/spec.md`
 - `specs/{BRANCH}/plan.md`
 - `specs/{BRANCH}/tasks.md`
@@ -154,6 +156,7 @@ Display the log entry with a preview header:
 ```
 
 Use `AskUserQuestion` to prompt:
+
 - header: "Write log"
 - question: "Write this to log?"
 - options:
@@ -170,15 +173,15 @@ Use `AskUserQuestion` to prompt:
 mkdir -p ~/my-log/.andrew
 ```
 
-2. Set the log file path:
+1. Set the log file path:
 
 ```
 LOG_FILE=~/my-log/.andrew/mykit-temp-log.md
 ```
 
-3. **If the log file already exists**: Read its current content, prepend the new entry, write back.
+1. **If the log file already exists**: Read its current content, prepend the new entry, write back.
 
-4. **If the log file does not exist**: Create it with a header and the new entry.
+2. **If the log file does not exist**: Create it with a header and the new entry.
 
 The file should have this structure:
 

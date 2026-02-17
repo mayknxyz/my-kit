@@ -15,6 +15,7 @@ git rebase -i main
 ```
 
 Interactive rebase commands:
+
 - `pick` — keep commit as-is
 - `reword` — change commit message
 - `squash` — combine with previous commit (keep message)

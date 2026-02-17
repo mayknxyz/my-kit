@@ -2,7 +2,7 @@
 
 Packages: `@sentry/astro` + `@sentry/cloudflare`
 
-Docs: https://docs.sentry.io/platforms/javascript/guides/cloudflare/frameworks/astro/
+Docs: <https://docs.sentry.io/platforms/javascript/guides/cloudflare/frameworks/astro/>
 
 ## Install
 

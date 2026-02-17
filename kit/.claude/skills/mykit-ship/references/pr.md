@@ -93,17 +93,11 @@ Closes #{ISSUE_NUMBER}
 
 ### Step 5: Auto-Detect Labels
 
-Fetch available repo labels:
+Read the canonical label list from `$HOME/.claude/skills/mykit/references/labels.md`. Only labels defined there are allowed — never create new labels.
 
-```bash
-REPO_LABELS=$(gh label list --json name --jq '.[].name' --limit 30 2>/dev/null || echo "")
-```
-
-If labels exist, auto-match based on:
-- Commit type: `feat` → "enhancement", `fix` → "bug", `docs` → "documentation"
-- Spec/plan content keywords matching label names
-
-If no labels available, skip.
+Auto-match based on:
+- Commit type: `feat` → `enhancement`, `fix` → `bug`, `docs` → `documentation`
+- Spec/plan content keywords matching the auto-detection keywords table in the canonical list
 
 ### Step 6: Push and Create PR
 
@@ -167,6 +161,6 @@ PR_URL=$("${PR_CMD[@]}" 2>&1)
 ## Notes
 
 - PR description auto-generated from spec, plan, and commits
-- Labels auto-detected from commit type and content
+- Labels auto-detected from commit type and content, constrained to canonical list
 - Automatic issue linking with "Closes #N"
 - Workflow preferences (base branch, title format, auto-assign, draft) read from CLAUDE.md

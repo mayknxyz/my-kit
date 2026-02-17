@@ -21,6 +21,26 @@ Handles the 3 shipping steps: commit, pr, and release. Auto-activates when the u
 | `pr` | pull request, PR, merge request | Create or update pull request |
 | `release` | release, publish, tag, ship | Create release with versioning |
 
+## Related Commands
+
+| Command | Description |
+|---------|-------------|
+| `/mykit.ship.approve` | Full ship pipeline (review → PR), stops for manual review |
+| `/mykit.ship.bypass` | Full ship pipeline (review → release), no stops |
+| `/mykit.release` | Release only — aborts if test plan incomplete |
+| `/mykit.release.complete` | Release — marks unchecked test plan items as complete |
+| `/mykit.release.bypass` | Release — removes unchecked test plan items |
+
+## Test Plan Mode
+
+The release step accepts a **test plan mode** passed from the invoking command:
+
+| Mode | Command | Behavior on incomplete test plan |
+|------|---------|----------------------------------|
+| `abort` | `/mykit.release` | Stop and suggest `.complete` or `.bypass` |
+| `complete` | `/mykit.release.complete` | Mark all `- [ ]` → `- [x]`, proceed |
+| `bypass` | `/mykit.release.bypass` | Remove unchecked lines, proceed |
+
 ## Routing Logic
 
 ### 1. Identify Step

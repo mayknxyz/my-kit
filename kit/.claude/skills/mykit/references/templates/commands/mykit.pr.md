@@ -295,22 +295,20 @@ fi
 PR_TITLE="${PR_TITLE//\{title\}/$ISSUE_TITLE}"
 ```
 
-### Step 11b: Fetch Repo Labels and Select
+### Step 11b: Select Labels from Canonical List
 
-Fetch available labels from the repository:
+Read the canonical label list from `$HOME/.claude/skills/mykit/references/labels.md`. Only labels defined there are allowed — never create new labels.
 
-```bash
-REPO_LABELS=$(gh label list --json name --jq '.[].name' --limit 30 2>/dev/null || echo "")
-```
+Auto-detect best-match labels based on:
+- Commit type: `feat` → `enhancement`, `fix` → `bug`, `docs` → `documentation`
+- Spec/plan content keywords matching the auto-detection keywords table in the canonical list
 
-**If `REPO_LABELS` is empty**: Set `SELECTED_LABELS` to empty. Skip label selection.
-
-**If labels are available**: Present using `AskUserQuestion`:
+Present using `AskUserQuestion`:
 
 - header: "Labels"
 - question: "Which labels should this PR have?"
 - multiSelect: true
-- options: up to 4 labels, inferred-best-match labels listed first
+- options: up to 4 labels from the canonical list, auto-detected best-matches listed first
 - User can select "Other" to skip labels entirely.
 
 Store selected labels as `SELECTED_LABELS`.

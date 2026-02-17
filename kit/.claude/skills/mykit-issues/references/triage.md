@@ -1,6 +1,6 @@
 # /mykit.review.issues — Triage
 
-Review and triage open GitHub issues. Analyzes completeness, clarity, staleness, and potential duplicates. Suggests labels from the repo's existing label set.
+Review and triage open GitHub issues. Analyzes completeness, clarity, staleness, and potential duplicates. Suggests labels from the canonical label list.
 
 **This operation is read-only — it never modifies issues.**
 
@@ -79,11 +79,9 @@ No open issues found. Nothing to triage.
 
 Stop here.
 
-### Step 3: Fetch Repo Labels
+### Step 3: Load Canonical Labels
 
-```bash
-gh label list --json name,description,color --limit 100
-```
+Read the canonical label list from `$HOME/.claude/skills/mykit/references/labels.md`. Only labels defined there are allowed — never suggest or apply labels outside this list.
 
 ### Step 4: Analyze Each Issue
 
@@ -121,12 +119,12 @@ Compare each pair of issues by keyword overlap in titles:
 
 ### Step 5: Suggest Labels
 
-For each unlabeled issue, suggest labels from the repo's existing label set based on:
-- Keywords in title and body
+For each unlabeled issue, suggest labels from the canonical label list based on:
+- Keywords in title and body matched against the auto-detection keywords table
 - Issue type (bug report, feature request, question, documentation)
 - Domain indicators (e.g., file paths, technology names)
 
-Only suggest labels that already exist in the repo.
+Only suggest labels from the canonical list — never suggest labels outside it.
 
 ### Step 6: Display Triage Report
 
@@ -223,4 +221,4 @@ These actions require user confirmation — never auto-execute them as part of t
 - This operation is **read-only** — it never creates, updates, or closes issues
 - Limited to 50 open issues to keep per-issue analysis manageable
 - Duplicate detection uses simple keyword overlap — it flags candidates, not confirmed duplicates
-- Label suggestions only use labels that already exist in the repository
+- Label suggestions only use labels from the canonical list (`$HOME/.claude/skills/mykit/references/labels.md`)

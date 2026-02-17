@@ -51,6 +51,19 @@ Sets `BRANCH`, `ISSUE_NUMBER`, `SPEC_PATH`, `PLAN_PATH`, `TASKS_PATH`.
   - Set `isDetachedHead = false`
   - Set `isFeatureBranch = true` if `ISSUE_NUMBER` is non-empty
 
+**Detect if branch has been merged**:
+
+If on a feature branch, check whether it has already been merged to main:
+
+```bash
+git branch --merged main | grep -q "^\s*${BRANCH}$"
+```
+
+- **If the branch is in the merged list**: Set `isMerged = true`
+- **Otherwise**: Set `isMerged = false`
+
+Note: If the current branch IS main, skip this check (`isMerged = false`).
+
 ### Step 3: Get GitHub Issue Details (if applicable)
 
 If `ISSUE_NUMBER` is non-empty, attempt to fetch issue details:
@@ -62,6 +75,7 @@ gh issue view {issueNumber} --json number,title,state
 **Handle results**:
 
 - **If gh command succeeds**: Parse JSON and extract `title` and `state`
+  - **Mismatch detection**: If `isMerged = true` and issue `state` is "OPEN", set `issueMismatch = true` — the issue should likely be closed
 - **If gh is not installed**: Set `ghAvailable = false`, display "GitHub CLI not available" note
 - **If gh is not authenticated**: Set `ghAuthenticated = false`, display "GitHub CLI not authenticated" note
 - **If issue not found**: Display "Issue #{issueNumber} not found" note
@@ -77,11 +91,14 @@ Check for spec files using paths from `fetch-branch-info.sh` (only if on a featu
 **Determine phase**:
 
 ```
-if tasksExists -> phase = "Implementation"
+if isMerged -> phase = "Completed"
+else if tasksExists -> phase = "Implementation"
 else if planExists -> phase = "Planning"
 else if specExists -> phase = "Specification"
 else -> phase = "Not started"
 ```
+
+Note: Merge detection takes priority — a merged branch is complete regardless of whether spec files exist.
 
 ### Step 5: Get File Status
 
@@ -123,6 +140,7 @@ Based on the current state, determine the suggested next command:
 
 | Phase | Has Uncommitted Changes | Suggested Command | Reason |
 |-------|------------------------|-------------------|--------|
+| Completed | Any | See post-merge cleanup | Clean up merged branch |
 | Not started | Any | `/mykit.specify <issue#>` | Create a specification |
 | Specification | No | `/mykit.plan` | Create implementation plan |
 | Specification | Yes | `/mykit.commit` | Commit your specification changes |
@@ -135,6 +153,10 @@ Based on the current state, determine the suggested next command:
 
 - If on main branch (not feature branch): Suggest `/mykit.specify <issue#>`
 - If in detached HEAD: Suggest `git checkout {branch}` to return to a branch
+- **If phase is "Completed"**: Suggest cleanup actions:
+  - If `issueMismatch = true`: `gh issue close {issueNumber}` — Close the issue
+  - Then: `git checkout main` — Switch to main and delete the branch
+  - Format as: "Branch is merged. Clean up: close issue, delete branch, switch to main."
 
 ### Step 7: Display Dashboard
 
@@ -150,6 +172,11 @@ Format and display the complete status dashboard:
 ```
 **Branch**: {branch}
 **Issue**: #{issueNumber} - {issueTitle} ({issueState})
+```
+
+**If `issueMismatch = true`**, append a warning line:
+```
+**Note**: Issue is still OPEN but branch has been merged — consider closing it with `gh issue close {issueNumber}`
 ```
 
 **If on a feature branch but gh unavailable**:
@@ -180,7 +207,12 @@ You are not on a branch. Use `git checkout {branchName}` to return to a branch.
 
 ## Workflow Phase
 
-**If on a feature branch**:
+**If on a feature branch and phase is "Completed"**:
+```
+**Current**: Completed (merged to main)
+```
+
+**If on a feature branch and phase is NOT "Completed"**:
 ```
 **Current**: {phase}
 **Progress**: spec.md {specExists ? "✓" : "○"} | plan.md {planExists ? "✓" : "○"} | tasks.md {tasksExists ? "✓" : "○"}

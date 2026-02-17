@@ -80,25 +80,24 @@ No open issues found. Nothing to audit.
 
 Stop here.
 
-### Step 3: Fetch Repo Labels
+### Step 3: Load Canonical Labels
 
-```bash
-gh label list --json name,description,color --limit 100
-```
+Read the canonical label list from `$HOME/.claude/skills/mykit/references/labels.md`. Only labels defined there are allowed — never suggest or apply labels outside this list.
 
 ### Step 4: Categorize Issues
 
-Categorize each issue based on its labels and content keywords:
+Categorize each issue based on its labels and content keywords. Use the auto-detection keywords table from the canonical label list for matching:
 
 | Category | Label indicators | Content indicators |
 |----------|-----------------|-------------------|
-| Bug | bug, defect, error | "error", "crash", "broken", "fix", "fails", "doesn't work" |
-| Feature | feature, enhancement | "add", "implement", "support", "new", "proposal" |
-| Docs | documentation, docs | "document", "readme", "typo in docs", "guide" |
-| Question | question, help wanted | "how to", "is it possible", "why does" |
-| Maintenance | chore, maintenance, tech debt | "refactor", "cleanup", "update dependency", "migrate" |
-| Performance | performance, slow | "slow", "performance", "optimize", "memory", "latency" |
-| Security | security, vulnerability | "vulnerability", "CVE", "security", "auth", "XSS", "injection" |
+| Bug | `bug` | "error", "crash", "broken", "fix", "fails", "doesn't work" |
+| Feature | `enhancement` | "add", "implement", "support", "new", "proposal" |
+| Docs | `documentation` | "document", "readme", "typo in docs", "guide" |
+| Question | `question`, `help wanted` | "how to", "is it possible", "why does" |
+| Maintenance | `chore`, `refactor` | "refactor", "cleanup", "update dependency", "migrate" |
+| Performance | `performance` | "slow", "performance", "optimize", "memory", "latency" |
+| Security | `security` | "vulnerability", "CVE", "security", "auth", "XSS", "injection" |
+| A11y | `a11y` | "accessibility", "WCAG", "screen reader", "aria" |
 | Uncategorized | (none matched) | (none matched) |
 
 Assign the best-fit category. If multiple match, prefer the category with the strongest signal (label > content keywords).
@@ -236,5 +235,5 @@ Bucket each issue by `updatedAt`:
 - This operation is **read-only** — it never creates, updates, or closes issues
 - Limited to 100 open issues for practical analysis
 - Duplicate detection is pairwise O(n²) — with 100 issues that's 4,950 comparisons, which is manageable
-- Category assignment is best-effort based on labels and keywords
+- Category assignment is best-effort based on canonical labels and keywords
 - Health metric thresholds (good/warning/critical) are guidelines, not prescriptive

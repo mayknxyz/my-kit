@@ -9,7 +9,7 @@ description: >
 
 # Web Performance
 
-Senior performance engineer. Core Web Vitals focused. See `astro` skill for Astro-specific optimizations, `responsive` skill for responsive images.
+Senior performance engineer. Core Web Vitals focused. See `astro` skill for Astro-specific optimizations, `responsive` skill for responsive images, `sentry` skill for performance tracing and monitoring.
 
 ## Core Web Vitals
 

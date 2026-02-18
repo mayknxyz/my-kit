@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.8.4] - 2026-02-18
+
+### Added
+
+- `/mykit.audit.linkcheck` command — run link check audit using lychee and linkinator
+- `mykit-audit-linkcheck` subagent — runs both tools, deduplicates findings, writes structured report
+- `linkcheck.sh` shell script — tool availability checks, scanning, result aggregation
+
+### Changed
+
+- Audit orchestrator: 5-domain → 6-domain (quality, security, perf, a11y, deps, linkcheck)
+- CLAUDE.md: 29 → 30 commands, 16 → 17 thin stubs, 5 → 6 audit agents
+
 ## [2.8.3] - 2026-02-17
 
 ### Changed
@@ -365,7 +378,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Monolithic command routing (replaced by skill routing)
 - Per-project infrastructure file copies (now globally shared via stow symlinks)
 
-[Unreleased]: https://github.com/mayknxyz/my-kit/compare/v2.8.3...HEAD
+[Unreleased]: https://github.com/mayknxyz/my-kit/compare/v2.8.4...HEAD
+[2.8.4]: https://github.com/mayknxyz/my-kit/compare/v2.8.3...v2.8.4
 [2.8.3]: https://github.com/mayknxyz/my-kit/compare/v2.8.2...v2.8.3
 [2.8.2]: https://github.com/mayknxyz/my-kit/compare/v2.8.1...v2.8.2
 [2.8.1]: https://github.com/mayknxyz/my-kit/compare/v2.8.0...v2.8.1

@@ -36,7 +36,7 @@ Map user intent to: `audit`.
 
 Follow the loaded reference file's instructions exactly. Each reference contains the complete workflow:
 
-- **audit.md**: 5-domain parallel audit (quality, security, performance, accessibility, dependencies) using dedicated agents, aggregated scoring, and actionable recommendations
+- **audit.md**: 6-domain parallel audit (quality, security, performance, accessibility, dependencies, link checking) using dedicated agents, aggregated scoring, and actionable recommendations
 
 ## Reference Files
 

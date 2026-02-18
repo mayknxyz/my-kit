@@ -1,6 +1,6 @@
 # /mykit.audit.*
 
-Run audits across check domains: quality, security, performance, accessibility, and dependencies.
+Run audits across check domains: quality, security, performance, accessibility, dependencies, and link checking.
 
 ## Commands
 
@@ -12,6 +12,7 @@ Run audits across check domains: quality, security, performance, accessibility, 
 | `/mykit.audit.perf` | Performance only (AI analysis) |
 | `/mykit.audit.a11y` | Accessibility only (AI analysis) |
 | `/mykit.audit.deps` | Dependencies only (AI analysis) |
+| `/mykit.audit.linkcheck` | Link check only (lychee, linkinator) |
 
 ## Usage
 
@@ -36,6 +37,8 @@ You **MUST** consider the user input before proceeding (if not empty).
 
 This command orchestrates multiple check/validation subagents in parallel using the Task tool. Each subagent produces a markdown report stored in the spec's audit directory. After all subagents complete, the command displays a consolidated summary, proposes fixes, and lets the user choose to fix all or selectively apply solutions.
 
+**Note**: `/mykit.audit.all` runs all domains by default. Use `--only` to select specific domains.
+
 ### Subagent Domains
 
 | Domain | Report File | Tool(s) | Checks |
@@ -45,6 +48,7 @@ This command orchestrates multiple check/validation subagents in parallel using 
 | perf | `perf.md` | AI-driven analysis | Performance anti-patterns, bottlenecks |
 | a11y | `a11y.md` | AI-driven analysis | Accessibility issues in UI code |
 | deps | `deps.md` | AI-driven analysis + package managers | Outdated deps, known vulnerabilities, license issues |
+| linkcheck | `linkcheck.md` | lychee, linkinator | Broken links in markdown and HTML files |
 
 ## Implementation
 
@@ -71,7 +75,7 @@ Run `git init` to initialize a repository, or navigate to an existing git reposi
 Parse the command arguments to determine:
 
 - `action`: `null` (no action = preview) or `"run"` (execute)
-- `onlyDomains`: If `--only` flag is present, parse the comma-separated domain list. If not present, default to all domains: `["quality", "security", "perf", "a11y", "deps"]`
+- `onlyDomains`: If `--only` flag is present, parse the comma-separated domain list. If not present, default to all domains: `["quality", "security", "perf", "a11y", "deps", "linkcheck"]`
 
 **Validation**:
 
@@ -89,7 +93,7 @@ Parse the command arguments to determine:
   ```
   **Error**: Invalid domain '{domain}'.
 
-  Valid domains: quality, security, perf, a11y, deps
+  Valid domains: quality, security, perf, a11y, deps, linkcheck
   Example: `/mykit.audit.all --only quality,security`
   ```
 
@@ -131,6 +135,10 @@ command -v markdownlint-cli2 || command -v markdownlint
 
 # Security tools
 command -v gitleaks
+
+# Link check tools
+command -v lychee
+command -v linkinator
 ```
 
 Display:
@@ -147,6 +155,7 @@ The following checks will be performed:
 | perf | AI analysis | ready | Performance anti-patterns, bottlenecks |
 | a11y | AI analysis | ready | Accessibility issues in UI code |
 | deps | AI analysis | ready | Outdated deps, vulnerabilities, licenses |
+| linkcheck | lychee, linkinator | {available/partial/missing} | Broken links in markdown and HTML |
 
 **Report directory**: `{reportDir}`
 
@@ -181,6 +190,7 @@ Subagent prompt files live in `$HOME/.claude/agents/`. Each file contains the fu
 | perf | `$HOME/.claude/agents/audit-perf.md` | `general-purpose` |
 | a11y | `$HOME/.claude/agents/audit-a11y.md` | `general-purpose` |
 | deps | `$HOME/.claude/agents/audit-deps.md` | `general-purpose` |
+| linkcheck | `$HOME/.claude/agents/audit-linkcheck.md` | `Bash` |
 
 **For each domain in `onlyDomains`**:
 
@@ -220,6 +230,7 @@ After all subagents complete, read all report files from `{reportDir}/`:
 - `perf.md`
 - `a11y.md`
 - `deps.md`
+- `linkcheck.md`
 
 For each report, extract:
 
@@ -241,6 +252,7 @@ Display the summary table:
 | perf | {pass/fail/skip} | {count} | {highest severity} |
 | a11y | {pass/fail/skip} | {count} | {highest severity} |
 | deps | {pass/fail/skip} | {count} | {highest severity} |
+| linkcheck | {pass/fail/skip} | {count} | {highest severity} |
 
 **Total issues**: {totalIssueCount}
 **Reports saved to**: `{reportDir}`
@@ -319,7 +331,7 @@ Use `AskUserQuestion` to prompt the user:
 |-------|---------|
 | Not a git repository | "Not in a git repository. Run `git init` to initialize." |
 | Invalid action | "Invalid action '{action}'. Valid actions: run" |
-| Invalid domain | "Invalid domain '{domain}'. Valid domains: quality, security, perf, a11y, deps" |
+| Invalid domain | "Invalid domain '{domain}'. Valid domains: quality, security, perf, a11y, deps, linkcheck" |
 | Subagent timeout | "Subagent '{domain}' timed out. Partial results collected." |
 | Subagent error | "Subagent '{domain}' encountered an error. Check `{reportDir}/{domain}.md` for details." |
 | Report write failure | "Could not write report to `{reportDir}/{domain}.md`. Check directory permissions." |

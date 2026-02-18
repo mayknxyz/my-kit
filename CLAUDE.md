@@ -30,15 +30,15 @@ Auto-triggered by context: a11y, analytics, animation, api-design, astro, biome,
 
 Skills with `references/` subdirectories: a11y, analytics, api-design, astro, cloudflare, copywriting, database, git, security, sentry, seo, svelte, tailwind, testing, typescript, web-core.
 
-### Commands (29 total)
+### Commands (30 total)
 
 - **12 full commands**: init, sync, help, status, log, issue.create, issue.edit, issue.view, issue.list, label.sync, ship.bypass, ship.approve
-- **16 thin stubs**: specify (requires issue#), plan (requires spec.md), tasks (requires plan.md), implement, commit, pr, release, release.complete, release.bypass, audit.all, audit.quality, audit.security, audit.perf, audit.a11y, audit.deps, review.issues
+- **17 thin stubs**: specify (requires issue#), plan (requires spec.md), tasks (requires plan.md), implement, commit, pr, release, release.complete, release.bypass, audit.all, audit.quality, audit.security, audit.perf, audit.a11y, audit.deps, audit.linkcheck, review.issues
 - **1 utility**: review.skills
 
-### 5 Audit Agents
+### 6 Audit Agents
 
-mykit-audit-quality, mykit-audit-security, mykit-audit-perf, mykit-audit-a11y, mykit-audit-deps.
+mykit-audit-quality, mykit-audit-security, mykit-audit-perf, mykit-audit-a11y, mykit-audit-deps, mykit-audit-linkcheck.
 
 ## Path Convention
 

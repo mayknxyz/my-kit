@@ -24,11 +24,11 @@ This creates symlinks from `kit/.claude/` → `~/.claude/`, making commands, ski
 | `mykit-ops` | Utilities (audit) | Yes |
 | `mykit-issues` | Issue analysis (triage → deep-dive → bulk review) | Yes |
 
-### 24 Domain Skills
+### 27 Domain Skills
 
-Auto-triggered by context: a11y, analytics, animation, api-design, astro, biome, ci-cd, cloudflare, copywriting, database, design-system, feedback, git, performance, responsive, security, sentry, seo, svelte, tailwind, testing, typescript, web-core, zod.
+Auto-triggered by context: a11y, analytics, animation, api-design, astro, biome, ci-cd, cloudflare, copywriting, database, design-system, diagrams, docs, feedback, git, performance, responsive, security, sentry, seo, sop, svelte, tailwind, testing, typescript, web-core, zod.
 
-Skills with `references/` subdirectories: a11y, analytics, api-design, astro, cloudflare, copywriting, database, git, security, sentry, seo, svelte, tailwind, testing, typescript, web-core.
+Skills with `references/` subdirectories: a11y, analytics, api-design, astro, cloudflare, copywriting, database, diagrams, docs, git, security, sentry, seo, sop, svelte, tailwind, testing, typescript, web-core.
 
 ### Commands (30 total)
 

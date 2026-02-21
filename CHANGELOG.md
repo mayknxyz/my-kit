@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.9.0] - 2026-02-22
+
+### Added
+
+- `diagrams` domain skill — Mermaid flowcharts, sequence diagrams, ER diagrams, state machines, Gantt charts, C4 architecture with worked examples and syntax traps
+- `docs` domain skill — Diataxis framework, README template, ADR template, TSDoc patterns, Keep a Changelog format
+- `sop` domain skill — numbered checklists, incident runbooks, escalation matrices with 5-component structure and step writing rules
+
+### Changed
+
+- Domain skill count: 24 → 27 in CLAUDE.md
+- Skills with `references/` subdirectories list updated to include diagrams, docs, sop
+
 ## [2.8.4] - 2026-02-18
 
 ### Added

@@ -53,6 +53,7 @@ main                          # production, always deployable
 - Branch from `main`, merge back to `main`
 - Delete branches after merge
 - Keep branches short-lived (< 1 week ideal)
+- Project-specific commands (e.g. `/mykit.ship.approve`) may use their own branch naming convention (e.g. `{issue#}-{description}`) — defer to the more specific command
 
 ## PR Conventions
 

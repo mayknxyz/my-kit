@@ -99,6 +99,17 @@ These execute immediately without an action.
 | `/mykit.issue.list` | List issues with optional filters |
 | `/mykit.label.sync` | Enforce canonical labels on the repo |
 
+## Repos & MCP
+
+| Command | Description |
+|---------|-------------|
+| `/mykit.repos.review` | Review repo catalog vs GitHub repos |
+| `/mykit.repos.add` | Add repo to catalog with stack detection |
+| `/mykit.repos.remove` | Remove repo from catalog |
+| `/mykit.mcp.review` | Review installed vs available MCP servers |
+| `/mykit.mcp.add` | Add MCP server from template |
+| `/mykit.mcp.remove` | Remove MCP server from repo |
+
 ## Utilities
 
 | Command | Description |
@@ -186,11 +197,17 @@ Available commands:
 - `/mykit.issue.view <number>` - Quick view of a single issue
 - `/mykit.label.sync` - Enforce canonical labels on the repo
 - `/mykit.log` - Export session summary to ~/my-log
+- `/mykit.mcp.add` - Add MCP server from template
+- `/mykit.mcp.remove` - Remove MCP server from repo
+- `/mykit.mcp.review` - Review installed vs available MCP servers
 - `/mykit.plan` - Create implementation plan
 - `/mykit.pr` - Create or update pull request
 - `/mykit.release` - Release (aborts if test plan incomplete)
 - `/mykit.release.bypass` - Release (removes unchecked test plan items)
 - `/mykit.release.complete` - Release (marks test plan items as complete)
+- `/mykit.repos.add` - Add repo to catalog with stack detection
+- `/mykit.repos.remove` - Remove repo from catalog
+- `/mykit.repos.review` - Review repo catalog vs GitHub repos
 - `/mykit.review.issues` - Triage, deep-dive, or bulk review GitHub issues
 - `/mykit.review.skills` - Review activated skills and propose improvements
 - `/mykit.ship.approve` - Ship to PR, stop for manual review
@@ -226,11 +243,17 @@ For reference, these are valid command names to check against:
 - `issue.view`
 - `label.sync`
 - `log`
+- `mcp.add`
+- `mcp.remove`
+- `mcp.review`
 - `plan`
 - `pr`
 - `release`
 - `release.bypass`
 - `release.complete`
+- `repos.add`
+- `repos.remove`
+- `repos.review`
 - `review.issues`
 - `review.skills`
 - `ship.approve`

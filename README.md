@@ -34,7 +34,7 @@ This creates symlinks from `kit/.claude/` → `~/.claude/`, making all commands,
 
 ## What's Included
 
-### Commands (29)
+### Commands (36)
 
 | Category | Commands |
 |----------|----------|
@@ -43,12 +43,13 @@ This creates symlinks from `kit/.claude/` → `~/.claude/`, making all commands,
 | Development | `/mykit.specify <issue#>`, `/mykit.plan`, `/mykit.tasks`, `/mykit.implement` |
 | Issues | `/mykit.issue.create`, `.edit`, `.view`, `.list`, `/mykit.label.sync` |
 | Ship | `/mykit.commit`, `/mykit.pr`, `/mykit.release`, `.complete`, `.bypass`, `/mykit.ship.approve`, `/mykit.ship.bypass` |
-| Audit | `/mykit.audit.all`, `.quality`, `.security`, `.perf`, `.a11y`, `.deps` |
+| Audit | `/mykit.audit.all`, `.quality`, `.security`, `.perf`, `.a11y`, `.deps`, `.linkcheck` |
+| Repos & MCP | `/mykit.repos.review`, `.add`, `.remove`, `/mykit.mcp.review`, `.add`, `.remove` |
 | Review | `/mykit.review.issues`, `/mykit.review.skills` |
 
-### Skills (29)
+### Skills (30)
 
-**5 workflow skills** — framework-agnostic, work with any project:
+**6 workflow skills** — framework-agnostic, work with any project:
 
 | Skill | Auto-trigger | Purpose |
 |-------|-------------|---------|
@@ -57,6 +58,7 @@ This creates symlinks from `kit/.claude/` → `~/.claude/`, making all commands,
 | `mykit-ship` | Yes | Commit, PR, release pipeline |
 | `mykit-ops` | Yes | Audit utilities |
 | `mykit-issues` | Yes | Issue triage, deep-dive, bulk review |
+| `mykit-repos` | Yes | Repo catalog & MCP management |
 
 **24 domain skills** — auto-triggered by project context, tuned for the supported stack:
 

@@ -1,0 +1,8 @@
+{
+  "name": "sequential-thinking",
+  "description": "Structured problem-solving with thought chains",
+  "config": {
+    "command": "npx",
+    "args": ["-y", "@anthropic/sequential-thinking-mcp@latest"]
+  }
+}

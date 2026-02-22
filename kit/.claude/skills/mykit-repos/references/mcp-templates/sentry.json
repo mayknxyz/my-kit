@@ -1,0 +1,8 @@
+{
+  "name": "sentry",
+  "description": "Sentry error tracking and issue management",
+  "config": {
+    "command": "npx",
+    "args": ["-y", "@sentry/mcp-server"]
+  }
+}

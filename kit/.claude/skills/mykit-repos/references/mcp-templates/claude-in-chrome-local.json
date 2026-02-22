@@ -1,0 +1,8 @@
+{
+  "name": "claude-in-chrome-local",
+  "description": "Browser automation via Chrome DevTools Protocol",
+  "config": {
+    "command": "npx",
+    "args": ["-y", "@anthropic/claude-in-chrome-mcp@latest"]
+  }
+}

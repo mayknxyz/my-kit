@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.10.0] - 2026-02-23
+
+### Added
+
+- `mykit-repos` skill — repo catalog and MCP server management with 6 steps (repos.review/add/remove, mcp.review/add/remove)
+- `/mykit.repos.review` command — review repo catalog vs GitHub repos with auto-locate on disk
+- `/mykit.repos.add` command — add repo to catalog with automatic stack and MCP detection
+- `/mykit.repos.remove` command — remove repo from catalog with confirmation
+- `/mykit.mcp.review` command — compare installed vs available MCP servers, detect config drift
+- `/mykit.mcp.add` command — add MCP server from template with diff preview and confirmation
+- `/mykit.mcp.remove` command — remove MCP server with diff preview and confirmation
+- 7 MCP server templates: cloudflare, sentry, canva, claude-in-chrome-local, context7, browser-tools, sequential-thinking
+- `data/repos.json` — version-controlled repo catalog with stack and MCP tracking schema
+
+### Changed
+
+- CLAUDE.md: My Kit skills 5 → 6, commands 30 → 36, thin stubs 17 → 23
+- README.md: commands 29 → 36, skills 29 → 30, workflow skills 5 → 6, added Repos & MCP row, added missing audit.linkcheck
+- mykit.help.md: added Repos & MCP section, updated Mode 4 valid commands list
+- Ship approve command: find-or-create issue logic, changelog link conditional
+- Git skill: branch naming deference note for project-specific commands
+- Release reference: version bump conditional after merge, CHANGELOG-based release notes, branch capture note
+
 ## [2.9.0] - 2026-02-22
 
 ### Added
@@ -391,7 +414,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Monolithic command routing (replaced by skill routing)
 - Per-project infrastructure file copies (now globally shared via stow symlinks)
 
-[Unreleased]: https://github.com/mayknxyz/my-kit/compare/v2.8.4...HEAD
+[Unreleased]: https://github.com/mayknxyz/my-kit/compare/v2.10.0...HEAD
+[2.10.0]: https://github.com/mayknxyz/my-kit/compare/v2.9.0...v2.10.0
+[2.9.0]: https://github.com/mayknxyz/my-kit/compare/v2.8.4...v2.9.0
 [2.8.4]: https://github.com/mayknxyz/my-kit/compare/v2.8.3...v2.8.4
 [2.8.3]: https://github.com/mayknxyz/my-kit/compare/v2.8.2...v2.8.3
 [2.8.2]: https://github.com/mayknxyz/my-kit/compare/v2.8.1...v2.8.2

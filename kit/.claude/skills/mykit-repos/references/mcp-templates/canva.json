@@ -1,0 +1,8 @@
+{
+  "name": "canva",
+  "description": "Canva design asset creation and management",
+  "config": {
+    "command": "npx",
+    "args": ["-y", "@anthropic/canva-mcp-server"]
+  }
+}

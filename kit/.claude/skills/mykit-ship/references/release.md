@@ -139,16 +139,16 @@ gh pr merge "$PR_NUMBER" \
 
 **If merge fails**, display error with manual recovery steps and stop. No tag or release will be created.
 
-### Step 5: Version Bump Commit on Main
-
-After the squash merge, the version in CHANGELOG.md and package.json may not match the tag if the commit step's version bump was squashed into the feature commit. Create a dedicated version bump commit on main:
+### Step 5: Sync Main and Verify Version
 
 ```bash
 git checkout "$BASE_BRANCH"
 git pull origin "$BASE_BRANCH"
 ```
 
-Verify CHANGELOG.md and package.json have the correct `NEXT_VERSION`. If the squash merge already includes them (from the commit step), no changes are needed. If they need updating:
+Check if CHANGELOG.md (and package.json if present) already have the correct `NEXT_VERSION` from the squash merge. **If they do, skip to Step 6** — no version bump commit needed.
+
+Only if the version is missing or incorrect after merge:
 
 1. Update package.json version to `NEXT_VERSION`
 2. Update CHANGELOG.md with the version header and release date
@@ -164,19 +164,21 @@ git tag "$NEXT_VERSION"
 git push origin "$BASE_BRANCH" --tags
 ```
 
-Create GitHub release:
+Create GitHub release using the CHANGELOG entry for this version as release notes:
 
 ```bash
 gh release create "$NEXT_VERSION" \
-  --generate-notes \
+  --notes "$RELEASE_NOTES" \
   --title "$NEXT_VERSION"
 ```
+
+`$RELEASE_NOTES` should contain the CHANGELOG.md content for `NEXT_VERSION` (the section between the version header and the next version header or end of file). Do not use `--generate-notes` — it produces commit-log-style output instead of user-facing changelogs.
 
 **If tag or release fails**, display warning with manual recovery commands but continue cleanup.
 
 ### Step 7: Cleanup
 
-Delete local feature branch (remote already deleted by `--delete-branch` in Step 4):
+Delete local feature branch (remote already deleted by `--delete-branch` in Step 4). Note: `CURRENT_BRANCH` must be captured in Step 1 before any `git checkout` changes the active branch.
 
 ```bash
 git branch -d "$CURRENT_BRANCH" 2>/dev/null || git branch -D "$CURRENT_BRANCH" 2>/dev/null || true

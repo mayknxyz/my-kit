@@ -53,19 +53,22 @@ Wait for the user's selection before proceeding. If the user interrupts or corre
 - Read `CHANGELOG.md` to find the current version number
 - Bump according to the selected type (major/minor/patch)
 
-## Step 5: Create GitHub issue
+## Step 5: Find or create GitHub issue
 
-- Title should summarize the changes from the review in Step 1
-- Body should list the changes using context gathered in Step 1
-- Add appropriate label from the canonical list (`$HOME/.claude/skills/mykit/references/labels.md`) — never create new labels
-- Self-assign (`--assignee` with your GitHub username)
+- First, check for an existing related issue: `gh issue list --state open`
+- If a matching issue exists, use it — do not create a duplicate
+- If no matching issue exists, create one:
+  - Title should summarize the changes from the review in Step 1
+  - Body should list the changes using context gathered in Step 1
+  - Add appropriate label from the canonical list (`$HOME/.claude/skills/mykit/references/labels.md`) — never create new labels
+  - Self-assign (`--assignee` with your GitHub username)
 
 ## Step 6: Create branch and commit
 
 - Create a new branch named `{issue#}-{short-description}` (e.g. `44-add-git-gh-configs`)
 - Stage only the relevant changed files (do NOT include unrelated changes)
 - Update `CHANGELOG.md` with the new version, today's date, and changes under appropriate headings (Added/Changed/Fixed/Removed)
-- Add the changelog link at the bottom of the file following the existing pattern
+- If the existing CHANGELOG uses comparison links at the bottom, add one for the new version following the existing pattern
 - Commit with message: `v{version}: short description (#issue)`
 
 ## Step 7: Push and create PR

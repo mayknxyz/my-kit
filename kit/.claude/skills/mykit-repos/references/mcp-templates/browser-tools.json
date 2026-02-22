@@ -1,0 +1,8 @@
+{
+  "name": "browser-tools",
+  "description": "Browser DevTools access for debugging and inspection",
+  "config": {
+    "command": "npx",
+    "args": ["-y", "@anthropic/browser-tools-mcp@latest"]
+  }
+}

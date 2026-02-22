@@ -1,0 +1,8 @@
+{
+  "name": "cloudflare",
+  "description": "Cloudflare Workers, KV, D1, R2 management",
+  "config": {
+    "command": "npx",
+    "args": ["-y", "@cloudflare/mcp-server-cloudflare"]
+  }
+}

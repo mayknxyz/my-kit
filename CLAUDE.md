@@ -14,7 +14,7 @@ This creates symlinks from `kit/.claude/` → `~/.claude/`, making commands, ski
 
 ## Architecture
 
-### 5 My Kit Skills
+### 6 My Kit Skills
 
 | Skill | Purpose | Auto-trigger |
 |-------|---------|-------------|
@@ -23,6 +23,7 @@ This creates symlinks from `kit/.claude/` → `~/.claude/`, making commands, ski
 | `mykit-ship` | Ship pipeline (commit → pr → release) | Yes |
 | `mykit-ops` | Utilities (audit) | Yes |
 | `mykit-issues` | Issue analysis (triage → deep-dive → bulk review) | Yes |
+| `mykit-repos` | Repo catalog & MCP management (repos.* → mcp.*) | Yes |
 
 ### 27 Domain Skills
 
@@ -30,10 +31,10 @@ Auto-triggered by context: a11y, analytics, animation, api-design, astro, biome,
 
 Skills with `references/` subdirectories: a11y, analytics, api-design, astro, cloudflare, copywriting, database, diagrams, docs, git, security, sentry, seo, sop, svelte, tailwind, testing, typescript, web-core.
 
-### Commands (30 total)
+### Commands (36 total)
 
 - **12 full commands**: init, sync, help, status, log, issue.create, issue.edit, issue.view, issue.list, label.sync, ship.bypass, ship.approve
-- **17 thin stubs**: specify (requires issue#), plan (requires spec.md), tasks (requires plan.md), implement, commit, pr, release, release.complete, release.bypass, audit.all, audit.quality, audit.security, audit.perf, audit.a11y, audit.deps, audit.linkcheck, review.issues
+- **23 thin stubs**: specify (requires issue#), plan (requires spec.md), tasks (requires plan.md), implement, commit, pr, release, release.complete, release.bypass, audit.all, audit.quality, audit.security, audit.perf, audit.a11y, audit.deps, audit.linkcheck, review.issues, repos.review, repos.add, repos.remove, mcp.review, mcp.add, mcp.remove
 - **1 utility**: review.skills
 
 ### 6 Audit Agents
